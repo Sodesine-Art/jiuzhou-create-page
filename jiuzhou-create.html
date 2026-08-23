@@ -208,8 +208,13 @@
 html,body{width:100%;margin:0;overflow:visible;}
 body{overscroll-behavior:none;}
 .jz-page{width:100%;height:auto!important;min-height:var(--jz-min-height, 0)!important;overflow:visible!important;}
-.jz-page .container{flex:0 0 auto!important;min-height:0!important;overflow:visible!important;}
-.jz-page .first-page-scroll{max-height:none!important;overflow:visible!important;padding-right:0!important;}
+/* Beat every original scroll declaration, including browser scrollbar pseudo-elements. */
+.jz-page .container,.jz-page .first-page-scroll{flex:0 0 auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;overflow-y:visible!important;overflow-x:visible!important;padding-right:0!important;scrollbar-width:none!important;}
+.jz-page .container::-webkit-scrollbar,.jz-page .first-page-scroll::-webkit-scrollbar{display:none!important;width:0!important;height:0!important;}
+/* Keep the step controls after the active step, not above it. */
+.jz-page .accordion-container{display:flex!important;flex-direction:column!important;}
+.jz-page .accordion-item{order:1;}
+.jz-page .wizard-nav{order:2;margin-top:18px!important;padding:14px 2px 4px!important;border-top:1px solid #b08d4f;}
 </style>
 </head>
 <body>
@@ -1862,6 +1867,7 @@ body{overscroll-behavior:none;}
     const height = Math.max(viewport, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight);
     try {
       if (window.frameElement) {
+        window.frameElement.setAttribute('scrolling', 'no');
         window.frameElement.style.height = height + 'px';
         window.frameElement.style.minHeight = height + 'px';
         window.frameElement.style.maxHeight = height + 'px';
