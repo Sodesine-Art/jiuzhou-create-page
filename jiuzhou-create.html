@@ -221,6 +221,7 @@ body{overscroll-behavior:none;}
 .jz-entry-screen{position:relative;z-index:9999;display:grid;place-items:center;min-height:640px;overflow:hidden;background:#d9c7a7;color:#3a2c1a;font-family:"Noto Serif SC","Songti SC",STSong,serif;}
 .jz-entry-screen.is-hidden{display:none;}
 body:not(.jz-entered) .jz-page{display:none!important;}
+body:not(.jz-entered) #jz-completion-note{display:none!important;}
 .jz-entry-screen::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 14%,rgba(255,250,235,.88),transparent 42%),linear-gradient(180deg,#efe5cf,#d9c7a7 64%,#bda06d);}
 .jz-entry-screen .entry-frame{position:absolute;inset:16px;border:1px solid rgba(246,227,168,.75);box-shadow:0 0 0 5px rgba(50,34,22,.82),0 0 0 8px rgba(174,135,76,.8),0 0 0 12px rgba(35,27,19,.88),inset 0 0 26px rgba(15,22,18,.5);pointer-events:none;}
 .jz-entry-screen .entry-scene{position:absolute;inset:0;overflow:hidden;opacity:.88;}
@@ -1895,7 +1896,7 @@ body:not(.jz-entered) .jz-page{display:none!important;}
         try { if (window.top && window.top !== window) window.top.addEventListener('resize', sizeJzPage); } catch (e) { /* 忽略 */ }
     })();
 </script>
-<p style="flex:0 0 auto;margin:12px auto 16px;padding:0 18px;text-align:center;color:#7a5a31;font-family:serif;">完成创建后，请把页面中的「角色摘要」复制并粘贴到对话中，我将为你开启江湖。</p>
+<p id="jz-completion-note" style="flex:0 0 auto;margin:12px auto 16px;padding:0 18px;text-align:center;color:#7a5a31;font-family:serif;">完成创建后，请把页面中的「角色摘要」复制并粘贴到对话中，我将为你开启江湖。</p>
 <script>
 (() => {
   let pending = false;
@@ -1905,10 +1906,17 @@ body:not(.jz-entered) .jz-page{display:none!important;}
     try { viewport = window.top && window.top.innerHeight ? window.top.innerHeight : viewport; } catch (_) {}
     try { viewport = window.parent && window.parent.innerHeight ? window.parent.innerHeight : viewport; } catch (_) {}
     const page = document.querySelector('.jz-page');
+    const entry = document.getElementById('jz-entry-screen');
     if (!page) return;
-    page.style.setProperty('--jz-min-height', viewport + 'px');
-    page.style.height = 'auto';
-    const height = Math.max(viewport, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight);
+    const isOpening = entry && !entry.classList.contains('is-hidden') && !document.body.classList.contains('jz-entered');
+    let height;
+    if (isOpening) {
+      height = Math.ceil(Math.max(entry.offsetHeight, entry.scrollHeight, 1));
+    } else {
+      page.style.setProperty('--jz-min-height', viewport + 'px');
+      page.style.height = 'auto';
+      height = Math.max(viewport, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight);
+    }
     try {
       if (window.frameElement) {
         window.frameElement.setAttribute('scrolling', 'no');
