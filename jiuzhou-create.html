@@ -1840,5 +1840,27 @@
     })();
 </script>
 <p style="margin:16px auto 28px;padding:0 18px;text-align:center;color:#7a5a31;font-family:serif;">完成创建后，请把页面中的「角色摘要」复制并粘贴到对话中，我将为你开启江湖。</p>
+<script>
+(() => {
+  const fitFrame = () => {
+    let height = 900;
+    try { height = window.top && window.top.innerHeight ? window.top.innerHeight : height; } catch (_) {}
+    try { height = window.parent && window.parent.innerHeight ? window.parent.innerHeight : height; } catch (_) {}
+    const page = document.querySelector('.jz-page');
+    if (page) { page.style.height = height + 'px'; page.style.minHeight = height + 'px'; }
+    try {
+      if (window.frameElement) {
+        window.frameElement.style.height = height + 'px';
+        window.frameElement.style.minHeight = height + 'px';
+        window.frameElement.style.maxHeight = 'none';
+      }
+    } catch (_) {}
+  };
+  fitFrame();
+  requestAnimationFrame(fitFrame);
+  setTimeout(fitFrame, 80);
+  window.addEventListener('resize', fitFrame);
+})();
+</script>
 </body>
 </html>
