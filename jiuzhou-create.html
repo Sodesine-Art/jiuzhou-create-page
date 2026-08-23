@@ -204,7 +204,13 @@
         .jz-page .cm-tip { font-size: 0.8rem; color: #7a6a4f; margin-top: 10px; line-height: 1.7; }
 
 </style>
-<style>html,body{width:100%;margin:0;overflow:hidden;}body{overscroll-behavior:none;}.jz-page{width:100%;}</style>
+<style>
+html,body{width:100%;margin:0;overflow:visible;}
+body{overscroll-behavior:none;}
+.jz-page{width:100%;height:auto!important;min-height:var(--jz-min-height, 0)!important;overflow:visible!important;}
+.jz-page .container{flex:0 0 auto!important;min-height:0!important;overflow:visible!important;}
+.jz-page .first-page-scroll{max-height:none!important;overflow:visible!important;padding-right:0!important;}
+</style>
 </head>
 <body>
 <div class="jz-page">
@@ -1843,24 +1849,33 @@
 <p style="flex:0 0 auto;margin:12px auto 16px;padding:0 18px;text-align:center;color:#7a5a31;font-family:serif;">完成创建后，请把页面中的「角色摘要」复制并粘贴到对话中，我将为你开启江湖。</p>
 <script>
 (() => {
+  let pending = false;
   const fitFrame = () => {
-    let height = 900;
-    try { height = window.top && window.top.innerHeight ? window.top.innerHeight : height; } catch (_) {}
-    try { height = window.parent && window.parent.innerHeight ? window.parent.innerHeight : height; } catch (_) {}
+    pending = false;
+    let viewport = 700;
+    try { viewport = window.top && window.top.innerHeight ? window.top.innerHeight : viewport; } catch (_) {}
+    try { viewport = window.parent && window.parent.innerHeight ? window.parent.innerHeight : viewport; } catch (_) {}
     const page = document.querySelector('.jz-page');
-    if (page) { page.style.height = height + 'px'; page.style.minHeight = height + 'px'; }
+    if (!page) return;
+    page.style.setProperty('--jz-min-height', viewport + 'px');
+    page.style.height = 'auto';
+    const height = Math.max(viewport, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight);
     try {
       if (window.frameElement) {
         window.frameElement.style.height = height + 'px';
         window.frameElement.style.minHeight = height + 'px';
-        window.frameElement.style.maxHeight = 'none';
+        window.frameElement.style.maxHeight = height + 'px';
+        window.frameElement.style.overflow = 'hidden';
       }
     } catch (_) {}
   };
-  fitFrame();
-  requestAnimationFrame(fitFrame);
-  setTimeout(fitFrame, 80);
-  window.addEventListener('resize', fitFrame);
+  const requestFit = () => {
+    if (!pending) { pending = true; requestAnimationFrame(fitFrame); }
+  };
+  requestFit();
+  setTimeout(requestFit, 80);
+  window.addEventListener('resize', requestFit);
+  if (window.ResizeObserver) new ResizeObserver(requestFit).observe(document.body);
 })();
 </script>
 </body>
