@@ -218,8 +218,9 @@ body{overscroll-behavior:none;}
 .jz-page .wizard-nav{order:2;margin-top:18px!important;padding:14px 2px 4px!important;border-top:1px solid #b08d4f;}
 
 /* ===== 九州入口页：水榭人物卷 ===== */
-.jz-entry-screen{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;overflow:hidden;background:#d9c7a7;color:#3a2c1a;font-family:"Noto Serif SC","Songti SC",STSong,serif;}
+.jz-entry-screen{position:relative;z-index:9999;display:grid;place-items:center;min-height:640px;overflow:hidden;background:#d9c7a7;color:#3a2c1a;font-family:"Noto Serif SC","Songti SC",STSong,serif;}
 .jz-entry-screen.is-hidden{display:none;}
+body:not(.jz-entered) .jz-page{display:none!important;}
 .jz-entry-screen::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 14%,rgba(255,250,235,.88),transparent 42%),linear-gradient(180deg,#efe5cf,#d9c7a7 64%,#bda06d);}
 .jz-entry-screen .entry-frame{position:absolute;inset:16px;border:1px solid rgba(246,227,168,.75);box-shadow:0 0 0 5px rgba(50,34,22,.82),0 0 0 8px rgba(174,135,76,.8),0 0 0 12px rgba(35,27,19,.88),inset 0 0 26px rgba(15,22,18,.5);pointer-events:none;}
 .jz-entry-screen .entry-scene{position:absolute;inset:0;overflow:hidden;opacity:.88;}
@@ -236,23 +237,29 @@ body{overscroll-behavior:none;}
 .jz-entry-screen .entry-lotus{position:absolute;right:9%;bottom:16%;width:95px;height:55px;opacity:.78;animation:jz-entry-lotus 6s ease-in-out infinite alternate;}
 .jz-entry-screen .entry-lotus::before{content:"";position:absolute;left:17px;top:12px;width:58px;height:31px;background:#a33b2e;border-radius:70% 10% 70% 10%;transform:rotate(22deg);box-shadow:20px 9px 0 -4px #c7755b,10px -8px 0 -5px #c7755b;}
 .jz-entry-screen .entry-lotus::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:25px;border-radius:50%;background:#607b67;box-shadow:0 4px 0 rgba(39,50,71,.25);}
-.jz-entry-screen .entry-content{position:relative;z-index:2;display:grid;justify-items:center;width:min(92vw,650px);height:min(94dvh,820px);padding:clamp(22px,5vh,54px) 22px 24px;text-align:center;}
+.jz-entry-screen .entry-bamboo{position:absolute;right:4%;top:7%;width:150px;height:390px;opacity:.48;transform:rotate(8deg);background:repeating-linear-gradient(84deg,transparent 0 18px,rgba(55,92,67,.8) 19px 24px,transparent 25px 42px);mask-image:linear-gradient(90deg,transparent,#000 17%,#000 82%,transparent);animation:jz-entry-bamboo 8s ease-in-out infinite alternate;}
+.jz-entry-screen .entry-bamboo::before{content:"";position:absolute;inset:18px 5px 45px;background:repeating-linear-gradient(145deg,transparent 0 22px,rgba(79,113,80,.8) 23px 29px,transparent 30px 58px);}
+.jz-entry-screen .entry-swallows{position:absolute;left:17%;top:20%;color:rgba(26,26,46,.62);font:1.4rem/1 cursive;letter-spacing:.65em;transform:rotate(-8deg);animation:jz-entry-swallows 9s linear infinite alternate;}
+.jz-entry-screen .entry-seal{position:absolute;left:10%;top:12%;display:grid;place-items:center;width:52px;height:52px;border:2px solid rgba(163,59,46,.75);color:#a33b2e;background:rgba(247,240,222,.28);font-family:"Ma Shan Zheng",cursive;font-size:1.55rem;transform:rotate(-10deg);opacity:.72;box-shadow:inset 0 0 0 3px rgba(163,59,46,.14);}
+.jz-entry-screen .entry-sword{position:absolute;right:15%;bottom:19%;width:5px;height:136px;background:linear-gradient(90deg,#20283a,#d6c18a,#20283a);transform:rotate(31deg);opacity:.6;box-shadow:0 0 0 2px rgba(37,39,49,.08);}
+.jz-entry-screen .entry-sword::before{content:"";position:absolute;left:-17px;top:15px;width:39px;height:6px;background:#a33b2e;border:2px solid #283146;border-radius:4px;}.jz-entry-screen .entry-sword::after{content:"";position:absolute;left:-2px;bottom:-29px;width:9px;height:35px;border-radius:0 0 8px 8px;background:#a33b2e;box-shadow:12px 13px 0 -3px rgba(163,59,46,.75);}
+.jz-entry-screen .entry-content{position:relative;z-index:2;display:grid;justify-items:center;width:min(94vw,690px);height:620px;padding:24px 22px 18px;text-align:center;}
 .jz-entry-screen .entry-content::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(247,240,222,.64),rgba(247,240,222,.08) 60%,transparent);z-index:-1;}
 .jz-entry-screen .entry-title{margin:0;align-self:start;color:#1a1a2e;letter-spacing:.22em;text-shadow:0 1px rgba(255,255,255,.55);opacity:0;animation:jz-entry-copy .8s 1s ease forwards;}
 .jz-entry-screen .entry-title small{display:block;margin-bottom:7px;color:#a33b2e;font-size:.72rem;letter-spacing:.48em;}.jz-entry-screen .entry-title strong{display:block;font-size:clamp(1.5rem,4vw,2.6rem);font-weight:600;}
-.jz-entry-screen .entry-portrait{position:absolute;z-index:-1;bottom:13%;left:50%;max-width:min(74vw,590px);max-height:70%;width:auto;height:auto;transform:translate(-50%,18px) scale(1.025);object-fit:contain;filter:brightness(.88) saturate(.82) contrast(1.03);opacity:0;animation:jz-entry-reveal 3.6s .35s cubic-bezier(.22,.72,.2,1) forwards;}
+.jz-entry-screen .entry-portrait{position:absolute;z-index:-1;bottom:10%;left:50%;max-width:min(70vw,530px);max-height:76%;width:auto;height:auto;transform:translate(-50%,18px) scale(1.025);object-fit:contain;filter:brightness(.9) saturate(.88) contrast(1.03);opacity:0;animation:jz-entry-reveal 3.6s .35s cubic-bezier(.22,.72,.2,1) forwards;}
 .jz-entry-screen .entry-action{align-self:end;display:grid;justify-items:center;gap:10px;opacity:0;animation:jz-entry-copy .75s 2.55s ease forwards;}.jz-entry-screen .entry-action p{margin:0;color:#7a5a31;font-size:.81rem;letter-spacing:.16em;}.jz-entry-screen .entry-button{min-width:184px;min-height:50px;border:2px solid #1a1a2e;border-radius:6px;padding:12px 26px;color:#f7f0de;background:#a33b2e;box-shadow:0 6px 16px rgba(58,44,26,.3),inset 0 0 0 1px rgba(255,255,255,.15);font:600 1.05rem/1 "Noto Serif SC","Songti SC",STSong,serif;letter-spacing:.28em;cursor:pointer;}
 .jz-entry-screen .entry-button:hover,.jz-entry-screen .entry-button:focus-visible{background:linear-gradient(135deg,#87382b,#bb6544);transform:translateY(-2px);outline:none;}
 @keyframes jz-entry-reveal{0%{opacity:0;filter:blur(7px) brightness(.62) saturate(.45);transform:translate(-50%,24px) scale(1.04)}58%{opacity:.82}100%{opacity:1;filter:blur(0) brightness(.88) saturate(.82) contrast(1.03);transform:translate(-50%,0) scale(1)}}
-@keyframes jz-entry-copy{to{opacity:1}} @keyframes jz-entry-ripple{from{transform:perspective(380px) rotateX(62deg) translateX(-2%)}to{transform:perspective(380px) rotateX(62deg) translateX(2%)}} @keyframes jz-entry-float{from{transform:translateY(2px)}to{transform:translateY(-5px)}} @keyframes jz-entry-moon{from{transform:translateY(3px);opacity:.58}to{transform:translateY(-4px);opacity:.82}} @keyframes jz-entry-lotus{from{transform:translateY(2px) rotate(-2deg)}to{transform:translateY(-4px) rotate(3deg)}}
-@media(max-width:560px){.jz-entry-screen .entry-content{height:96dvh}.jz-entry-screen .entry-portrait{max-width:94vw;max-height:68%;bottom:15%;}.jz-entry-screen .entry-title strong{font-size:1.55rem;}}
+@keyframes jz-entry-copy{to{opacity:1}} @keyframes jz-entry-ripple{from{transform:perspective(380px) rotateX(62deg) translateX(-2%)}to{transform:perspective(380px) rotateX(62deg) translateX(2%)}} @keyframes jz-entry-float{from{transform:translateY(2px)}to{transform:translateY(-5px)}} @keyframes jz-entry-moon{from{transform:translateY(3px);opacity:.58}to{transform:translateY(-4px);opacity:.82}} @keyframes jz-entry-lotus{from{transform:translateY(2px) rotate(-2deg)}to{transform:translateY(-4px) rotate(3deg)}} @keyframes jz-entry-bamboo{from{transform:rotate(6deg) translateY(2px)}to{transform:rotate(10deg) translateY(-4px)}} @keyframes jz-entry-swallows{from{transform:translateX(-8px) rotate(-8deg)}to{transform:translateX(12px) rotate(-5deg)}}
+@media(max-width:560px){.jz-entry-screen{min-height:570px}.jz-entry-screen .entry-content{height:570px}.jz-entry-screen .entry-portrait{max-width:88vw;max-height:72%;bottom:11%;}.jz-entry-screen .entry-title strong{font-size:1.55rem;}.jz-entry-screen .entry-pavilion{transform:scale(.72);transform-origin:left bottom}.jz-entry-screen .entry-bamboo,.jz-entry-screen .entry-sword{display:none}.jz-entry-screen .entry-swallows{left:9%;top:24%;}}
 @media(prefers-reduced-motion:reduce){.jz-entry-screen *, .jz-entry-screen *::before,.jz-entry-screen *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;}}
 </style>
 </head>
 <body>
 <section class="jz-entry-screen" id="jz-entry-screen" aria-label="九州大世界进入页面">
     <div class="entry-frame" aria-hidden="true"></div>
-    <div class="entry-scene" aria-hidden="true"><div class="entry-moon"></div><div class="entry-pavilion"><i class="roof"></i><i class="post p1"></i><i class="post p2"></i><i class="deck"></i><i class="reflection"></i></div><div class="entry-lotus"></div></div>
+    <div class="entry-scene" aria-hidden="true"><div class="entry-moon"></div><div class="entry-bamboo"></div><div class="entry-swallows">⌁ · ⌁ · ⌁</div><div class="entry-seal">侠</div><div class="entry-sword"></div><div class="entry-pavilion"><i class="roof"></i><i class="post p1"></i><i class="post p2"></i><i class="deck"></i><i class="reflection"></i></div><div class="entry-lotus"></div></div>
     <div class="entry-content"><h1 class="entry-title"><small>九州卷 · 入江湖</small><strong>九州大世界</strong></h1><img class="entry-portrait" src="146562056_p0_master1200.jpg" alt="执伞行于九州的江湖人物"><div class="entry-action"><button class="entry-button" type="button" id="jz-enter-create">踏入江湖</button><p>卷轴展开，江湖在前。</p></div></div>
 </section>
 <div class="jz-page">
@@ -1932,6 +1939,7 @@ body{overscroll-behavior:none;}
       enter.disabled = true;
       enter.textContent = '江湖已开';
       screen.classList.add('is-hidden');
+      document.body.classList.add('jz-entered');
       page.removeAttribute('aria-hidden');
       window.dispatchEvent(new Event('resize'));
     }, { once: true });
