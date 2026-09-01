@@ -1228,7 +1228,7 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             for (const [kw, place, faction] of factionRules) {
                 if (text.includes(kw)) { ctx.地点 = place; ctx.势力 = faction; break; }
             }
-            const clothes = extractClothing(appearance);
+            const clothes = extractClothing(appearance, text);
             if (clothes) ctx.衣服 = clothes;
             return ctx;
         }
@@ -1246,13 +1246,12 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             if (startLocation && startSpot) ctx.地点 = startSpot;
             return ctx;
         }
-        function extractClothing(appearance) {
-            if (!appearance) return '';
-            const segs = String(appearance).split(/[，,。；;]/);
+        function extractClothing() {
+            const source = Array.prototype.slice.call(arguments).filter(Boolean).join(' ');
+            if (!source) return '';
+            const segs = source.split(/[，,。；；\n]/);
             for (const seg of segs) {
-                if (/衣|裙|袍|衫|甲|裘|裳|劲装|襦|锦|布衣|斗篷|披风/.test(seg)) {
-                    return seg.trim();
-                }
+                if (/衣|裙|袍|衫|甲|裘|裳|劲装|襦|锦|布衣|斗篷|披风/.test(seg)) return seg.trim();
             }
             return '';
         }
@@ -1279,6 +1278,13 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             }
             throw new Error('Mvu 变量框架未就绪：MagVarUpdate 未能加载（请检查网络，或确认已安装 MagVarUpdate 扩展）');
         }
+        function normalizeCultivation(text) {
+            const raw = String(text || '').trim();
+            const allowed = ['第一境·淬皮','第一境·通脉','第一境·凝元','第二境·周天','第二境·罡劲','第二境·离体','第三境·明势','第三境·透劲','第三境·破阵','第四境·入微','第四境·归一','第四境·无招','第五境·破军','第五境·裂城','第五境·绝巅'];
+            if (allowed.includes(raw)) return raw;
+            if (!raw || /凡人|未入流|未习武|尚未入门/.test(raw)) return '未入流';
+            return '未入流';
+        }
         function applyInitToMvuData(d, form) {
             if (!d || typeof d !== 'object') return;
             if (!d.stat_data || typeof d.stat_data !== 'object') d.stat_data = {};
@@ -1295,16 +1301,18 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             u.外貌 = form.appearance || '';
             u.身材 = form.figure || form.context.身材;
             u.衣服 = form.clothes || form.context.衣服;
+            u.身份 = form.identity || '';
+            u.其他设定 = form.other || '';
+            if (Object.prototype.hasOwnProperty.call(u, '所属势力')) delete u.所属势力;
             u.背包物品 = {};
             u.装备 = {};
             if (!u.武学功法 || typeof u.武学功法 !== 'object') u.武学功法 = {};
             if (!u.武学功法.修炼功法 || typeof u.武学功法.修炼功法 !== 'object') u.武学功法.修炼功法 = {};
             if (!u.武学功法.战斗功法 || typeof u.武学功法.战斗功法 !== 'object') u.武学功法.战斗功法 = {};
             u.修为进度 = 0;
-            u.境界 = '未入流';
+            u.境界 = normalizeCultivation(form.cultivation);
             u.状态 = {};
             u.天赋 = {};
-            u.所属势力 = form.context.势力;
             form.talents.forEach(talent => {
                 const key = String(talent.name).replace(/\./g, '·');
                 u.天赋[key] = {
@@ -1349,6 +1357,7 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             const context = getActivePlotContext(appearance, startLocation, startSpot);
             const activePlotOption = document.querySelector('.plot-option.active');
             const customMode = !activePlotOption || !plotContexts[activePlotOption.getAttribute('data-plot')];
+            const customPlot = document.getElementById('custom-plot').value.trim();
             const form = {
                 name: name,
                 age: age,
@@ -1356,9 +1365,12 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
                 appearance: appearance,
                 figure: figure,
                 personality: document.getElementById('char-personality').value.trim(),
+                identity: document.getElementById('char-identity').value.trim(),
+                cultivation: document.getElementById('char-cultivation').value.trim(),
+                other: document.getElementById('char-other').value.trim(),
                 talents: selectedTalents.slice(),
                 context: context,
-                clothes: extractClothing(appearance),
+                clothes: extractClothing(appearance, customPlot),
                 startLocation: startLocation,
                 startSpot: startSpot
             };
@@ -1406,8 +1418,8 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
                 }
                 btn.style.background = '#4CAF50';
                 if (status) status.textContent = customMode
-                    ? '已写入基础信息，并按你的剧情/开局地点给出时间、地点、衣着、身材、势力初值；AI 会在首轮回复读取剧情、身份与天赋后校准。摘要' + (filled ? '已填入输入框' : '已复制到剪贴板') + '，发送即可开局。' + floorNote
-                    : '已写入：姓名/年龄/性别/外貌/身材/性格/天赋，并按开场剧情与开局地点生成时间/地点/衣着/势力。摘要' + (filled ? '已填入输入框' : '已复制到剪贴板') + '，发送即可开局。' + floorNote;
+                    ? '已写入基础信息，并按你的剧情/开局地点给出时间、地点、衣着、身材、身份初值；AI 会在首轮回复读取剧情、身份与天赋后校准。摘要' + (filled ? '已填入输入框' : '已复制到剪贴板') + '，发送即可开局。' + floorNote
+                    : '已写入：姓名/年龄/性别/外貌/身材/性格/天赋，并按开场剧情与开局地点生成时间/地点/衣着/身份。摘要' + (filled ? '已填入输入框' : '已复制到剪贴板') + '，发送即可开局。' + floorNote;
             } catch (e) {
                 console.error('MVU 初始化失败:', e);
                 btn.disabled = false;
