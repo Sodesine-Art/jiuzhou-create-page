@@ -275,7 +275,65 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
 @media(max-width:560px){.jz-entry-screen{min-height:570px}.jz-entry-screen .entry-content{height:570px}.jz-entry-screen .entry-portrait{max-width:66vw;max-height:66%;bottom:18%;}.jz-entry-screen .entry-title strong{font-size:1.55rem;}.jz-entry-screen .entry-poem{top:17%;bottom:17%;width:15%;font-size:.76rem;letter-spacing:.13em;line-height:1.7;}.jz-entry-screen .entry-poem-left{left:1%;}.jz-entry-screen .entry-poem-right{right:1%;}.jz-entry-screen .entry-poem::before{font-size:.68em;letter-spacing:.18em;}}
 @media(prefers-reduced-motion:reduce){.jz-entry-screen *, .jz-entry-screen *::before,.jz-entry-screen *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;}}
 </style>
-</head>
+<style id="jz-mobile-layout-overrides">
+/* 九州长歌手机创建页覆盖层：仅在窄容器生效，桌面仍沿用原页面布局 */
+@media (max-width: 640px) {
+  html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+  .jz-entry-screen{min-height:min(620px,100dvh);padding-bottom:max(8px,env(safe-area-inset-bottom));}
+  .jz-entry-screen .entry-frame{inset:8px;}
+  .jz-entry-screen .entry-content{width:100%;height:min(590px,100dvh);min-height:500px;padding:18px 16px 14px;box-sizing:border-box;}
+  .jz-entry-screen .entry-poem{display:none;}
+  .jz-entry-screen .entry-title{align-self:start;}
+  .jz-entry-screen .entry-title strong{font-size:clamp(1.45rem,7vw,2rem);}
+  .jz-entry-screen .entry-portrait{max-width:78vw;max-height:53%;bottom:21%;}
+  .jz-entry-screen .entry-action{width:min(100%,320px);gap:8px;}
+  .jz-entry-screen .entry-button{width:100%;min-height:48px;padding:14px 18px;}
+  .jz-page{width:100%;max-width:none;min-height:0!important;height:auto!important;overflow:visible!important;background-image:none;}
+  .jz-page .container{width:100%;min-height:0;max-height:none;overflow:visible!important;border-width:3px;border-radius:0;box-shadow:none;}
+  .jz-page .first-page-scroll{max-height:none!important;overflow:visible!important;padding-right:0;scrollbar-gutter:auto;}
+  .jz-page .accordion-container{padding:8px;}
+  .jz-page .accordion-content-inner{padding:14px 10px 20px;}
+  .jz-page .wizard-nav{position:sticky;top:0;z-index:20;padding:8px 4px 10px;background:#e8dcc4;border-bottom:1px solid #b08d4f;}
+  .jz-page .wizard-step{width:100%;font-size:1.05rem;}
+  .jz-page .wizard-dots{order:3;width:100%;}
+  .jz-page .wizard-btn{min-height:44px;padding:9px 14px;font-size:.94rem;}
+  .jz-page h2{font-size:1.65rem;padding-left:8px;}
+  .jz-page h3{font-size:1.25rem;}
+  .jz-page p{font-size:1rem;line-height:1.75;}
+  .jz-page input,.jz-page select,.jz-page textarea{max-width:100%;font-size:16px;}
+  .jz-page textarea{min-height:110px;}
+  .jz-page .character-form,.jz-page .form-section{grid-template-columns:minmax(0,1fr)!important;}
+  .jz-page .talent-roll-area{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px;}
+  .jz-page .talent-card{min-width:0;padding:6px 5px;font-size:.76rem;line-height:1.35;}
+  .jz-page .talent-name{margin-bottom:2px;font-size:.88rem;line-height:1.25;word-break:break-word;}
+  .jz-page .talent-desc{font-size:.7rem;line-height:1.35;word-break:break-word;}
+  .jz-page .preset-selection,.jz-page .archive-controls{flex-wrap:wrap;}
+  .jz-page .preset-btn,.jz-page .archive-controls button{min-height:44px;}
+
+  /* 原绝对定位疆域图在手机改为区域选择网格；原有 click 事件和 data/id 保持不变。 */
+  .jz-page .map-container{margin:10px 0;}
+  .jz-page .map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;width:100%;height:auto!important;min-height:0;overflow:visible!important;padding:9px;border:1px solid #1a1a2e;border-radius:8px;background:linear-gradient(155deg,#f3ead6,#e4d2a8);}
+  .jz-page .province{position:relative!important;inset:auto!important;width:auto!important;height:auto!important;min-height:88px;padding:9px 7px;transform:none!important;display:flex;align-items:center;justify-content:center;gap:3px;box-shadow:0 1px 3px rgba(0,0,0,.18);}
+  .jz-page .province:hover,.jz-page .province:focus-visible{transform:none!important;box-shadow:0 0 0 2px #a33b2e,0 2px 5px rgba(0,0,0,.18);}
+  .jz-page .province-name{font-size:1.15rem;line-height:1.2;}
+  .jz-page .province-desc{display:-webkit-box;overflow:hidden;font-size:.78rem;line-height:1.35;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+  .jz-page .outer-region{min-height:76px;}
+  .jz-page .outer-region .province-name{font-size:1.05rem;}
+  .jz-page .outer-region .province-desc{font-size:.72rem;}
+  .jz-page .province-factions{display:none;}
+  .jz-page .map-popover{position:fixed!important;z-index:99999;left:8px!important;right:8px!important;top:auto!important;bottom:max(8px,env(safe-area-inset-bottom))!important;width:auto!important;max-width:none;max-height:min(72dvh,520px);padding:14px;}
+  .jz-page .map-popover h3{font-size:1.1rem;}
+  .jz-page .faction-map,.jz-page .realm-list{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .jz-page .detail-line{align-items:flex-start;gap:6px;}
+  .jz-page .detail-line .dl-lbl{min-width:4em;}
+  #jz-completion-note{margin:10px auto max(18px,env(safe-area-inset-bottom));padding:0 12px;font-size:.9rem;}
+}
+@media (max-width: 360px) {
+  .jz-page .map,.jz-page .faction-map,.jz-page .realm-list{grid-template-columns:minmax(0,1fr);}
+}
+@media (prefers-reduced-motion: reduce) {
+  .jz-entry-screen *, .jz-entry-screen *::before, .jz-entry-screen *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
+}</style></head>
 <body>
 <section class="jz-entry-screen" id="jz-entry-screen" aria-label="九州大世界进入页面">
     <div class="entry-content"><h1 class="entry-title"><small>九州卷 · 入江湖</small></h1><p class="entry-poem entry-poem-left">少年侠气，交结五都雄。肝胆洞，毛发耸。立谈中，死生同。一诺千金重。推翘勇，矜豪纵。轻盖拥，联飞鞚，斗城东。轰饮酒垆，春色浮寒瓮。吸海垂虹。闲呼鹰嗾犬，白羽摘雕弓。狡穴俄空。乐匆匆。</p><img class="entry-portrait" src="146562056_p0_master1200.jpg" alt="执伞行于九州的江湖人物"><p class="entry-poem entry-poem-right">似黄粱梦，辞丹凤；明月共，漾孤篷。官冗从，怀倥偬；落尘笼，簿书丛。鹖弁如云众，供粗用，忽奇功。笳鼓动，渔阳弄，思悲翁。不请长缨，系取天骄种。剑吼西风。恨登山临水，手寄七弦桐。目送归鸿。</p><div class="entry-action"><button class="entry-button" type="button" id="jz-enter-create">踏入江湖</button><p>卷轴展开，江湖在前。</p></div></div>
