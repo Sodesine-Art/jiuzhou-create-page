@@ -1411,28 +1411,64 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             }
             return '';
         }
-        async function ensureMvu() {
+        const MVU_WAIT_TIMEOUT_MS = 8000;
+        const MVU_FALLBACK_WINDOW_MS = 3000;
+        const MVU_OPERATION_TIMEOUT_MS = 8000;
+        let gameInitializationRunning = false;
+
+        function waitFor(promise, timeoutMs, message) {
+            let timer = null;
+            const timeout = new Promise((_, reject) => {
+                timer = setTimeout(() => reject(new Error(message)), timeoutMs);
+            });
+            return Promise.race([Promise.resolve(promise), timeout]).finally(() => {
+                if (timer) clearTimeout(timer);
+            });
+        }
+
+        function isMvuApi(candidate) {
+            return !!candidate
+                && typeof candidate.getMvuData === 'function'
+                && typeof candidate.replaceMvuData === 'function';
+        }
+
+        async function ensureMvu(onProgress) {
             const probeMvu = () => {
-                try { if (window.Mvu) return window.Mvu; } catch (e) { /* 忽略 */ }
-                try { if (typeof Mvu !== 'undefined') return Mvu; } catch (e) { /* 忽略 */ }
-                try { if (window.parent && window.parent.Mvu) return window.parent.Mvu; } catch (e) { /* 跨域忽略 */ }
-                try { if (window.top && window.top.Mvu) return window.top.Mvu; } catch (e) { /* 跨域忽略 */ }
+                try { if (isMvuApi(window.Mvu)) return window.Mvu; } catch (e) { /* 忽略 */ }
+                try { if (typeof Mvu !== 'undefined' && isMvuApi(Mvu)) return Mvu; } catch (e) { /* 忽略 */ }
+                try { if (window.parent && isMvuApi(window.parent.Mvu)) return window.parent.Mvu; } catch (e) { /* 跨域忽略 */ }
+                try { if (window.top && isMvuApi(window.top.Mvu)) return window.top.Mvu; } catch (e) { /* 跨域忽略 */ }
                 return null;
             };
             const direct = probeMvu();
             if (direct) return direct;
+            if (typeof onProgress === 'function') onProgress('正在检测变量框架…');
             const th = window.TavernHelper;
-            if (!th) throw new Error('未找到酒馆助手 TavernHelper，请确认已安装 JS-Slash-Runner');
-            if (typeof th.waitGlobalInitialized !== 'function') throw new Error('酒馆助手未提供 waitGlobalInitialized');
             let api = null;
-            try { api = await th.waitGlobalInitialized('Mvu'); } catch (e) { /* 忽略，继续轮询兜底 */ }
-            if (api) return api;
-            for (let i = 0; i < 25; i++) {
+            let waitProblem = null;
+            if (th && typeof th.waitGlobalInitialized === 'function') {
+                try {
+                    api = await waitFor(
+                        th.waitGlobalInitialized('Mvu'),
+                        MVU_WAIT_TIMEOUT_MS,
+                        '等待 MVU 变量框架超过 8 秒'
+                    );
+                } catch (e) {
+                    waitProblem = e;
+                }
+            } else {
+                waitProblem = new Error(th ? '酒馆助手未提供 waitGlobalInitialized' : '未找到酒馆助手 TavernHelper');
+            }
+            if (isMvuApi(api)) return api;
+            if (typeof onProgress === 'function') onProgress('变量框架未立即响应，正在备用检测…');
+            const deadline = Date.now() + MVU_FALLBACK_WINDOW_MS;
+            while (Date.now() < deadline) {
                 const found = probeMvu();
                 if (found) return found;
                 await new Promise((resolve) => setTimeout(resolve, 200));
             }
-            throw new Error('Mvu 变量框架未就绪：MagVarUpdate 未能加载（请检查网络，或确认已安装 MagVarUpdate 扩展）');
+            const detail = waitProblem && waitProblem.message ? '（' + waitProblem.message + '）' : '';
+            throw new Error('未检测到 MVU 变量框架' + detail + '。请确认已启用 MagVarUpdate 与酒馆助手，再刷新当前聊天重试');
         }
         function normalizeCultivation(text) {
             const raw = String(text || '').trim();
@@ -1568,6 +1604,7 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             return false;
         }
         async function startGame(includeBond) {
+            if (gameInitializationRunning) return;
             const name = document.getElementById('char-name').value.trim();
             if (!name) {
                 alert('请先填写角色姓名，再开始游戏。');
@@ -1613,30 +1650,56 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             };
             const btn = document.getElementById(includeBond ? 'bond-start-game-button' : 'start-game-button');
             const status = document.getElementById(includeBond ? 'bond-game-status' : 'start-game-status');
+            const updateStatus = (text) => {
+                if (status) status.textContent = text;
+            };
+            if (!btn) return;
+            gameInitializationRunning = true;
             btn.disabled = true;
             btn.textContent = '正在初始化…';
-            if (status) status.textContent = '正在写入 MVU 变量并准备摘要…';
+            btn.style.background = '';
+            updateStatus('正在检测变量框架…');
             try {
-                const Mvu = await ensureMvu();
-                const chatData = Mvu.getMvuData({ type: 'chat' });
+                const Mvu = await ensureMvu(updateStatus);
+                updateStatus('正在读取当前变量…');
+                const chatData = await waitFor(
+                    Promise.resolve().then(() => Mvu.getMvuData({ type: 'chat' })),
+                    MVU_OPERATION_TIMEOUT_MS,
+                    '读取聊天变量超过 8 秒'
+                );
                 if (!chatData || typeof chatData !== 'object') throw new Error('获取变量表失败（getMvuData 返回空）');
                 applyInitToMvuData(chatData, form);
-                await Mvu.replaceMvuData(chatData, { type: 'chat' });
+                updateStatus('正在写入角色与羁绊人物…');
+                await waitFor(
+                    Mvu.replaceMvuData(chatData, { type: 'chat' }),
+                    MVU_OPERATION_TIMEOUT_MS,
+                    '写入聊天变量超过 8 秒'
+                );
                 let floorNote = '';
                 try {
+                    updateStatus('正在同步首楼变量…');
                     let messageId = 'latest';
                     if (typeof getCurrentMessageId === 'function') {
                         try { messageId = getCurrentMessageId(); } catch (e) { /* 非楼层 iframe，退回 latest */ }
                     }
-                    const floorData = Mvu.getMvuData({ type: 'message', message_id: messageId });
+                    const floorData = await waitFor(
+                        Promise.resolve().then(() => Mvu.getMvuData({ type: 'message', message_id: messageId })),
+                        MVU_OPERATION_TIMEOUT_MS,
+                        '读取首楼变量超过 8 秒'
+                    );
                     if (floorData && typeof floorData === 'object') {
                         applyInitToMvuData(floorData, form);
-                        await Mvu.replaceMvuData(floorData, { type: 'message', message_id: messageId });
+                        await waitFor(
+                            Mvu.replaceMvuData(floorData, { type: 'message', message_id: messageId }),
+                            MVU_OPERATION_TIMEOUT_MS,
+                            '写入首楼变量超过 8 秒'
+                        );
                     }
                 } catch (floorErr) {
                     console.warn('楼层快照写入失败（不影响聊天级初始化）:', floorErr);
                     floorNote = '（楼层快照未同步，刷新后可能需模型首轮补齐）';
                 }
+                updateStatus('正在生成角色摘要…');
                 updatePreview();
                 const summary = document.getElementById('character-preview').innerText;
                 const filled = tryFillChatInput(summary);
@@ -1664,10 +1727,28 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
                 btn.textContent = '失败，点此重试';
                 btn.style.background = '#c0392b';
                 if (status) status.textContent = '初始化失败：' + (e && e.message ? e.message : e) + '。请确认已安装并启用 MagVarUpdate 与酒馆助手，且网络可访问变量框架。';
+            } finally {
+                gameInitializationRunning = false;
             }
         }
         const startGameButton = document.getElementById('start-game-button');
         if (startGameButton) startGameButton.addEventListener('click', () => startGame(false));
+
+        function showMvuPreflight() {
+            const status = document.getElementById('start-game-status');
+            if (!status) return;
+            let direct = null;
+            try { direct = window.Mvu; } catch (e) { /* 忽略 */ }
+            if (isMvuApi(direct)) {
+                status.textContent = 'MVU 变量框架已就绪。填写完成后可开始游戏。';
+                return;
+            }
+            const th = window.TavernHelper;
+            status.textContent = th
+                ? 'MVU 变量框架正在准备；若开始游戏后提示未检测到，请刷新当前聊天或检查扩展。'
+                : '暂未检测到酒馆助手；开始游戏时会再次检测并给出可重试提示。';
+        }
+        setTimeout(showMvuPreflight, 300);
         const bondCreatorStep = document.getElementById('bond-creator-step');
         function openBondCreator() {
             if (!bondCreatorStep) return;
