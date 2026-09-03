@@ -1,0 +1,2282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九州长歌 - 角色与羁绊创建</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+        .jz-page * { margin: 0; padding: 0; box-sizing: border-box; }
+        .jz-page {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #d9c7a7;
+            color: #3a2c1a;
+            line-height: 1.6;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><path fill="%233a2c1a" d="M50,5C25.1,5,5,25.1,5,50s20.1,45,45,45s45-20.1,45-45S74.9,5,50,5z M50,85.7c-19.7,0-35.7-16-35.7-35.7S30.3,14.3,50,14.3S85.7,30.3,85.7,50S69.7,85.7,50,85.7z"/></svg>');
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            -webkit-overflow-scrolling: touch;
+        }
+        .jz-page::-webkit-scrollbar { width: 8px; }
+        .jz-page::-webkit-scrollbar-thumb { background: #b08d4f; border-radius: 4px; }
+        .jz-page::-webkit-scrollbar-track { background: #eadfc4; }
+        .jz-page .container {
+            flex: 1 1 0;
+            min-height: 0;
+            max-width: 100%;
+            margin: 0 auto;
+            background-color: #e8dcc4;
+            border: 8px solid #1a1a2e;
+            border-radius: 4px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .jz-page .first-page-scroll { max-height: calc(100vh - 150px); overflow-y: auto; overflow-x: hidden; scrollbar-gutter: stable; padding-right: 10px; }
+        .jz-page .first-page-scroll::-webkit-scrollbar { width: 8px; }
+        .jz-page .first-page-scroll::-webkit-scrollbar-thumb { background: #b08d4f; border-radius: 4px; }
+        .jz-page .first-page-scroll::-webkit-scrollbar-track { background: #eadfc4; }
+        .jz-page header, .jz-page .container::before { display: none !important; }
+        .jz-page .accordion-container { padding: 10px; }
+        .jz-page .wizard-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; padding: 2px 2px 10px; }
+        .jz-page .wizard-step { font-family: 'Ma Shan Zheng', cursive; font-size: 1.15rem; color: #2a2a4a; }
+        .jz-page .wizard-dots { display: flex; gap: 5px; margin-top: 3px; justify-content: center; }
+        .jz-page .wizard-dot { width: 8px; height: 8px; border-radius: 50%; background: #cbbfa0; border: 1px solid #1a1a2e; cursor: pointer; }
+        .jz-page .wizard-dot.on { background: #2a9d8f; }
+        .jz-page .wizard-btn { appearance: none; border: 2px solid #1a1a2e; background: #f0e6d2; color: #1a1a2e; border-radius: 6px; padding: 10px 22px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: inherit; }
+        .jz-page .wizard-btn:hover:not(:disabled) { background: #2a9d8f; color: #fff; }
+        .jz-page .wizard-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+        .jz-page .accordion-item { display: none; }
+        .jz-page .accordion-item.active { display: block !important; }
+        .jz-page .accordion-header { display: none; }
+        .jz-page .accordion-content-inner { padding: 22px 18px; }
+        .jz-page h2 { font-family: 'Ma Shan Zheng', cursive; font-size: 2.2rem; color: #1a1a2e; border-left: 4px solid #2a9d8f; padding-left: 10px; margin: 4px 0 10px; }
+        .jz-page h3 { font-size: 1.6rem; color: #2a2a4a; margin: 16px 0 10px; border-bottom: 1px solid #2a9d8f; padding-bottom: 4px; }
+        .jz-page p { margin-bottom: 14px; line-height: 1.8; font-size: 1.1rem; }
+        .jz-page .step-hint { color: #5a4a36; font-size: 0.85rem; margin-bottom: 6px; }
+        .jz-page .hidden { display: none !important; }
+
+        /* 疆域图 */
+        .jz-page .map-container { margin: 6px 0; }
+        .jz-page .map { width: 100%; height: 640px; background-color: #e8dcc4; border: 2px solid #1a1a2e; border-radius: 4px; position: relative; overflow: hidden; }
+        .jz-page .province {
+            position: absolute; border: 2px solid #1a1a2e; border-radius: 8px;
+            background-color: rgba(240, 230, 210, 0.85);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 4px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            cursor: pointer; transition: all 0.2s;
+        }
+        .jz-page .province:hover { transform: scale(1.06); z-index: 5; box-shadow: 3px 3px 10px rgba(0,0,0,0.3); border-color: #a33b2e; }
+        .jz-page .map-popover { position: fixed; z-index: 9999; display: none; width: min(320px, calc(100vw - 16px)); max-height: min(420px, calc(100dvh - 16px)); overflow: auto; padding: 12px 14px; border: 1px solid #8a6d33; border-left: 4px solid #a33b2e; border-radius: 8px; background: rgba(255, 250, 239, .98); color: #2b2118; box-shadow: 0 8px 22px rgba(43,33,24,.28); font-size: .88rem; line-height: 1.6; }
+        .jz-page .map-popover h3 { margin: 0 0 7px; color: #7e2f25; font-size: 1.12rem; }
+        .jz-page .province-name { font-family: 'Ma Shan Zheng', cursive; font-size: 1.4rem; font-weight: bold; color: #1a1a2e; }
+        .jz-page .province-desc { font-size: 1rem; text-align: center; color: #2a2a4a; line-height: 1.3; }
+        .jz-page #yangzhou { top: 60%; left: 65%; width: 20%; height: 25%; background-color: rgba(42,157,143,.2); }
+        .jz-page #qingzhou { top: 25%; left: 65%; width: 20%; height: 30%; background-color: rgba(234,115,109,.2); }
+        .jz-page #jingzhou { top: 45%; left: 45%; width: 20%; height: 25%; background-color: rgba(231,196,119,.2); }
+        .jz-page #yongzhou { top: 30%; left: 35%; width: 20%; height: 25%; background-color: rgba(156,136,255,.2); }
+        .jz-page #liangzhou { top: 15%; left: 15%; width: 25%; height: 30%; background-color: rgba(118,215,196,.2); }
+        .jz-page #yizhou { top: 50%; left: 25%; width: 20%; height: 30%; background-color: rgba(242,166,90,.2); }
+        .jz-page #yunzhou { top: 65%; left: 35%; width: 20%; height: 25%; background-color: rgba(86,188,138,.2); }
+        .jz-page #youzhou { top: 10%; left: 50%; width: 25%; height: 25%; background-color: rgba(237,137,154,.2); }
+        .jz-page #zhongzhou { top: 35%; left: 50%; width: 20%; height: 20%; background-color: rgba(149,175,192,.2); }
+        .jz-page .outer-region { border-style: dashed; background-color: rgba(255, 248, 227, .9); }
+        .jz-page .outer-region .province-name { font-size: 1.25rem; color: #7e2f25; }
+        .jz-page .outer-region .province-desc { font-size: .84rem; }
+        .jz-page #xiyu { top: 43%; left: 2%; width: 19%; height: 22%; background-color: rgba(213, 164, 83, .22); }
+        .jz-page #beifang { top: 2%; left: 18%; width: 22%; height: 16%; background-color: rgba(120, 160, 185, .2); }
+        .jz-page #dongying { top: 8%; left: 87%; width: 10%; height: 25%; background-color: rgba(112, 158, 171, .2); }
+        @media (max-width: 640px) {
+            .jz-page .map { height: 570px; }
+            .jz-page .outer-region .province-name { font-size: 1rem; }
+            .jz-page .outer-region .province-desc { font-size: .72rem; }
+        }
+        .jz-page .province-factions { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; margin-top: 3px; }
+        .jz-page .pf-tag { appearance: none; border: 1px solid #8a6d33; background: rgba(255,253,246,.92); color: #5a3d1f; border-radius: 999px; padding: 1px 5px; font-size: 0.6rem; cursor: pointer; font-family: inherit; line-height: 1.4; }
+        .jz-page .pf-tag:hover { background: #a33b2e; color: #fff; }
+        .jz-page .realm-list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 8px; }
+        @media (max-width: 760px) { .jz-page .realm-list { grid-template-columns: 1fr 1fr; } }
+        .jz-page .realm-col { background: linear-gradient(160deg, #fbf5e6, #f0e6d2); border: 2px solid #1a1a2e; border-radius: 8px; padding: 12px 10px; }
+        .jz-page .realm-col-head { text-align: center; border-bottom: 2px solid #b08d4f; padding-bottom: 6px; margin-bottom: 8px; }
+        .jz-page .realm-col-head .realm-no { display: block; font-family: 'Ma Shan Zheng', cursive; font-size: 1.3rem; color: #1a1a2e; }
+        .jz-page .realm-col-head .realm-sub { display: block; font-size: 0.85rem; color: #a33b2e; margin-top: 2px; }
+        .jz-page .realm-col .sub-realm-list { list-style: none; margin: 0; padding: 0; }
+        .jz-page .realm-col .sub-realm-list li { border-bottom: 1px dashed #cdba92; padding: 5px 2px; font-size: 0.82rem; line-height: 1.5; }
+        .jz-page .realm-col .sub-realm-list li:last-child { border-bottom: none; }
+        .jz-page .realm-col .sub-realm-list b { color: #a33b2e; margin-right: 4px; }
+
+        /* 详情面板 */
+        .jz-page .detail-view { padding: 4px 2px; }
+        .jz-page .detail-back { appearance: none; border: 1px solid #1a1a2e; background: #f0e6d2; color: #1a1a2e; border-radius: 6px; padding: 4px 12px; font-size: 0.85rem; cursor: pointer; font-family: inherit; margin-bottom: 6px; }
+        .jz-page .detail-back:hover { background: #2a9d8f; color: #fff; }
+        .jz-page .detail-line { display: flex; gap: 8px; padding: 3px 0; font-size: 0.9rem; line-height: 1.6; }
+        .jz-page .detail-line .dl-lbl { color: #8a6d33; min-width: 4.2em; font-weight: 700; flex-shrink: 0; }
+
+        /* 势力分布 */
+        .jz-page .faction-map { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .jz-page .faction-sec { margin-top: 20px; border-top: 2px solid #1a1a2e; padding-top: 12px; }
+        @media (max-width: 640px) { .jz-page .faction-map { grid-template-columns: repeat(2, 1fr); } }
+        .jz-page .fzone { background: rgba(255,253,246,.75); border: 1px solid #1a1a2e; border-radius: 6px; padding: 6px 8px; }
+        .jz-page .fzone-name { font-family: 'Ma Shan Zheng', cursive; font-size: 1rem; color: #1a1a2e; border-bottom: 1px dashed #b08d4f; padding-bottom: 3px; margin-bottom: 4px; }
+        .jz-page .fzone-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+        .jz-page .ftag { appearance: none; border: 1px solid #b08d4f; background: #fbf5e6; color: #3a2c1a; border-radius: 999px; padding: 2px 8px; font-size: 0.78rem; cursor: pointer; font-family: inherit; }
+        .jz-page .ftag:hover { background: #a33b2e; color: #fff; }
+
+        /* 武学境界 */
+        .jz-page .realm-list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 4px; }
+        @media (max-width: 640px) { .jz-page .realm-list { grid-template-columns: 1fr 1fr; } }
+        .jz-page .realm-card {
+            appearance: none; border: 2px solid #1a1a2e; border-radius: 8px; background: linear-gradient(160deg, #f3ead6, #eadfc4);
+            padding: 10px 6px; text-align: center; cursor: pointer; font-family: inherit; transition: all 0.2s;
+        }
+        .jz-page .realm-card:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,.2); border-color: #a33b2e; }
+        .jz-page .realm-no { display: block; font-size: 0.75rem; color: #a33b2e; }
+        .jz-page .realm-name { display: block; font-family: 'Ma Shan Zheng', cursive; font-size: 1.05rem; color: #1a1a2e; }
+        .jz-page .realm-sub { display: block; font-size: 0.72rem; color: #5a4a36; margin-top: 2px; }
+        .jz-page .sub-realm-list { margin: 4px 0 8px 20px; }
+        .jz-page .sub-realm-list li { margin-bottom: 4px; font-size: 0.9rem; line-height: 1.6; }
+
+        /* 角色创建：紧凑 */
+        .jz-page .character-section { border-top: 2px solid #1a1a2e; padding-top: 12px; }
+        .jz-page .form-section { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .jz-page .plot-block { margin-top: 4px; border-top: 1px dashed #b08d4f; padding-top: 8px; }
+        @media (max-width: 768px) { .jz-page .form-section { grid-template-columns: 1fr; } }
+        .jz-page .form-group { margin-bottom: 8px; }
+        .jz-page label { display: block; margin-bottom: 3px; font-weight: 600; color: #1a1a2e; font-size: 0.9rem; }
+        .jz-page textarea {
+            width: 100%; padding: 6px 8px; border: 1px solid #1a1a2e; border-radius: 5px;
+            resize: vertical; min-height: 34px; background-color: rgba(255,255,255,.85);
+            font-family: 'Noto Serif SC', serif; font-size: 0.88rem; line-height: 1.5;
+        }
+        .jz-page select {
+            width: 100%; padding: 6px 8px; border: 1px solid #1a1a2e; border-radius: 5px;
+            background: rgba(255,255,255,.85); font-family: inherit; font-size: 0.88rem; color: #1a1a2e;
+        }
+        .jz-page .talent-system { margin-top: 14px; }
+        .jz-page .talent-roll-area { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
+        @media (max-width: 768px) { .jz-page .talent-roll-area { grid-template-columns: repeat(2, 1fr); } }
+        .jz-page .talent-card { border: 2px solid #1a1a2e; border-radius: 6px; padding: 8px; text-align: center; cursor: pointer; background: rgba(255,255,255,.9); font-size: 0.85rem; }
+        .jz-page .talent-card.selected { border-color: #2a9d8f; background: rgba(42,157,143,.1); }
+        .jz-page .talent-quality-1 { border-color: #8B4513; }
+        .jz-page .talent-quality-2 { border-color: #808080; }
+        .jz-page .talent-quality-3 { border-color: #228B22; }
+        .jz-page .talent-quality-4 { border-color: #9370DB; }
+        .jz-page .talent-quality-5 { border-color: #FFD700; }
+        .jz-page .talent-name { font-weight: 600; margin-bottom: 3px; font-size: 0.95rem; }
+        .jz-page .talent-desc { font-size: 0.8rem; color: #555; line-height: 1.5; }
+        .jz-page .talent-controls { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .jz-page button { background-color: #1a1a2e; color: #e8dcc4; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: 600; font-family: inherit; font-size: 0.9rem; }
+        .jz-page button:hover { background-color: #2a2a4a; }
+        .jz-page .selected-talents { margin-top: 8px; }
+        .jz-page .selected-talent-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+        .jz-page .selected-talent { background: rgba(42,157,143,.1); border: 1px solid #2a9d8f; border-radius: 5px; padding: 4px 8px; display: flex; align-items: center; font-size: 0.85rem; }
+        .jz-page .remove-talent { margin-left: 6px; cursor: pointer; color: #1a1a2e; font-weight: bold; }
+        .jz-page .summary-section { margin-top: 12px; border-top: 2px solid #1a1a2e; padding-top: 10px; }
+        .jz-page .summary-content { background: rgba(42,157,143,.08); border: 1px solid #2a9d8f; border-radius: 6px; padding: 10px; margin-bottom: 10px; white-space: pre-line; font-size: 0.88rem; line-height: 1.6; }
+        .jz-page .plot-options { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+        .jz-page .plot-option { padding: 6px 12px; border: 1px solid #1a1a2e; cursor: pointer; border-radius: 5px; font-weight: 500; font-size: 0.88rem; background: #f0e6d2; color: #1a1a2e; flex: 1; min-width: 100px; text-align: center; }
+        .jz-page .plot-option.active { background: #1a1a2e; color: #e8dcc4; }
+        .jz-page .plot-content { min-height: 90px; }
+        .jz-page .plot-scene { display: none; background: rgba(42,157,143,.08); border: 1px solid #2a9d8f; border-radius: 5px; padding: 10px; line-height: 1.7; font-size: 0.88rem; }
+        .jz-page .plot-scene.active { display: block; }
+        .jz-page .button-group { margin-top: 10px; }
+        .jz-page .footer-note { font-size: 0.8rem; color: #666; margin-top: 6px; }
+        .jz-page .jz-footer { text-align: center; font-size: 0.75rem; color: #8a6d33; padding: 8px 0 4px; border-top: 1px dashed #b08d4f; margin-top: 10px; }
+        /* ===== 角色管理弹窗 ===== */
+        .jz-page .cm-overlay { position: absolute; top: 0; left: 0; right: 0; height: 100%; bottom: auto; background: rgba(26,26,46,.55); z-index: 60; display: flex; align-items: center; justify-content: center; padding: 18px; }
+        .jz-page .cm-overlay.hidden { display: none; }
+        .jz-page .cm-modal { width: min(640px, 96%); max-height: 88%; background: linear-gradient(180deg, #f7f0de 0%, #eadfc4 100%); border: 3px solid #1a1a2e; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,.5); display: flex; flex-direction: column; overflow: hidden; font-family: 'Noto Serif SC', serif; color: #3a2c1a; }
+        .jz-page .cm-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: #1a1a2e; color: #e8dcc4; }
+        .jz-page .cm-head h4 { font-family: 'Ma Shan Zheng', cursive; font-size: 1.3rem; letter-spacing: 4px; margin: 0; }
+        .jz-page .cm-close { background: transparent; border: 1px solid #b08d4f; color: #e8dcc4; border-radius: 5px; padding: 3px 12px; cursor: pointer; font-size: 0.85rem; font-family: inherit; }
+        .jz-page .cm-close:hover { background: #2a2a4a; }
+        .jz-page .cm-body { padding: 14px 16px; overflow-y: auto; min-height: 0; }
+        .jz-page .cm-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+        .jz-page .cm-row button { flex: 1; min-width: 130px; background: #1a1a2e; color: #e8dcc4; border: 1px solid #b08d4f; padding: 9px 10px; border-radius: 6px; font-weight: 600; cursor: pointer; font-family: inherit; font-size: 0.92rem; }
+        .jz-page .cm-row button:hover { background: #2a2a4a; }
+        .jz-page .cm-section-title { font-size: 0.95rem; color: #1a1a2e; font-weight: 700; border-left: 3px solid #b08d4f; padding-left: 8px; margin: 10px 0 8px; }
+        .jz-page .cm-list { display: flex; flex-direction: column; gap: 8px; max-height: 240px; overflow-y: auto; }
+        .jz-page .cm-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: rgba(255,255,255,.55); border: 1px solid #b08d4f; border-radius: 6px; padding: 8px 10px; }
+        .jz-page .cm-item-info { flex: 1; min-width: 0; }
+        .jz-page .cm-item-name { font-weight: 700; color: #1a1a2e; font-size: 0.95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .jz-page .cm-item-time { font-size: 0.75rem; color: #7a6a4f; margin-top: 2px; }
+        .jz-page .cm-item-actions { display: flex; gap: 6px; flex-shrink: 0; }
+        .jz-page .cm-item-actions button { padding: 5px 12px; font-size: 0.8rem; border-radius: 5px; border: 1px solid #1a1a2e; background: #f0e6d2; color: #1a1a2e; cursor: pointer; font-family: inherit; }
+        .jz-page .cm-item-actions button.cm-load:hover { background: #2a9d8f; color: #fff; }
+        .jz-page .cm-item-actions button.cm-del:hover { background: #a94442; color: #fff; }
+        .jz-page .cm-empty { text-align: center; color: #8a6d33; font-size: 0.85rem; padding: 14px 0; }
+.jz-page .cm-tip { font-size: 0.8rem; color: #7a6a4f; margin-top: 10px; line-height: 1.7; }
+
+        /* ===== 羁绊人物创建 ===== */
+        .jz-page .bond-intro { margin: 0 0 14px; padding: 10px 12px; border-left: 4px solid #a33b2e; background: rgba(163,59,46,.08); color: #5a3d1f; }
+        .jz-page .bond-section { margin: 14px 0; padding: 12px; border: 1px solid #b08d4f; border-radius: 8px; background: rgba(255,253,246,.52); }
+        .jz-page .bond-section h3 { margin-top: 0; font-size: 1.18rem; }
+        .jz-page .bond-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px 12px; }
+        .jz-page .bond-grid .form-group { min-width: 0; }
+        .jz-page .bond-wide { grid-column: 1 / -1; }
+        .jz-page .bond-help { margin: 2px 0 0; color: #7a6a4f; font-size: .78rem; line-height: 1.5; }
+        .jz-page .bond-json { min-height: 116px; font-family: ui-monospace, Consolas, monospace; font-size: .78rem; }
+        .jz-page .bond-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+        .jz-page .bond-actions button { min-height:44px; flex:1 1 180px; }
+        .jz-page .bond-skip { background:#7a6a4f; }
+        .jz-page .bond-start { background:#a33b2e; }
+        .jz-page .bond-start:hover { background:#87382b; }
+        .jz-page .bond-creator-panel { order: 1; }
+        .jz-page .bond-creator-panel.hidden { display: none !important; }
+        /* 主角与羁绊人物共用的舒适填写卡片 */
+        .jz-page .form-section .form-group,
+        .jz-page .bond-grid .form-group { margin: 0; padding: 10px 12px 12px; border: 1px solid rgba(176,141,79,.62); border-radius: 10px; background: rgba(255,253,246,.55); box-shadow: inset 0 1px rgba(255,255,255,.72); }
+        .jz-page .form-section .form-group:focus-within,
+        .jz-page .bond-grid .form-group:focus-within { border-color: #a33b2e; box-shadow: 0 0 0 3px rgba(163,59,46,.12), inset 0 1px rgba(255,255,255,.72); }
+        .jz-page .form-section .form-group label,
+        .jz-page .bond-grid .form-group label { margin-bottom: 7px; color: #5a3d1f; font-size: .92rem; }
+        .jz-page .form-section .form-group textarea,
+        .jz-page .bond-grid .form-group textarea,
+        .jz-page .bond-grid .form-group input,
+        .jz-page .bond-grid .form-group select { min-height: 58px; padding: 10px 12px; border: 1px solid #cbb58a; border-radius: 7px; background: rgba(255,255,255,.88); color: #302316; line-height: 1.55; box-shadow: inset 0 1px 2px rgba(75,52,27,.06); }
+        .jz-page .form-section .form-group textarea:focus,
+        .jz-page .bond-grid .form-group textarea:focus,
+        .jz-page .bond-grid .form-group input:focus,
+        .jz-page .bond-grid .form-group select:focus { outline: none; border-color: #a33b2e; background: #fffdf7; }
+        .jz-page .bond-grid .form-group input,
+        .jz-page .bond-grid .form-group select { min-height: 44px; }
+        .jz-page .bond-grid .bond-json { min-height: 88px; }
+        .jz-page .bond-grid .bond-wide { max-width: 760px; justify-self: start; width: 100%; }
+        @media (max-width: 640px) { .jz-page .bond-grid { grid-template-columns:minmax(0,1fr); } .jz-page .bond-section { padding:10px; } }
+
+</style>
+<style>
+html,body{width:100%;margin:0;overflow:visible;}
+body{overscroll-behavior:none;}
+.jz-page{width:100%;height:auto!important;min-height:var(--jz-min-height, 0)!important;overflow:visible!important;}
+/* Beat every original scroll declaration, including browser scrollbar pseudo-elements. */
+.jz-page .container,.jz-page .first-page-scroll{flex:0 0 auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;overflow-y:visible!important;overflow-x:visible!important;padding-right:0!important;scrollbar-width:none!important;}
+.jz-page .container::-webkit-scrollbar,.jz-page .first-page-scroll::-webkit-scrollbar{display:none!important;width:0!important;height:0!important;}
+/* Keep the step controls after the active step, not above it. */
+.jz-page .accordion-container{display:flex!important;flex-direction:column!important;}
+.jz-page .accordion-item{order:1;}
+.jz-page .wizard-nav{order:2;margin-top:18px!important;padding:14px 2px 4px!important;border-top:1px solid #b08d4f;}
+
+/* ===== 九州入口页：水榭人物卷 ===== */
+.jz-entry-screen{position:relative;z-index:9999;display:grid;place-items:center;min-height:640px;overflow:hidden;background:#d9c7a7;color:#3a2c1a;font-family:"Noto Serif SC","Songti SC",STSong,serif;}
+.jz-entry-screen.is-hidden{display:none;}
+body:not(.jz-entered) .jz-page{display:none!important;}
+body:not(.jz-entered) #jz-completion-note{display:none!important;}
+.jz-entry-screen::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 14%,rgba(255,250,235,.88),transparent 42%),linear-gradient(180deg,#efe5cf,#d9c7a7 64%,#bda06d);}
+.jz-entry-screen .entry-frame{position:absolute;inset:16px;border:1px solid rgba(246,227,168,.75);box-shadow:0 0 0 5px rgba(50,34,22,.82),0 0 0 8px rgba(174,135,76,.8),0 0 0 12px rgba(35,27,19,.88),inset 0 0 26px rgba(15,22,18,.5);pointer-events:none;}
+.jz-entry-screen .entry-scene{position:absolute;inset:0;overflow:hidden;opacity:.88;}
+.jz-entry-screen .entry-scene::before{content:"";position:absolute;left:-10%;right:-10%;bottom:-8%;height:40%;background:linear-gradient(180deg,rgba(163,188,183,.1),rgba(42,42,74,.24));border-top:1px solid rgba(42,42,74,.25);clip-path:ellipse(72% 72% at 50% 100%);}
+.jz-entry-screen .entry-scene::after{content:"";position:absolute;left:6%;right:6%;bottom:12%;height:18%;opacity:.52;background:repeating-radial-gradient(ellipse at 50% 100%,transparent 0 21px,rgba(238,224,181,.3) 22px 23px,transparent 24px 46px);transform:perspective(380px) rotateX(62deg);animation:jz-entry-ripple 8s ease-in-out infinite alternate;}
+.jz-entry-screen .entry-moon{position:absolute;right:13%;top:15%;width:clamp(42px,6vw,70px);aspect-ratio:1;border-radius:50%;background:#f2dfad;box-shadow:0 0 0 8px rgba(242,223,173,.12),0 0 34px rgba(242,223,173,.32);opacity:.72;animation:jz-entry-moon 7s ease-in-out infinite alternate;}
+.jz-entry-screen .entry-pavilion{position:absolute;left:8%;bottom:25%;width:clamp(150px,22vw,260px);height:clamp(105px,16vw,170px);opacity:.72;filter:drop-shadow(0 7px 5px rgba(24,27,35,.2));animation:jz-entry-float 9s ease-in-out infinite alternate;}
+.jz-entry-screen .entry-pavilion .roof{position:absolute;left:-8%;top:0;width:116%;height:42%;background:#273247;clip-path:polygon(0 68%,50% 0,100% 68%,91% 76%,50% 26%,9% 76%);}
+.jz-entry-screen .entry-pavilion .roof::after{content:"";position:absolute;left:7%;right:7%;bottom:8%;height:7px;background:#a33b2e;transform:skewX(-25deg);}
+.jz-entry-screen .entry-pavilion .deck{position:absolute;left:8%;right:8%;bottom:10%;height:18%;border:4px solid #273247;border-top:0;background:rgba(217,199,167,.48);}
+.jz-entry-screen .entry-pavilion .post{position:absolute;bottom:22%;width:7px;height:49%;background:#273247;box-shadow:0 0 0 1px rgba(239,216,151,.5);}
+.jz-entry-screen .entry-pavilion .p1{left:14%;}.jz-entry-screen .entry-pavilion .p2{right:14%;}
+.jz-entry-screen .entry-pavilion .reflection{position:absolute;left:15%;right:15%;bottom:-19%;height:22%;background:rgba(39,50,71,.22);clip-path:polygon(0 0,100% 0,78% 100%,22% 100%);transform:scaleY(-1);}
+.jz-entry-screen .entry-lotus{position:absolute;right:9%;bottom:16%;width:95px;height:55px;opacity:.78;animation:jz-entry-lotus 6s ease-in-out infinite alternate;}
+.jz-entry-screen .entry-lotus::before{content:"";position:absolute;left:17px;top:12px;width:58px;height:31px;background:#a33b2e;border-radius:70% 10% 70% 10%;transform:rotate(22deg);box-shadow:20px 9px 0 -4px #c7755b,10px -8px 0 -5px #c7755b;}
+.jz-entry-screen .entry-lotus::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:25px;border-radius:50%;background:#607b67;box-shadow:0 4px 0 rgba(39,50,71,.25);}
+.jz-entry-screen .entry-water-surface{position:absolute;left:-8%;right:-8%;bottom:-4%;height:42%;opacity:.72;background:repeating-radial-gradient(ellipse at 50% 105%,transparent 0 28px,rgba(212,234,225,.5) 29px 31px,transparent 32px 62px),linear-gradient(180deg,rgba(162,202,191,.12),rgba(56,103,108,.28));clip-path:ellipse(76% 72% at 50% 100%);animation:jz-entry-water 12s ease-in-out infinite alternate;}
+.jz-entry-screen .entry-stream{position:absolute;width:38%;height:13%;border:2px solid rgba(219,239,229,.55);border-left:0;border-bottom:0;border-radius:50%;filter:drop-shadow(0 3px 2px rgba(39,75,75,.16));opacity:.72;animation:jz-entry-stream 7s ease-in-out infinite alternate;}
+.jz-entry-screen .stream-one{left:-5%;top:39%;transform:rotate(11deg);}.jz-entry-screen .stream-two{right:-7%;top:30%;width:34%;height:17%;transform:rotate(-14deg);animation-delay:-3s;}
+.jz-entry-screen .entry-bridge{position:absolute;left:6%;bottom:28%;width:35%;height:18%;border:8px solid rgba(49,57,69,.55);border-bottom:0;border-radius:50% 50% 0 0;transform:rotate(-5deg);opacity:.62;}.jz-entry-screen .entry-bridge::after{content:"";position:absolute;left:9%;right:9%;bottom:-7px;height:8px;background:rgba(163,59,46,.48);}
+.jz-entry-screen .entry-reeds{position:absolute;left:1%;bottom:16%;width:26%;height:38%;opacity:.44;background:repeating-linear-gradient(78deg,transparent 0 12px,rgba(58,97,68,.85) 13px 16px,transparent 17px 32px);transform:skewX(-9deg);mask-image:linear-gradient(0deg,#000 0 85%,transparent);}
+.jz-entry-screen .entry-pavilion.pavilion-far{left:auto;right:7%;bottom:48%;transform:scale(.52);transform-origin:right bottom;opacity:.4;animation:none;}.jz-entry-screen .entry-pavilion.pavilion-mid{left:24%;bottom:38%;transform:scale(.42);transform-origin:left bottom;opacity:.38;animation:none;}
+.jz-entry-screen .entry-bamboo{position:absolute;right:4%;top:7%;width:150px;height:390px;opacity:.48;transform:rotate(8deg);background:repeating-linear-gradient(84deg,transparent 0 18px,rgba(55,92,67,.8) 19px 24px,transparent 25px 42px);mask-image:linear-gradient(90deg,transparent,#000 17%,#000 82%,transparent);animation:jz-entry-bamboo 8s ease-in-out infinite alternate;}
+.jz-entry-screen .entry-bamboo::before{content:"";position:absolute;inset:18px 5px 45px;background:repeating-linear-gradient(145deg,transparent 0 22px,rgba(79,113,80,.8) 23px 29px,transparent 30px 58px);}
+.jz-entry-screen .entry-swallows{position:absolute;left:17%;top:20%;color:rgba(26,26,46,.62);font:1.4rem/1 cursive;letter-spacing:.65em;transform:rotate(-8deg);animation:jz-entry-swallows 9s linear infinite alternate;}
+.jz-entry-screen .entry-seal{position:absolute;left:10%;top:12%;display:grid;place-items:center;width:52px;height:52px;border:2px solid rgba(163,59,46,.75);color:#a33b2e;background:rgba(247,240,222,.28);font-family:"Ma Shan Zheng",cursive;font-size:1.55rem;transform:rotate(-10deg);opacity:.72;box-shadow:inset 0 0 0 3px rgba(163,59,46,.14);}
+.jz-entry-screen .entry-sword{position:absolute;right:15%;bottom:19%;width:5px;height:136px;background:linear-gradient(90deg,#20283a,#d6c18a,#20283a);transform:rotate(31deg);opacity:.6;box-shadow:0 0 0 2px rgba(37,39,49,.08);}
+.jz-entry-screen .entry-sword::before{content:"";position:absolute;left:-17px;top:15px;width:39px;height:6px;background:#a33b2e;border:2px solid #283146;border-radius:4px;}.jz-entry-screen .entry-sword::after{content:"";position:absolute;left:-2px;bottom:-29px;width:9px;height:35px;border-radius:0 0 8px 8px;background:#a33b2e;box-shadow:12px 13px 0 -3px rgba(163,59,46,.75);}
+.jz-entry-screen .entry-content{position:relative;z-index:2;display:grid;justify-items:center;width:min(94vw,690px);height:620px;padding:24px 22px 18px;text-align:center;}
+.jz-entry-screen .entry-content::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(247,240,222,.64),rgba(247,240,222,.08) 60%,transparent);z-index:-1;}
+.jz-entry-screen .entry-poem{position:absolute;top:14%;bottom:14%;z-index:3;width:17%;margin:0;color:rgba(30,31,43,.92);font-size:clamp(.88rem,1.6vw,1.12rem);font-weight:600;line-height:1.9;letter-spacing:.24em;text-align:start;text-shadow:0 1px rgba(255,255,255,.65),0 0 10px rgba(247,240,222,.7);writing-mode:vertical-rl;text-orientation:mixed;overflow:hidden;opacity:0;animation:jz-entry-copy .9s 1.25s ease forwards;}
+.jz-entry-screen .entry-poem-left{left:2%;}.jz-entry-screen .entry-poem-right{right:2%;}.jz-entry-screen .entry-poem::before{content:"贺铸 · 六州歌头";display:block;margin-bottom:1em;color:#a33b2e;font-size:.72em;letter-spacing:.32em;}
+.jz-entry-screen .entry-title{margin:0;align-self:start;color:#1a1a2e;letter-spacing:.22em;text-shadow:0 1px rgba(255,255,255,.55);opacity:0;animation:jz-entry-copy .8s 1s ease forwards;}
+.jz-entry-screen .entry-title small{display:block;margin-bottom:7px;color:#a33b2e;font-size:.72rem;letter-spacing:.48em;}.jz-entry-screen .entry-title strong{display:block;font-size:clamp(1.5rem,4vw,2.6rem);font-weight:600;}
+.jz-entry-screen .entry-portrait{position:absolute;z-index:-1;bottom:18%;left:50%;max-width:min(68vw,510px);max-height:68%;width:auto;height:auto;transform:translate(-50%,18px) scale(1.025);object-fit:contain;filter:brightness(.9) saturate(.88) contrast(1.03);opacity:0;animation:jz-entry-reveal 3.6s .35s cubic-bezier(.22,.72,.2,1) forwards;}
+.jz-entry-screen .entry-action{align-self:end;display:grid;justify-items:center;gap:10px;opacity:0;animation:jz-entry-copy .75s 2.55s ease forwards;}.jz-entry-screen .entry-action p{margin:0;color:#7a5a31;font-size:.81rem;letter-spacing:.16em;}.jz-entry-screen .entry-button{min-width:184px;min-height:50px;border:2px solid #1a1a2e;border-radius:6px;padding:12px 26px;color:#f7f0de;background:#a33b2e;box-shadow:0 6px 16px rgba(58,44,26,.3),inset 0 0 0 1px rgba(255,255,255,.15);font:600 1.05rem/1 "Noto Serif SC","Songti SC",STSong,serif;letter-spacing:.28em;cursor:pointer;}
+.jz-entry-screen .entry-button:hover,.jz-entry-screen .entry-button:focus-visible{background:linear-gradient(135deg,#87382b,#bb6544);transform:translateY(-2px);outline:none;}
+@keyframes jz-entry-reveal{0%{opacity:0;filter:blur(7px) brightness(.62) saturate(.45);transform:translate(-50%,24px) scale(1.04)}58%{opacity:.82}100%{opacity:1;filter:blur(0) brightness(.88) saturate(.82) contrast(1.03);transform:translate(-50%,0) scale(1)}}
+@keyframes jz-entry-copy{to{opacity:1}} @keyframes jz-entry-ripple{from{transform:perspective(380px) rotateX(62deg) translateX(-2%)}to{transform:perspective(380px) rotateX(62deg) translateX(2%)}} @keyframes jz-entry-float{from{transform:translateY(2px)}to{transform:translateY(-5px)}} @keyframes jz-entry-moon{from{transform:translateY(3px);opacity:.58}to{transform:translateY(-4px);opacity:.82}} @keyframes jz-entry-lotus{from{transform:translateY(2px) rotate(-2deg)}to{transform:translateY(-4px) rotate(3deg)}} @keyframes jz-entry-bamboo{from{transform:rotate(6deg) translateY(2px)}to{transform:rotate(10deg) translateY(-4px)}} @keyframes jz-entry-swallows{from{transform:translateX(-8px) rotate(-8deg)}to{transform:translateX(12px) rotate(-5deg)}} @keyframes jz-entry-water{from{transform:translateX(-1%) scaleY(.98)}to{transform:translateX(2%) scaleY(1.03)}} @keyframes jz-entry-stream{from{margin-top:0;opacity:.5}to{margin-top:9px;opacity:.82}}
+@media(max-width:560px){.jz-entry-screen{min-height:570px}.jz-entry-screen .entry-content{height:570px}.jz-entry-screen .entry-portrait{max-width:66vw;max-height:66%;bottom:18%;}.jz-entry-screen .entry-title strong{font-size:1.55rem;}.jz-entry-screen .entry-poem{top:17%;bottom:17%;width:15%;font-size:.76rem;letter-spacing:.13em;line-height:1.7;}.jz-entry-screen .entry-poem-left{left:1%;}.jz-entry-screen .entry-poem-right{right:1%;}.jz-entry-screen .entry-poem::before{font-size:.68em;letter-spacing:.18em;}}
+@media(prefers-reduced-motion:reduce){.jz-entry-screen *, .jz-entry-screen *::before,.jz-entry-screen *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;}}
+</style>
+<style id="jz-mobile-layout-overrides">
+/* 九州长歌手机创建页覆盖层：仅在窄容器生效，桌面仍沿用原页面布局 */
+@media (max-width: 640px) {
+  html,body{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+  .jz-entry-screen{min-height:min(620px,100dvh);padding-bottom:max(8px,env(safe-area-inset-bottom));}
+  .jz-entry-screen .entry-frame{inset:8px;}
+  .jz-entry-screen .entry-content{width:100%;height:min(590px,100dvh);min-height:500px;padding:18px 16px 14px;box-sizing:border-box;}
+  .jz-entry-screen .entry-poem{display:none;}
+  .jz-entry-screen .entry-title{align-self:start;}
+  .jz-entry-screen .entry-title strong{font-size:clamp(1.45rem,7vw,2rem);}
+  .jz-entry-screen .entry-portrait{max-width:78vw;max-height:53%;bottom:21%;}
+  .jz-entry-screen .entry-action{width:min(100%,320px);gap:8px;}
+  .jz-entry-screen .entry-button{width:100%;min-height:48px;padding:14px 18px;}
+  .jz-page{width:100%;max-width:none;min-height:0!important;height:auto!important;overflow:visible!important;background-image:none;}
+  .jz-page .container{width:100%;min-height:0;max-height:none;overflow:visible!important;border-width:3px;border-radius:0;box-shadow:none;}
+  .jz-page .first-page-scroll{max-height:none!important;overflow:visible!important;padding-right:0;scrollbar-gutter:auto;}
+  .jz-page .accordion-container{padding:8px;}
+  .jz-page .accordion-content-inner{padding:14px 10px 20px;}
+  .jz-page .wizard-nav{position:sticky;top:0;z-index:20;padding:8px 4px 10px;background:#e8dcc4;border-bottom:1px solid #b08d4f;}
+  .jz-page .wizard-step{width:100%;font-size:1.05rem;}
+  .jz-page .wizard-dots{order:3;width:100%;}
+  .jz-page .wizard-btn{min-height:44px;padding:9px 14px;font-size:.94rem;}
+  .jz-page h2{font-size:1.65rem;padding-left:8px;}
+  .jz-page h3{font-size:1.25rem;}
+  .jz-page p{font-size:1rem;line-height:1.75;}
+  .jz-page input,.jz-page select,.jz-page textarea{max-width:100%;font-size:16px;}
+  .jz-page textarea{min-height:64px;}
+  .jz-page .bond-grid .bond-json{min-height:96px;}
+  .jz-page .character-form,.jz-page .form-section{grid-template-columns:minmax(0,1fr)!important;}
+  .jz-page .talent-roll-area{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px;}
+  .jz-page .talent-card{min-width:0;padding:6px 5px;font-size:.76rem;line-height:1.35;}
+  .jz-page .talent-name{margin-bottom:2px;font-size:.88rem;line-height:1.25;word-break:break-word;}
+  .jz-page .talent-desc{font-size:.7rem;line-height:1.35;word-break:break-word;}
+  .jz-page .preset-selection,.jz-page .archive-controls{flex-wrap:wrap;}
+  .jz-page .preset-btn,.jz-page .archive-controls button{min-height:44px;}
+
+  /* 原绝对定位疆域图在手机改为区域选择网格；原有 click 事件和 data/id 保持不变。 */
+  .jz-page .map-container{margin:10px 0;}
+  .jz-page .map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;width:100%;height:auto!important;min-height:0;overflow:visible!important;padding:9px;border:1px solid #1a1a2e;border-radius:8px;background:linear-gradient(155deg,#f3ead6,#e4d2a8);}
+  .jz-page .province{position:relative!important;inset:auto!important;width:auto!important;height:auto!important;min-height:88px;padding:9px 7px;transform:none!important;display:flex;align-items:center;justify-content:center;gap:3px;box-shadow:0 1px 3px rgba(0,0,0,.18);}
+  .jz-page .province:hover,.jz-page .province:focus-visible{transform:none!important;box-shadow:0 0 0 2px #a33b2e,0 2px 5px rgba(0,0,0,.18);}
+  .jz-page .province-name{font-size:1.15rem;line-height:1.2;}
+  .jz-page .province-desc{display:-webkit-box;overflow:hidden;font-size:.78rem;line-height:1.35;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+  .jz-page .outer-region{min-height:76px;}
+  .jz-page .outer-region .province-name{font-size:1.05rem;}
+  .jz-page .outer-region .province-desc{font-size:.72rem;}
+  .jz-page .province-factions{display:none;}
+  .jz-page .map-popover{position:fixed!important;z-index:99999;left:8px!important;right:8px!important;top:auto!important;bottom:max(8px,env(safe-area-inset-bottom))!important;width:auto!important;max-width:none;max-height:min(72dvh,520px);padding:14px;}
+  .jz-page .map-popover h3{font-size:1.1rem;}
+  .jz-page .faction-map,.jz-page .realm-list{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .jz-page .detail-line{align-items:flex-start;gap:6px;}
+  .jz-page .detail-line .dl-lbl{min-width:4em;}
+  #jz-completion-note{margin:10px auto max(18px,env(safe-area-inset-bottom));padding:0 12px;font-size:.9rem;}
+}
+@media (max-width: 360px) {
+  .jz-page .map,.jz-page .faction-map,.jz-page .realm-list{grid-template-columns:minmax(0,1fr);}
+}
+@media (prefers-reduced-motion: reduce) {
+  .jz-entry-screen *, .jz-entry-screen *::before, .jz-entry-screen *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
+}</style></head>
+<body>
+<section class="jz-entry-screen" id="jz-entry-screen" aria-label="九州大世界进入页面">
+    <div class="entry-content"><h1 class="entry-title"><small>九州卷 · 入江湖</small></h1><p class="entry-poem entry-poem-left">少年侠气，交结五都雄。肝胆洞，毛发耸。立谈中，死生同。一诺千金重。推翘勇，矜豪纵。轻盖拥，联飞鞚，斗城东。轰饮酒垆，春色浮寒瓮。吸海垂虹。闲呼鹰嗾犬，白羽摘雕弓。狡穴俄空。乐匆匆。</p><img class="entry-portrait" src="146562056_p0_master1200.jpg" alt="执伞行于九州的江湖人物"><p class="entry-poem entry-poem-right">似黄粱梦，辞丹凤；明月共，漾孤篷。官冗从，怀倥偬；落尘笼，簿书丛。鹖弁如云众，供粗用，忽奇功。笳鼓动，渔阳弄，思悲翁。不请长缨，系取天骄种。剑吼西风。恨登山临水，手寄七弦桐。目送归鸿。</p><div class="entry-action"><button class="entry-button" type="button" id="jz-enter-create">踏入江湖</button><p>卷轴展开，江湖在前。</p></div></div>
+</section>
+<div class="jz-page">
+    <div class="container">
+<div class="accordion-container">
+            <div class="wizard-nav">
+                <button type="button" class="wizard-btn" id="wizard-prev" disabled>← 返回</button>
+                <div style="text-align:center">
+                    <div class="wizard-step" id="wizard-step-label">第 1 / 2 步 · 九州疆域·江湖势力</div>
+                    <div class="wizard-dots" id="wizard-dots"></div>
+                </div>
+                <button type="button" class="wizard-btn" id="wizard-next">下一步 →</button>
+            </div>
+<div class="accordion-item active">
+                <div class="accordion-header"><h2>九州疆域·江湖势力</h2></div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner first-page-scroll">
+                        <h2 id="first-page-title">九州疆域</h2>
+                        <div id="step1-content">
+<div id="province-view">
+                            <p class="step-hint">点击任意州或外域地区查看详情；点击空白处或 × 关闭</p>
+                            <div class="map-container">
+                                <div class="map">
+                                <div class="province" id="yangzhou" data-name="扬州">
+                                    <div class="province-name">扬州</div>
+                                    <div class="province-desc">江南水乡<br>温柔富贵</div>
+                                </div>
+                                <div class="province" id="qingzhou" data-name="青州">
+                                    <div class="province-name">青州</div>
+                                    <div class="province-desc">齐鲁故地<br>武林泰斗</div>
+                                </div>
+                                <div class="province" id="jingzhou" data-name="荆州">
+                                    <div class="province-name">荆州</div>
+                                    <div class="province-desc">鱼米之乡<br>九省通衢</div>
+                                </div>
+                                <div class="province" id="yongzhou" data-name="雍州">
+                                    <div class="province-name">雍州</div>
+                                    <div class="province-desc">关中沃土<br>帝王之基</div>
+                                </div>
+                                <div class="province" id="liangzhou" data-name="凉州">
+                                    <div class="province-name">凉州</div>
+                                    <div class="province-desc">大漠孤烟<br>边塞豪情</div>
+                                </div>
+                                <div class="province" id="yizhou" data-name="益州">
+                                    <div class="province-name">益州</div>
+                                    <div class="province-desc">天府之国<br>奇门遁甲</div>
+                                </div>
+                                <div class="province" id="yunzhou" data-name="云州">
+                                    <div class="province-name">云州</div>
+                                    <div class="province-desc">十万大山<br>苗疆秘域</div>
+                                </div>
+                                <div class="province" id="youzhou" data-name="幽州">
+                                    <div class="province-name">幽州</div>
+                                    <div class="province-desc">北境边关<br>苦寒之地</div>
+                                </div>
+                                <div class="province" id="zhongzhou" data-name="中州">
+                                    <div class="province-name">中州</div>
+                                    <div class="province-desc">中原腹地<br>四战之地</div>
+                                </div>
+                                <div class="province outer-region" id="xiyu" data-name="西域">
+                                    <div class="province-name">西域</div>
+                                    <div class="province-desc">绿洲诸国<br>丝路商旅</div>
+                                </div>
+                                <div class="province outer-region" id="beifang" data-name="北方诸部">
+                                    <div class="province-name">北方</div>
+                                    <div class="province-desc">草原林海<br>汗庭部盟</div>
+                                </div>
+                                <div class="province outer-region" id="dongying" data-name="东瀛">
+                                    <div class="province-name">东瀛</div>
+                                    <div class="province-desc">统一朝廷<br>三大武门</div>
+                                </div>
+                                <aside id="map-popover" class="map-popover" role="dialog" aria-modal="false" aria-live="polite"></aside>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faction-sec">
+                            <h3>江湖势力 · 疆域分布</h3>
+                            <p class="step-hint">点击门派查看详情</p>
+                            <div class="faction-map" id="faction-map">
+                            <div class="fzone">
+                                <div class="fzone-name">幽州</div>
+                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="丐帮">丐帮·北分舵</button><button type="button" class="ftag" data-faction="神武卫">神武卫·北镇抚司</button></div>
+                            </div>
+                            <div class="fzone">
+                                <div class="fzone-name">凉州</div>
+                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="黑沙帮">黑沙帮</button><button type="button" class="ftag" data-faction="陇西马帮">陇西马帮</button></div>
+                            </div>
+                            <div class="fzone">
+                                <div class="fzone-name">青州</div>
+                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="听风楼">听风楼·沿海线</button><button type="button" class="ftag" data-faction="丐帮">丐帮·海港眼线</button></div>
+                            </div>
+                            <div class="fzone">
+                                <div class="fzone-name">中州</div>
+                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="神武卫">神武卫·总司</button><button type="button" class="ftag" data-faction="听风楼">听风楼·总楼</button><button type="button" class="ftag" data-faction="丐帮">丐帮·总舵</button><button type="button" class="ftag" data-faction="菩提禅院">菩提禅院</button><button type="button" class="ftag" data-faction="四大世家">四大世家·济阴</button><button type="button" class="ftag" data-faction="漕帮盐商">漕帮/盐商</button></div>
+                            </div>
+                            <div class="fzone">
+                                <div class="fzone-name">雍州</div>
+                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="天机剑宗">天机剑宗</button></div>
+                            </div>
+                            <div class="fzone">
+                                <div class="fzone-name">益州</div>
+                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="真武阁">真武阁</button><button type="button" class="ftag" data-faction="百草堂">百草堂</button><button type="button" class="ftag" data-faction="枯藤寺">枯藤寺(无主)</button></div>
+                            </div>
+                            <div class="fzone">
+                                <div class="fzone-name">扬州</div>
+                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="四大世家">四大世家</button><button type="button" class="ftag" data-faction="漕帮盐商">漕帮/盐商</button><button type="button" class="ftag" data-faction="听风楼">听风楼·秦淮</button></div>
+                            </div>
+                            <div class="fzone">
+                                <div class="fzone-name">荆州</div>
+                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="黑虎堂">黑虎堂</button><button type="button" class="ftag" data-faction="漕帮盐商">漕帮</button></div>
+                            </div>
+                            <div class="fzone">
+                                <div class="fzone-name">云州</div>
+                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="七情谷">七情谷</button><button type="button" class="ftag" data-faction="幽冥教">幽冥教</button></div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <section class="realm-below-first" aria-labelledby="realm-below-first-title">
+                            <h2 id="realm-below-first-title">武学境界</h2>
+                            <p class="step-hint">五大境界 · 每境三小境界 · 共十五层；每境第 2→3 小境界为质变节点</p>
+                            <div class="realm-list" id="realm-list">
+                                <div class="realm-col">
+                                    <div class="realm-col-head"><span class="realm-no">第一境</span><span class="realm-sub">凡胎入武</span></div>
+                                    <ol class="sub-realm-list">
+                                        <li><b>淬皮</b>皮膜坚韧，寻常拳脚难伤</li>
+                                        <li><b>通脉</b>气血贯通，内劲运转更顺，速度与恢复力提升</li>
+                                        <li><b>凝元</b>内力凝成稳定元力，连续攻防能力明显增强</li>
+                                    </ol>
+                                </div>
+                                <div class="realm-col">
+                                    <div class="realm-col-head"><span class="realm-no">第二境</span><span class="realm-sub">真劲外放</span></div>
+                                    <ol class="sub-realm-list">
+                                        <li><b>周天</b>内力成周天循环，持久战力大增</li>
+                                        <li><b>罡劲</b>劲力覆盖身体或兵器，普通刀剑与弓弩难破防</li>
+                                        <li><b>离体</b>刀风掌劲可短距离离体攻击，但距离与消耗受限</li>
+                                    </ol>
+                                </div>
+                                <div class="realm-col">
+                                    <div class="realm-col-head"><span class="realm-no">第三境</span><span class="realm-sub">化劲成势</span></div>
+                                    <ol class="sub-realm-list">
+                                        <li><b>明势</b>初悟势，未出手而先声夺人</li>
+                                        <li><b>透劲</b>劲力可穿透护甲、震伤内腑，并能卸力借力</li>
+                                        <li><b>破阵</b>能控制一片战斗空间，正面击溃小型阵势</li>
+                                    </ol>
+                                </div>
+                                <div class="realm-col">
+                                    <div class="realm-col-head"><span class="realm-no">第四境</span><span class="realm-sub">宗师归真</span></div>
+                                    <ol class="sub-realm-list">
+                                        <li><b>入微</b>精确控制呼吸、筋骨、步法、兵器与内力</li>
+                                        <li><b>归一</b>身体、兵器、内力和意图形成完整攻防闭环</li>
+                                        <li><b>无招</b>不让对手看到完整招式，主动打断归一高手的节奏</li>
+                                    </ol>
+                                </div>
+                                <div class="realm-col">
+                                    <div class="realm-col-head"><span class="realm-no">第五境</span><span class="realm-sub">镇国绝巅</span></div>
+                                    <ol class="sub-realm-list">
+                                        <li><b>破军</b>可击溃精锐小队、重甲军阵和普通城防据点</li>
+                                        <li><b>裂城</b>可持续破坏城门、城墙和大型建筑群，改变攻城战局</li>
+                                        <li><b>绝巅</b>长时间作战、蓄力或借地形可摧毁一座普通城池，但不可一击毁城</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+<div class="accordion-item">
+                <div class="accordion-header"><h2>角色创建系统</h2></div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <h2>角色创建系统</h2>
+                        <div class="form-section">
+                            <div class="left-column">
+                            <div class="form-group">
+                                <label for="char-name">姓名：</label>
+                                <textarea id="char-name" placeholder="请输入角色姓名"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="char-age">年龄：</label>
+                                <textarea id="char-age" placeholder="请输入角色年龄"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="char-gender">性别：</label>
+                                <textarea id="char-gender" placeholder="请输入角色性别"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="char-appearance">外貌：</label>
+                                <textarea id="char-appearance" placeholder="描述角色的外貌特征、穿着打扮等"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="char-figure">身材：</label>
+                                <textarea id="char-figure" placeholder="描述角色的身材体型（身高、体格、姿态等）"></textarea>
+                            </div>
+                            </div>
+                            <div class="right-column">
+                            <div class="form-group">
+                                <label for="char-personality">性格：</label>
+                                <textarea id="char-personality" placeholder="描述角色的性格特点、行为习惯等"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="char-identity">身份：</label>
+                                <textarea id="char-identity" placeholder="描述角色的身份背景"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="char-cultivation">境界：</label>
+                                <select id="char-cultivation">
+                                    <option value="未入流">未入流</option>
+                                    <option>第一境·淬皮</option><option>第一境·通脉</option><option>第一境·凝元</option>
+                                    <option>第二境·周天</option><option>第二境·罡劲</option><option>第二境·离体</option>
+                                    <option>第三境·明势</option><option>第三境·透劲</option><option>第三境·破阵</option>
+                                    <option>第四境·入微</option><option>第四境·归一</option><option>第四境·无招</option>
+                                    <option>第五境·破军</option><option>第五境·裂城</option><option>第五境·绝巅</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="char-other">其他设定：</label>
+                                <textarea id="char-other" placeholder="添加角色的背景故事、特殊能力、人际关系等"></textarea>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="plot-block">
+                            <h3>九州江湖 · 开场剧情</h3>
+                            <div class="plot-options">
+                                     <div class="plot-option active" data-plot="zhenwu">真武阁</div>
+                                     <div class="plot-option" data-plot="puti">菩提禅院</div>
+                                     <div class="plot-option" data-plot="tianji">天机剑宗</div>
+                                     <div class="plot-option" data-plot="youming">幽冥教</div>
+                                     <div class="plot-option" data-plot="qiqing">七情谷</div>
+                                     <div class="plot-option" data-plot="gaibang">丐帮</div>
+                                     <div class="plot-option" data-plot="shijia">四大世家</div>
+                                     <div class="plot-option" data-plot="baicao">百草堂</div>
+                                     <div class="plot-option" data-plot="tingfeng">听风楼</div>
+                                     <div class="plot-option" data-plot="shenwu">神武卫</div>
+                                     <div class="plot-option" data-plot="custom">自定义剧情</div>
+                                </div>
+<div class="plot-content">
+                                      <div class="plot-scene active" id="zhenwu-plot">你替镇上药铺往巴郡送一包药材钱，三天的山路走得脚底起泡。头一日在山道茶棚歇脚，一位鹤发老道摸了半天衣袋，赊欠两文茶钱。你顺手替他付了，他搁下一句「缘法到了自会相见」便走了。三日后你送完货折返，当真武山门已在望，青石阶上竟坐着那位老道，手边两壶清茶：「茶钱已还。你绕山三日不抄近路，这壶茶，请你喝。」</div>
+                                      <div class="plot-scene" id="puti-plot">你替人往荥阳送一封家书，半路赶上暴雨，躲进灵山脚下旧茶棚。棚里坐着一位行脚老僧，守着半筐经卷发愁——雨水顺着瓦缝直往筐上滴。你二话不说脱下外衫盖住经筐，又帮他把经卷搬进檐下。雨停时，老僧见你浑身湿透，却护得经卷半点未湿，忽然开口：「灵山藏经阁缺个晒经的人。你若无事，跟贫僧上山晒三日经，柴房有铺，锅里有粥。」他顿了顿：「你护经的模样，像极了我年轻时入寺的样子。」</div>
+                                      <div class="plot-scene" id="tianji-plot">你随马帮走秦岭，一场山雨把你逼进天剑峰下的剑冢避雨。满山断剑插地如林，你闲得发慌，折了根木枝照着剑痕比划，谁知一描便入了神，从雨停描到日暮。身后不知何时站了一名白衣剑侍，他看你收势，沉默半晌才开口：「你方才第三剑的收势，宗门入门弟子要练三年。你叫什么名字，师承何人？」</div>
+                                      <div class="plot-scene" id="youming-plot">你是个走寨串乡的货郎，卖完最后一串山铃就能赶在阿妹生辰前回家。集市收摊时，一位蒙着黑纱的女子买走了那串铃，多搁下一枚铜钱：「铃音可避蛊，今夜风声不对，早些回寨。」你半信半疑，夜里果真被山风里隐约的铃声引出寨子。月下，那女子指尖悬着一只泛幽光的蛊虫，正偏头看你：「跟了这么远——是想讨回那枚铜钱，还是想听个故事？」</div>
+                                      <div class="plot-scene" id="qiqing-plot">你赴金陵赶考落第，盘缠只剩最后几文，夜来在秦淮河畔吹箫卖艺。你吹的是一支乡间小调，讲的是少年离家、老母倚门。画舫二层的帘子忽然掀开，抛下一朵海棠，蒙纱的乐师倚窗笑道：「曲子里有故事的人，箫声才入得了耳。」她指尖拨起琵琶，接的正是你那曲子的后半阙——分毫不差，又比你多了一段归乡的调子。</div>
+                                      <div class="plot-scene" id="gaibang-plot">你在彭城码头扛了一天麻包，散工后用最后两文钱买了两个炊饼。蹲在墙根啃饼时，见老乞丐盯着你的饼咽口水，你掰了半个递过去。老乞丐也不客气，接过去咬了一口，从怀里摸出一只豁口酒葫芦塞给你：「吃饼不喝酒，白来世上走。」你灌了一口，酒烈得呛出眼泪，却有一股暖意直沉丹田。老乞丐眯起眼：「这酒是降龙掌传人当年埋在槐树下的，香不香？」</div>
+                                      <div class="plot-scene" id="shijia-plot">你是游学的寒门书生，盘缠将尽，路过瘦西湖时正赶上慕容家办诗剑会。你本只想看个热闹，瞥见柳枝上挂着一盏灯谜，下联缺了半句，随口对了出来，竟引来满座喝彩。一位华服少女分开人群走到你面前，把一枚刻着「慕容」的玉佩放进你掌心：「灯谜是我出的，下联是你解的，这局算我输。明日枫桥东市有场小宴，这顿酒，该我请你。」</div>
+                                      <div class="plot-scene" id="baicao-plot">你在益州南郑的山里采了三日菌子，下山时路过药王谷口，药庐前排着长队。你见药僮搬不动药材，放下篓子搭了把手。坐堂女医却先不看病人，从你篓里拣出一株紫叶小草：「断肠草混在菌子里，你这三日的辛苦差点要了你的命。」她把草递还给你：「记住它的样子——谷里采药，正缺你这样的眼睛。」</div>
+                                      <div class="plot-scene" id="tingfeng-plot">你在洛阳城南代写书信，三年来替人写过家书、状纸、情信。这日傍晚，一个满脸横肉的刀客把你的信摊拍在案上：「半月前这封信，是不是你写的？」信上只有四个字：今夜三更。你认得那笔迹——是你的，可你从没写过这封信。刀客冷笑：「城南杜老爷昨夜死在自己房里，死前攥着的就是这封信。跟我走一趟。」话音未落，巷口两名捕快已围上来。千钧一发之际，茶楼二层探出个青袍人，不紧不慢开口：「都住手。那封信是我写的，用的是他的笔迹——杜老爷不是他杀的，信上的字也根本不是'今夜三更'。二位捕快，要不要看看我手里这份真迹？」</div>
+                                      <div class="plot-scene" id="shenwu-plot">你是替镖局押货的趟子手，赶着一车皮货来渔阳交货，排在城门口入城的长队里。前头商队有个伙计挑着两口木箱，走路的架势却不对——鞋底没茧、落脚极轻，挑箱子的肩是虚搭着的，箱里装的分明不是寻常货物。你不动声色跟上去，在他擦着守城校尉身侧进城的一瞬，一把攥住他手腕。那人猛地甩手，袖中滑出一柄短刀，反手就朝你咽喉抹来。你偏头避开，一记肩撞把他顶在城墙根上，两人当场扭作一团，木箱摔在地上，箱盖掀开——里面是一排崭新的军中弩机。校尉拔刀断喝：「拿下！」他看了看地上的弩，又看了看你：「你押的是皮货，管的是闲事，看得倒是准。」</div>
+                                      <textarea id="custom-plot" class="plot-scene" placeholder="请在这里输入您的自定义开场剧情（不少于150字）"></textarea>
+                                
+                        </div>
+                        <div class="form-group" style="margin-top:14px;">
+                            <label for="start-location">开局地点（九州州府区县，可选）：</label>
+                            <select id="start-location" style="width:100%;padding:10px;border:1px solid #1a1a2e;border-radius:6px;background:rgba(255,255,255,.85);font-family:inherit;font-size:1.05rem;color:#1a1a2e;">
+                                <option value="">未选择（按剧情推断）</option>
+                                        <optgroup label="幽州">
+                                            <option value="幽州·蓟城">幽州·蓟城（首府）</option>
+                                            <option value="幽州·涿郡">幽州·涿郡</option>
+                                            <option value="幽州·清河">幽州·清河</option>
+                                            <option value="幽州·常山">幽州·常山</option>
+                                            <option value="幽州·渔阳">幽州·渔阳</option>
+                                        </optgroup>
+                                        <optgroup label="凉州">
+                                            <option value="凉州·姑臧">凉州·姑臧（首府）</option>
+                                            <option value="凉州·陇西">凉州·陇西</option>
+                                            <option value="凉州·金城">凉州·金城</option>
+                                            <option value="凉州·沙州">凉州·沙州</option>
+                                            <option value="凉州·玉门">凉州·玉门</option>
+                                        </optgroup>
+                                        <optgroup label="青州">
+                                            <option value="青州·临淄">青州·临淄（首府）</option>
+                                            <option value="青州·北海">青州·北海</option>
+                                            <option value="青州·东莱">青州·东莱</option>
+                                            <option value="青州·乐安">青州·乐安</option>
+                                            <option value="青州·高密">青州·高密</option>
+                                            <option value="青州·泰山">青州·泰山</option>
+                                            <option value="青州·琅琊">青州·琅琊</option>
+                                            <option value="青州·东海">青州·东海</option>
+                                        </optgroup>
+                                        <optgroup label="中州">
+                                            <option value="中州·洛阳">中州·洛阳（首府）</option>
+                                            <option value="中州·颍川">中州·颍川</option>
+                                            <option value="中州·陈留">中州·陈留</option>
+                                            <option value="中州·汝南">中州·汝南</option>
+                                            <option value="中州·荥阳">中州·荥阳</option>
+                                            <option value="中州·濮阳">中州·濮阳</option>
+                                            <option value="中州·东郡">中州·东郡</option>
+                                            <option value="中州·济阴">中州·济阴</option>
+                                            <option value="中州·任城">中州·任城</option>
+                                            <option value="中州·彭城">中州·彭城</option>
+                                            <option value="中州·下邳">中州·下邳</option>
+                                            <option value="中州·沛县">中州·沛县</option>
+                                        </optgroup>
+                                        <optgroup label="雍州">
+                                            <option value="雍州·长安">雍州·长安（首府）</option>
+                                            <option value="雍州·凤翔">雍州·凤翔</option>
+                                            <option value="雍州·天水">雍州·天水</option>
+                                        </optgroup>
+                                        <optgroup label="益州">
+                                            <option value="益州·汉中">益州·汉中（首府）</option>
+                                            <option value="益州·南郑">益州·南郑</option>
+                                            <option value="益州·巴郡">益州·巴郡</option>
+                                            <option value="益州·葭萌">益州·葭萌</option>
+                                            <option value="益州·剑阁">益州·剑阁</option>
+                                        </optgroup>
+                                        <optgroup label="扬州">
+                                            <option value="扬州·金陵">扬州·金陵（首府）</option>
+                                            <option value="扬州·姑苏">扬州·姑苏</option>
+                                            <option value="扬州·广陵">扬州·广陵</option>
+                                            <option value="扬州·京口">扬州·京口</option>
+                                            <option value="扬州·丹阳">扬州·丹阳</option>
+                                        </optgroup>
+                                        <optgroup label="荆州">
+                                            <option value="荆州·江陵">荆州·江陵（首府）</option>
+                                            <option value="荆州·襄阳">荆州·襄阳</option>
+                                            <option value="荆州·江夏">荆州·江夏</option>
+                                            <option value="荆州·长沙">荆州·长沙</option>
+                                        </optgroup>
+                                        <optgroup label="云州">
+                                            <option value="云州·五溪">云州·五溪（首府）</option>
+                                            <option value="云州·武陵">云州·武陵</option>
+                                            <option value="云州·黔中">云州·黔中</option>
+                                            <option value="云州·苗岭">云州·苗岭</option>
+                                            <option value="云州·百越">云州·百越</option>
+                                        </optgroup>
+                            </select>
+                        </div>
+<div class="talent-system">
+                            <h3>天赋抽取系统</h3>
+                            <p>点击下方按钮抽取天赋，您可以选择并保留最多3个天赋</p>
+                            <div class="talent-controls">
+                                <button id="roll-talents">抽取天赋 (剩余次数: <span id="roll-count">无限</span>)</button>
+                                <button id="reset-talents">重置已选天赋</button>
+                            </div>
+                            <div class="talent-roll-area" id="talent-display">
+                            </div>
+                            <div class="selected-talents">
+                                <h4>已选择的天赋 (最多3个):</h4>
+                                <div class="selected-talent-list" id="selected-talents">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="summary-section">
+                            <h3>角色信息预览：</h3>
+                            <div class="summary-content" id="character-preview">
+姓名：
+年龄：
+性别：
+外貌：
+身材：
+性格：
+天赋：（抽取的天赋）
+身份：
+ 境界：
+其他设定：
+【开场剧情】
+                            </div>
+                            <p class="footer-note">角色信息将自动更新；点击下方「开始游戏」会初始化变量并把摘要填入输入框</p>
+                            <div class="button-group" style="margin-top:14px;">
+                                 <button id="character-manager-button" type="button">角色管理</button>
+                                <button id="create-bond-button" type="button">创建羁绊人物（可选）</button>
+                                 <button id="start-game-button" type="button">开始游戏</button>
+                                <input type="file" id="import-character-input" accept=".json,application/json" style="display:none;">
+                            </div>
+                            <p class="footer-note" id="start-game-status">填写角色信息、抽取天赋、确定剧情与开局地点后，点击「开始游戏」：写入 MVU 变量并把角色摘要填入聊天输入框，发送即可开局。</p>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <section class="bond-creator-panel hidden" id="bond-creator-step" aria-hidden="true">
+                <div class="accordion-content-inner">
+                    <h2>羁绊人物创建</h2>
+                    <p class="bond-intro">此步骤完全可选。创建完成后，该人物会在发送第一条开局消息前直接写入「羁绊人物」变量；衣服与所属势力可留空，之后由剧情自然补全。</p>
+                    <div class="bond-section">
+                        <h3>基础信息</h3>
+                        <div class="bond-grid">
+                            <div class="form-group"><label for="bond-name">姓名（必填）：</label><textarea id="bond-name" placeholder="例如：沈青萝"></textarea><p class="bond-help">姓名将作为变量中的人物键名；不可含 / 或 ~。</p></div>
+                            <div class="form-group"><label for="bond-gender">性别（必填）：</label><textarea id="bond-gender" placeholder="例如：女"></textarea></div>
+                            <div class="form-group"><label for="bond-realm">境界（必填）：</label><select id="bond-realm"><option value="">请选择境界</option><option>未入流</option><option>第一境·淬皮</option><option>第一境·通脉</option><option>第一境·凝元</option><option>第二境·周天</option><option>第二境·罡劲</option><option>第二境·离体</option><option>第三境·明势</option><option>第三境·透劲</option><option>第三境·破阵</option><option>第四境·入微</option><option>第四境·归一</option><option>第四境·无招</option><option>第五境·破军</option><option>第五境·裂城</option><option>第五境·绝巅</option></select></div>
+                            <div class="form-group"><label for="bond-progress">修为进度（0—100）：</label><input id="bond-progress" type="number" min="0" max="100" value="0"></div>
+                            <div class="form-group"><label for="bond-affection">好感度（0—100）：</label><input id="bond-affection" type="number" min="0" max="100" value="0"></div>
+                            <div class="form-group"><label for="bond-faction">所属势力（必填）：</label><textarea id="bond-faction" placeholder="例如：听风楼"></textarea></div>
+                            <div class="form-group bond-wide"><label for="bond-appearance">外貌（必填）：</label><textarea id="bond-appearance" placeholder="描述相貌、神情、气质等"></textarea></div>
+                            <div class="form-group bond-wide"><label for="bond-figure">身材（必填）：</label><textarea id="bond-figure" placeholder="描述身形、体态等"></textarea></div>
+                            <div class="form-group bond-wide"><label for="bond-clothes">衣服（可空）：</label><textarea id="bond-clothes" placeholder="可不填，后续由剧情补全"></textarea></div>
+                        </div>
+                    </div>
+                    <div class="bond-section">
+                        <h3>状态、天赋与装备</h3>
+                        <p class="bond-help">以下全部可选，每行填写一项，格式为「名称：描述」。不写名称也可以，页面会自动命名；无需 JSON。</p>
+                        <div class="bond-grid">
+                            <div class="form-group"><label for="bond-status">状态（可选）：</label><textarea id="bond-status" class="bond-json" placeholder="旧伤：左臂旧伤隐痛\n警觉：初到陌生地界，戒心未消"></textarea></div>
+                            <div class="form-group"><label for="bond-talents">天赋（可选）：</label><textarea id="bond-talents" class="bond-json" placeholder="听风辨位：能从风声分辨来者方位"></textarea></div>
+                            <div class="form-group bond-wide"><label for="bond-equipment">装备（可选）：</label><textarea id="bond-equipment" class="bond-json" placeholder="佩剑：一柄旧青锋"></textarea></div>
+                        </div>
+                    </div>
+                    <div class="bond-section">
+                        <h3>武学功法</h3>
+                        <div class="bond-grid">
+                            <div class="form-group"><label for="bond-cultivation-skills">修炼功法（可选）：</label><textarea id="bond-cultivation-skills" class="bond-json" placeholder="吐纳诀：以吐纳调息、温养内息"></textarea></div>
+                            <div class="form-group"><label for="bond-combat-skills">战斗功法（可选）：</label><textarea id="bond-combat-skills" class="bond-json" placeholder="流云剑法：剑路轻灵，擅长游斗"></textarea></div>
+                        </div>
+                    </div>
+                    <div class="bond-actions">
+                        <button id="bond-back-button" type="button">← 返回角色创建</button>
+                        <button id="bond-skip-button" class="bond-skip" type="button">暂不创建，直接开始游戏</button>
+                        <button id="bond-start-game-button" class="bond-start" type="button">保存羁绊人物并开始游戏</button>
+                    </div>
+                    <p class="footer-note" id="bond-game-status" aria-live="polite">填写完毕后保存并开始游戏；所有已填写字段会直接写入初始变量。</p>
+                </div>
+        </section>
+        <!-- ===== 角色管理弹窗 ===== -->
+        <div class="cm-overlay hidden" id="character-manager-overlay">
+            <div class="cm-modal" role="dialog" aria-modal="true" aria-label="角色管理">
+                <div class="cm-head">
+                    <h4>角色管理</h4>
+                    <button type="button" class="cm-close" id="character-manager-close">✕ 关闭</button>
+                </div>
+                <div class="cm-body">
+                    <div class="cm-row">
+                        <button type="button" id="cm-export-button">导出为文件</button>
+                        <button type="button" id="cm-save-button">保存到本地</button>
+                        <button type="button" id="cm-import-button">从文件导入</button>
+                    </div>
+                    <div class="cm-section-title">本地存档</div>
+                    <div class="cm-list" id="cm-saved-list"></div>
+                    <p class="cm-tip">「保存到本地」会把当前角色留在本浏览器中，随时可载入或删除；「导出为文件」可复制到任意设备，再用「从文件导入」恢复。载入存档后检查信息，再点击「开始游戏」即可。</p>
+                </div>
+            </div>
+        </div>
+        <div class="jz-footer">九州大世界 · 角色创建</div>
+    </div>
+</div>
+<script>
+        const wizardSteps = Array.from(document.querySelectorAll('.accordion-item'));
+        const wizardPrev = document.getElementById('wizard-prev');
+        const wizardNext = document.getElementById('wizard-next');
+        const wizardLabel = document.getElementById('wizard-step-label');
+        const wizardDots = document.getElementById('wizard-dots');
+        const wizardNames = ['九州疆域·江湖势力', '角色创建'];
+        let wizardIndex = 0;
+        wizardDots.innerHTML = wizardSteps.map((_, i) => '<span class="wizard-dot' + (i === 0 ? ' on' : '') + '" data-step="' + i + '" title="' + wizardNames[i] + '"></span>').join('');
+        function wizardGo(i) {
+            wizardIndex = Math.max(0, Math.min(wizardSteps.length - 1, i));
+            wizardSteps.forEach((el, idx) => el.classList.toggle('active', idx === wizardIndex));
+            wizardLabel.textContent = '第 ' + (wizardIndex + 1) + ' / ' + wizardSteps.length + ' 步 · ' + wizardNames[wizardIndex];
+            wizardPrev.disabled = wizardIndex === 0;
+            wizardNext.textContent = wizardIndex === wizardSteps.length - 1 ? '完成 ↓' : '下一步 →';
+            document.querySelectorAll('.wizard-dot').forEach((d, idx) => d.classList.toggle('on', idx === wizardIndex));
+            const page = document.querySelector('.jz-page');
+            if (page) page.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        wizardPrev.addEventListener('click', () => wizardGo(wizardIndex - 1));
+        wizardNext.addEventListener('click', () => {
+            if (wizardIndex === wizardSteps.length - 1) {
+                const doneTarget = document.getElementById('start-game-button');
+                if (doneTarget) { const page = document.querySelector('.jz-page'); if (page) page.scrollTo({ top: doneTarget.offsetTop - 70, behavior: 'smooth' }); }
+                return;
+            }
+            wizardGo(wizardIndex + 1);
+        });
+        wizardDots.addEventListener('click', (e) => {
+            const dot = e.target.closest ? e.target.closest('.wizard-dot') : null;
+            if (dot) wizardGo(Number(dot.getAttribute('data-step')));
+        });
+        wizardGo(0);
+        document.querySelectorAll('.province').forEach(function (province) {
+            province.addEventListener('click', function (event) {
+                showProvince(this.getAttribute('data-name') || this.querySelector('.province-name').textContent, event);
+            });
+        });
+        const TALENT_TIER = {1: '劣质', 2: '普通', 3: '优秀', 4: '史诗', 5: '传说'};
+        const TIER_QUALITY = {'劣质': 1, '普通': 2, '优秀': 3, '史诗': 4, '传说': 5};
+        function toTierName(q) {
+            if (q == null) return '普通';
+            if (typeof q === 'number') return TALENT_TIER[q] || '普通';
+            const s = String(q).trim();
+            if (TIER_QUALITY[s]) return s;
+            if (/^[1-5]$/.test(s)) return TALENT_TIER[Number(s)];
+            return '普通';
+        }
+        function toTierNum(q) {
+            const s = String(q == null ? '' : q).trim();
+            if (TIER_QUALITY[s]) return TIER_QUALITY[s];
+            const n = parseInt(s, 10);
+            return (n >= 1 && n <= 5) ? n : 3;
+        }
+        const talentData = {
+            1: [ // 劣质天赋 (30个)
+                { name: "经脉淤塞", desc: "内力运转极为不畅，修炼效率低下。" },
+                { name: "根骨孱弱", desc: "身体基础差，气血不足，外功修炼事倍功半。" },
+                { name: "悟性低下", desc: "理解武学精要异常困难。" },
+                { name: "心魔易生", desc: "修炼时容易胡思乱想，走火入魔风险增加。" },
+                { name: "手脚笨拙", desc: "招式僵硬，难以掌握精妙武技。" },
+                { name: "五行驳杂", desc: "体内气息混乱，难以专精某一属性功法。" },
+                { name: "识人不明", desc: "容易轻信他人，遭遇背叛。" },
+                { name: "福缘浅薄", desc: "奇遇与你无缘，倒霉事却常伴左右。" },
+                { name: "胆怯如鼠", desc: "战斗中容易畏惧，士气低落。" },
+                { name: "口齿木讷", desc: "不擅交流，难以获得前辈指点或同伴帮助。" },
+                { name: "味同嚼蜡", desc: "对美食无感，难以通过药膳补充元气。" },
+                { name: "方向痴迷", desc: "极易迷路，在复杂地形中寸步难行。" },
+                { name: "金石不开", desc: "对暗器、机关术毫无天赋。" },
+                { name: "书画丑拙", desc: "无法通过书画静心悟道。" },
+                { name: "音律聋哑", desc: "不通音律，易被音波功所克。" },
+                { name: "记忆模糊", desc: "遗忘速度快，需要反复巩固所学。" },
+                { name: "睡眠惊厥", desc: "难以深度入睡，精力恢复缓慢。" },
+                { name: "酒量浅薄", desc: "沾酒即醉，无法借酒悟道或激发豪情。" },
+                { name: "面相凶恶", desc: "天生恶相，初始人际交往困难。" },
+                { name: "体质虚寒", desc: "极怕寒冷，在寒属性环境中实力大减。" },
+                { name: "燥火攻心", desc: "极易烦躁动怒，影响判断。" },
+                { name: "招蜂引蝶（劣质版）", desc: "莫名的吸引力，但吸引来的多是麻烦人物。" },
+                { name: "铜皮铁骨（劣质版）", desc: "皮肤粗糙坚硬，但内力传导性极差。" },
+                { name: "力如蛮牛（劣质版）", desc: "空有蛮力，无法精细控制，常损坏物品。" },
+                { name: "过目即忘", desc: "看过一遍的招式，转眼就记不清细节。" },
+                { name: "毒抗微弱", desc: "对各类毒物、迷药抵抗力极低。" },
+                { name: "气场全无", desc: "存在感薄弱，容易被敌人忽略，也容易被同伴遗忘。" },
+                { name: "财帛散尽", desc: "不擅理财，难以积累财富。" },
+                { name: "兵刃相克", desc: "与大多数兵器的相性都不好。" },
+                { name: "天谴之人", desc: "偶尔会莫名其妙地遭遇小灾小难（如被鸟粪砸中）。" }
+            ],
+            2: [ // 普通天赋 (40个)
+                { name: "经脉通畅", desc: "内力运转无碍，修炼速度正常。" },
+                { name: "根骨扎实", desc: "身体强健，能稳步修炼外功。" },
+                { name: "悟性尚可", desc: "能较好地理解武学原理。" },
+                { name: "心志坚定", desc: "不易被外物干扰，修炼能专注。" },
+                { name: "身手敏捷", desc: "动作比常人快上几分。" },
+                { name: "耳聪目明", desc: "听力和视力优于常人。" },
+                { name: "力能扛鼎", desc: "气力比普通武夫大。" },
+                { name: "粗通药理", desc: "能辨识常见草药，治疗简单伤势。" },
+                { name: "水性佳", desc: "精通水性，在水中行动自如。" },
+                { name: "骑术娴熟", desc: "善于驾驭马匹等坐骑。" },
+                { name: "厨艺了得", desc: "能烹饪美味佳肴，小幅提升同伴心情。" },
+                { name: "匠人巧手", desc: "能维修和保养简单的兵甲。" },
+                { name: "察言观色", desc: "善于通过表情和语气判断他人情绪。" },
+                { name: "口若悬河", desc: "能言善辩，在交易和打探消息时有优势。" },
+                { name: "方向感强", desc: "不易迷路，能快速适应新环境。" },
+                { name: "过目不忘（普通版）", desc: "记忆力好，能记住看过的文字和地图。" },
+                { name: "睡眠质量高", desc: "能快速入睡，精力恢复快。" },
+                { name: "酒中豪客", desc: "酒量好，且酒后能保持一定清醒。" },
+                { name: "面相和善", desc: "给人第一印象不错，易于交谈。" },
+                { name: "耐热耐寒", desc: "对酷暑和严寒有较强的忍耐力。" },
+                { name: "暗器基础", desc: "能熟练使用飞镖、石子等常见暗器。" },
+                { name: "书画怡情", desc: "能通过书画调节心境，小幅稳定心神。" },
+                { name: "音律入门", desc: "通晓音律，对普通音波功有轻微抗性。" },
+                { name: "财运平平", desc: "收支平衡，偶尔有小额横财。" },
+                { name: "兵刃亲和（普通版）", desc: "上手各类兵器的速度较快。" },
+                { name: "桃花寻常", desc: "有正常的异性缘，但无特殊加成。" },
+                { name: "毒抗一般", desc: "对普通毒物有一定抵抗力。" },
+                { name: "气场平和", desc: "不易引人注目，适合潜行跟踪。" },
+                { name: "野兽亲和", desc: "普通动物对你没有敌意。" },
+                { name: "夜视之能", desc: "在微光环境下视力优于常人。" },
+                { name: "快速消化", desc: "能更快地吸收食物和药物的精华。" },
+                { name: "坚韧皮肉", desc: "对普通拳脚和利刃有稍强的防御力。" },
+                { name: "平衡大师", desc: "在光滑、狭窄的地形上如履平地。" },
+                { name: "模仿秀", desc: "能粗略模仿他人的口音和动作。" },
+                { name: "灵光一闪", desc: "偶尔在武学上能想出不错的点子。" },
+                { name: "血勇之气", desc: "受伤后，短时间内攻击力会小幅提升。" },
+                { name: "千里寻踪（普通版）", desc: "善于追踪足迹和气味。" },
+                { name: "龟息之法", desc: "能短暂闭气，降低生命活动。" },
+                { name: "精准投掷", desc: "投掷物品的准头很高。" },
+                { name: "铁胃", desc: "能吃下大部分食物而不闹肚子。" }
+            ],
+            3: [ // 优秀天赋 (50个)
+                { name: "经脉宽广", desc: "内力容量和运转速度优于同辈。" },
+                { name: "根骨清奇", desc: "修炼外功事半功倍，筋骨强健。" },
+                { name: "悟性上佳", desc: "能举一反三，快速领悟武学精妙。" },
+                { name: "心若冰清", desc: "心境澄澈，极大降低走火入魔风险。" },
+                { name: "动如脱兔", desc: "身法迅捷，闪避能力出众。" },
+                { name: "明察秋毫", desc: "观察力极强，能发现细微的痕迹与破绽。" },
+                { name: "力贯千钧", desc: "力量刚猛无俦，开碑裂石。" },
+                { name: "医术精通", desc: "不仅能疗伤，还能配制一些特殊丹药。" },
+                { name: "毒术专精", desc: "善于用毒和解毒。" },
+                { name: "水性超凡", desc: "如游鱼般灵活，可在水下长时间战斗。" },
+                { name: "人马合一", desc: "骑乘时能与坐骑心灵相通，发挥更强战力。" },
+                { name: "珍馐品味", desc: "能通过品尝分辨食材和药材的年份与功效。" },
+                { name: "巧匠大师", desc: "能打造和修复精良的兵甲与机关。" },
+                { name: "洞悉人心", desc: "能较为准确地判断他人的意图与谎言。" },
+                { name: "辩才无碍", desc: "极具说服力，能化解部分干戈。" },
+                { name: "人体图谱", desc: "对经脉穴道了如指掌，点穴与疗伤效果大增。" },
+                { name: "深度睡眠", desc: "睡眠一个时辰，效果堪比常人三个时辰。" },
+                { name: "酒神附体", desc: "越喝越精神，甚至能临时提升内力。" },
+                { name: "领袖气质", desc: "能自然地吸引他人追随，提升团队士气。" },
+                { name: "寒暑不侵", desc: "对常规的炎热与寒冷完全免疫。" },
+                { name: "暗器百解", desc: "精通多种暗器手法，防不胜防。" },
+                { name: "书画通灵", desc: "所作书画蕴含一丝神韵，可助人悟道。" },
+                { name: "音律攻心", desc: "能以音律扰动他人心神，或安抚同伴。" },
+                { name: "财运亨通", desc: "更容易获得财富，做生意也容易赚钱。" },
+                { name: "兵刃专家", desc: "对某一类兵器有超常领悟，使用时有威力加成。" },
+                { name: "风情月意", desc: "魅力出众，更容易获得异性好感。" },
+                { name: "百毒不侵", desc: "对世间大部分毒药具有免疫力。" },
+                { name: "气场收放", desc: "可主动收敛或释放自身气息。" },
+                { name: "兽语者", desc: "能与部分灵性野兽进行简单沟通。" },
+                { name: "鹰眼", desc: "拥有超常的远视和动态视力。" },
+                { name: "饕餮之胃", desc: "能快速消化并吸收药力，丹药冷却时间缩短。" },
+                { name: "铜筋铁骨", desc: "肉身强度远超常人，寻常刀剑难伤。" },
+                { name: "踏雪无痕", desc: "轻功高超，在雪地、沙地等也难以留下足迹。" },
+                { name: "千面之人", desc: "精通易容术，难以被看破。" },
+                { name: "武学奇才", desc: "修炼任何武学的速度都很快。" },
+                { name: "愈战愈勇", desc: "在长时间战斗中，能逐渐提升战斗力。" },
+                { name: "千里追踪（优秀版）", desc: "能通过极其细微的线索进行追踪。" },
+                { name: "龟息大法", desc: "能长时间进入假死状态，骗过大多数探查。" },
+                { name: "妙手空空", desc: "偷窃技艺高超，也能用于战斗中夺取兵刃。" },
+                { name: "福星高照", desc: "运气很好，经常能化险为夷，偶得小机缘。" },
+                { name: "内息绵长", desc: "内力恢复速度远超常人。" },
+                { name: "剑心通明（优秀版）", desc: "对剑法有特殊感悟，学剑更快。" },
+                { name: "刀意凛然（优秀版）", desc: "对刀法有特殊感悟，学刀更快。" },
+                { name: "拳掌双绝（优秀版）", desc: "对拳掌功夫有特殊感悟。" },
+                { name: "魅影", desc: "在阴影和黑暗中移动时，存在感大幅降低。" },
+                { name: "天生媚骨（优秀版）", desc: "魅力浑然天成，对异性有极强吸引力。" },
+                { name: "纯阳之体", desc: "阳气充沛，修炼阳刚功法事半功倍，邪祟难近。" },
+                { name: "玄阴之脉", desc: "阴气内敛，修炼阴柔功法事半功倍，身形缥缈。" },
+                { name: "雷灵根（优秀版）", desc: "对雷电有天然亲和力，可初步引导雷电之力，修炼雷法事半功倍。" },
+                { name: "五行均衡", desc: "金木水火土五行平衡，可兼容多种属性功法而无冲突。" }
+            ],
+            4: [ // 史诗天赋 (63个)
+                { name: "先天道体", desc: "近乎完美的修炼体质，内力自生，修炼任何功法都极快。" },
+                { name: "武痴", desc: "对武学有着超乎常人的狂热与专注，修炼速度暴增，但容易忽略其他事物。" },
+                { name: "战斗天才", desc: "在战斗中能瞬间找到最优解，以弱胜强如家常便饭。" },
+                { name: "不灭战意", desc: "战意滔天，重伤之下反而能爆发出惊人潜力，越濒死越强大。" },
+                { name: "医圣传人", desc: "医术通神，能活死人肉白骨，更能以医理破解武功。" },
+                { name: "毒皇再世", desc: "用毒出神入化，可于无形中施毒，也能炼制奇毒。" },
+                { name: "天机演算", desc: "能窥探一丝天机，卜算吉凶，预知危险。" },
+                { name: "阵法宗师", desc: "精通各类阵法，可布阵困敌、杀敌、辅助修炼。" },
+                { name: "机关巨匠", desc: "能制造出威力巨大、巧夺天工的战争机关或生活助手。" },
+                { name: "佛心道骨", desc: "兼具佛家的慈悲与道家的逍遥，心境圆满，万邪不侵。" },
+                { name: "魔种暗藏", desc: "内心深处藏有一丝魔性，在特定时刻爆发，获得巨大力量但可能失控。" },
+                { name: "百脉俱通", desc: "所有经脉天生通畅无阻，无修炼瓶颈可言。" },
+                { name: "琉璃玉身", desc: "肉身纯净无瑕，不仅防御力强，更能完美契合各种内力。" },
+                { name: "幻影迷踪", desc: "身法如鬼似魅，能留下残影迷惑敌人。" },
+                { name: "破碎虚空（史诗版）", desc: "拳脚或兵刃能引动空间震荡，产生撕裂性的破坏力。" },
+                { name: "言出法随（弱化版）", desc: "语言带有极强的精神力量，能短暂影响他人行为（非绝对控制）。" },
+                { name: "点石成金", desc: "拥有极高的商业天赋，能迅速积累巨额财富。" },
+                { name: "神农尝草", desc: "对天地灵物有超常感知，能发现并辨别稀有药材与矿物。" },
+                { name: "兽王之心", desc: "能号令百兽，与强大异兽沟通并结成伙伴。" },
+                { name: "真实之眼", desc: "能看破绝大多数幻术、伪装和陷阱。" },
+                { name: "过目不忘（史诗版）", desc: "任何事物看过一遍即能完美复现，包括复杂的武学招式。" },
+                { name: "无垢之体", desc: "体内无尘无垢，不生病，不受大部分负面状态影响。" },
+                { name: "多重人格", desc: "体内存在不同的人格，每个人格可能擅长不同的领域，在危机时可能切换。" },
+                { name: "时间感知", desc: "对时间的流逝异常敏感，能在战斗中精准把握每一个瞬间。" },
+                { name: "空间感知", desc: "对空间位置异常敏感，擅长暗器、轻功和躲避。" },
+                { name: "内力化形", desc: "能将内力凝聚成实体进行攻击或防御。" },
+                { name: "兵器大师", desc: "精通所有类型的兵器，无有短板。" },
+                { name: "七窍玲珑心", desc: "心思缜密，算无遗策，是顶级的谋士。" },
+                { name: "倾城之貌/潘安之姿", desc: "颜值达到巅峰，能产生巨大的视觉冲击力，影响他人判断。" },
+                { name: "龙吟虎啸", desc: "发声如龙吟虎啸，可震慑敌人，鼓舞友军，是极强的音波功基础。" },
+                { name: "北冥之海", desc: "丹田气海异于常人，可海量储存内力。" },
+                { name: "吸星大法（弱化版）", desc: "可吸取他人内力，但有驳杂不纯、反噬自身的风险。" },
+                { name: "移花接木", desc: "能将自身承受的部分伤害或负面状态转移给他人或他物。" },
+                { name: "梦中修炼", desc: "可在睡梦中继续修炼内力或演练武学。" },
+                { name: "血继限界", desc: "拥有特殊的血脉，可能源自某个古老家族，具备独特能力（如瞳术、体质等）。" },
+                { name: "天妒英才", desc: "天赋极高，但运气极差，总会遭遇更强的对手或更倒霉的事，在绝境中成长。" },
+                { name: "红尘炼心", desc: "于凡尘俗世中修行，心境提升速度极快，并能从生活中领悟武学至理。" },
+                { name: "剑胆琴心", desc: "既有剑客的胆魄，又有雅士的心境，攻守兼备，心境无漏。" },
+                { name: "霸者横栏", desc: "天生具有王者霸气，能对弱者产生威慑，并提升己方势力凝聚力。" },
+                { name: "诡道莫测", desc: "行事风格诡异难测，招式、战术往往出人意料，让对手防不胜防。" },
+                { name: "阴阳和合（史诗版）", desc: "深谙阴阳相生之道，双修效果极佳，并能调和体内阴阳内力。" },
+                { name: "媚骨天成（史诗版）", desc: "一颦一笑皆能勾魂夺魄，能无形中操控他人情欲，是顶级魅术的基础。" },
+                { name: "天魔之体", desc: "对魅惑、幻术等精神攻击有极高抗性，甚至能反弹。" },
+                { name: "炉鼎之身（史诗版）", desc: "自身是极佳的双修炉鼎，能极大提升道侣功力，但若被邪道利用则后果不堪设想。" },
+                { name: "情丝绕指柔", desc: "能将情意化为实质的力量，对挚爱之人有特殊的守护能力或对负心人有极强的诅咒之力。" },
+                { name: "九霄雷音（史诗版）", desc: "发声如雷霆，音波中蕴含一丝天威，对邪祟、阴魂有巨大杀伤力，并可震慑人心。" },
+                { name: "雷霆战体（史诗版）", desc: "引雷电淬体，肉身强横无比，速度与爆发力获得巨额提升，攻击附带麻痹效果。" },
+                { name: "五雷正法（史诗版）", desc: "掌握高深雷法，可召唤天雷攻敌，威力巨大，是邪魔外道的克星。" },
+                { name: "御兽通灵", desc: "可与灵兽签订契约，共同成长，战力倍增。" },
+                { name: "分身化影", desc: "可消耗大量内力制造出具有部分实力的分身。" },
+                { name: "元素亲和（金/木/水/火/土）", desc: "对某一自然元素有极强亲和力，相关功法威力倍增。" },
+                { name: "不屈意志", desc: "精神意志坚不可摧，即使身体被控，精神亦能反抗。" },
+                { name: "能量吞噬", desc: "可少量吞噬对手攻来的真气能量化为己用。" },
+                { name: "危机预感", desc: "能在致命危机到来前心生警兆。" },
+                { name: "学习机器", desc: "不仅能快速学习武功，还能快速掌握语言、技艺等任何知识。" },
+                { name: "气血如龙", desc: "生命力旺盛至极，恢复能力超强。" },
+                { name: "精准操控", desc: "对自身力量的掌控入微，能做到分金断玉而不伤他物。" },
+                { name: "环境适应", desc: "能快速适应任何极端环境（高温、高压、深海等）。" },
+                { name: "灵魂坚韧", desc: "灵魂强度远超常人，夺舍、搜魂等法术对你效果大减。" },
+                { name: "因果之线（弱化版）", desc: "能模糊地感知到自己与他人之间的因果联系。" },
+                { name: "封印大师", desc: "擅长施加和解除各种内力封印。" },
+                { name: "语言大师", desc: "能快速学会并精通任何语言。" },
+                { name: "艺术宗师", desc: "在琴棋书画某一领域达到宗师境界，可借此悟道或对敌。" }
+            ],
+            5: [ // 传说天赋 (42个)
+                { name: "天命之子", desc: "受天地气运所钟，奇遇不断，总能逢凶化吉。" },
+                { name: "武神转世", desc: "对武学的理解近乎于道，任何武功一学就会，一会就精。" },
+                { name: "他心通", desc: "能直接感知到他人的情绪和浅层思维。" },
+                { name: "宿慧", desc: "拥有前世的记忆或知识碎片，起点远超常人。" },
+                { name: "言灵（武侠版）", desc: "语言带有规则之力，能小范围地影响现实（如令枯木逢春，或让兵刃短暂锈蚀）。" },
+                { name: "时空旅者（残片）", desc: "能偶尔窥见未来或过去的片段，或者进行极短距离的瞬移。" },
+                { name: "万物共鸣", desc: "能与天地万物（山川、草木、风雨）产生共鸣，借天地之力为己用。" },
+                { name: "混沌之体", desc: "可容纳并转化一切属性的内力，无有任何冲突。" },
+                { name: "不朽金身（传说版）", desc: "肉身强度堪比神兵，水火不侵，刀枪不入，寿命大幅延长。" },
+                { name: "一念成阵", desc: "心念一动，即可布下强大阵法。" },
+                { name: "创功者", desc: "不再局限于学习，而是能根据自身理解，开创出全新的绝世功法。" },
+                { name: "万法不侵", desc: "对绝大多数内力、精神、属性攻击都有极高的抗性。" },
+                { name: "因果斩却（弱化版）", desc: "能斩断自身与某些小事件的因果联系，避免被追踪和卜算。" },
+                { name: "生命汲取", desc: "可通过接触直接掠夺他人的生命精华来修复自身伤势。" },
+                { name: "灵魂出窍", desc: "可使灵魂暂时离体，进行侦查或精神攻击。" },
+                { name: "概念附魔", desc: "能为自己的攻击附加必中、破甲、撕裂等抽象概念效果。" },
+                { name: "领域展开（武侠版）", desc: "在自身周围形成独特的势或场，在此领域中，自身能力大幅提升，敌人被极大压制。" },
+                { name: "凤凰涅槃", desc: "在受到致命伤后，有机会浴火重生，并获得巨大提升（有漫长冷却时间或苛刻条件）。" },
+                { name: "真龙之气", desc: "身负皇者命格，能凝聚势力气运，万民归心，对王朝武功有极致加成。" },
+                { name: "天眼通", desc: "能洞察事物本质，看破一切虚妄，直指本源。" },
+                { name: "轮回印", desc: "灵魂深处带有轮回印记，死亡后有机会带着部分记忆转世（概率极低且条件未知）。" },
+                { name: "阴阳混沌体", desc: "超越单纯的纯阳玄阴，达到阴阳合一、返璞归真的至高体质。" },
+                { name: "情劫之主", desc: "自身便是他人的情劫，与之产生情愫者，命运会因你而剧烈波动，而你则能从这段因果中获得力量。" },
+                { name: "极乐净土（传说版）", desc: "可展开独特的双修领域，在此领域中，双方灵肉高度契合，修炼速度一日千里，并能治愈道侣的一切暗伤与隐疾。" },
+                { name: "紫霄神雷（传说版）", desc: "执掌天地间至阳至刚的雷霆权柄，代天行罚。此雷法不仅威力无穷，更能淬炼神魂，涤荡心魔，是一切邪祟、魔念的终极克星。修炼到极致，可召唤九霄神雷，有毁天灭地之威。" },
+                { name: "无我无相", desc: "心境修为达到化境，无我相，无人相，无众生相。可完美模拟任何人的气息、武功，亦能免疫所有精神、魅惑类攻击。" },
+                { name: "道法自然", desc: "自身与天道相合，一举一动皆暗合自然之理，无需刻意修炼，内力亦能自行增长，于平凡中见神奇。" },
+                { name: "合欢圣体", desc: "你的身体便是最完美的道场，双修时，能将双方的精、气、神、灵力、乃至神魂都完美融合，化为最本源的混沌之气，共同炼化，修为一日千里。" },
+                { name: "欲望化身", desc: "你是行走的欲望之源，能轻易勾起任何生灵（包括人、妖、魔、甚至神祇）内心最深处的欲望，并将其化为你的力量。可吸收众生欲望进行修炼。" },
+                { name: "万妙仙炉", desc: "你的身体是一个能炼化万物的仙炉。任何进入你体内的能量，无论是灵力、魔气、妖力，都能被炼化为最精纯的本源能量为你所用。采补万物，皆无隐患。" },
+                { name: "天狐血脉（觉醒）", desc: "传承自上古天狐，天生拥有极致的魅惑之力，一笑倾城，一语惑心。成长到极致，甚至能创造幻境世界，颠倒乾坤。" },
+                { name: "道心种魔", desc: "可在与你有过亲密接触的人心中种下道心魔种。种下后，对方修为越高，你能获得的好处就越大，甚至能在关键时刻操控对方心神。此法极为隐秘，难以察觉。" },
+                { name: "阴阳神体", desc: "体内自成阴阳小天地，可随心意转化自身为至阴或至阳之体。既是最好的炉鼎，也是最强的火炉，在双修关系中永远占据主导地位。" },
+                { name: "三千情劫", desc: "你的修行之路注定与情字纠缠。你将历经三千情劫，每渡过一劫，便能斩断一丝因果，获得对方的部分气运与道果。若能三千劫满，则可情道大成，立地成圣。" },
+                { name: "姹女玄男", desc: "天生便是最完美的双修伴侣，无论与何人双修，皆能补足对方的先天缺陷，圆满其大道根基。与之双修者，必能突破当前境界。此天赋一出，天下修士皆会为你疯狂。" }
+            ]
+        };
+        let selectedTalents = [];
+        const talentDisplay = document.getElementById('talent-display');
+        const selectedTalentsContainer = document.getElementById('selected-talents');
+        const rollButton = document.getElementById('roll-talents');
+        const resetButton = document.getElementById('reset-talents');
+        const rollCountElement = document.getElementById('roll-count');
+        document.querySelectorAll('.plot-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.plot-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                option.classList.add('active');
+                document.querySelectorAll('.plot-scene').forEach(scene => {
+                    scene.classList.remove('active');
+                });
+                const plotType = option.getAttribute('data-plot');
+                if (plotType === 'custom') {
+                    document.getElementById('custom-plot').classList.add('active');
+                } else {
+                    document.getElementById(`${plotType}-plot`).classList.add('active');
+                }
+                const locSel = document.getElementById('start-location');
+                if (locSel && PLOT_LOCATIONS[plotType]) {
+                    locSel.value = PLOT_LOCATIONS[plotType];
+                }
+                updatePreview();
+            });
+        });
+        rollButton.addEventListener('click', () => {
+            if (selectedTalents.length >= 3) {
+                alert('您已经选择了3个天赋，无法继续抽取。');
+                return;
+            }
+            talentDisplay.innerHTML = '';
+            const talentsToShow = [];
+            const qualityCounts = {1: 3, 2: 3, 3: 2, 4: 1, 5: 3}; // 每种品质的数量（传说 3 个）
+            for (const quality in qualityCounts) {
+                const count = qualityCounts[quality];
+                const pool = [...talentData[quality]];
+                for (let i = 0; i < count; i++) {
+                    if (pool.length === 0) break;
+                    const randomIndex = Math.floor(Math.random() * pool.length);
+                    const talent = pool.splice(randomIndex, 1)[0];
+                    talent.quality = parseInt(quality);
+                    talentsToShow.push(talent);
+                }
+            }
+            talentsToShow.forEach(talent => {
+                const talentCard = document.createElement('div');
+                talentCard.className = `talent-card talent-quality-${talent.quality}`;
+                talentCard.innerHTML = `
+                    <div class="talent-name">${talent.name}</div>
+                    <div class="talent-desc">${talent.desc}</div>
+                `;
+                talentCard.addEventListener('click', () => {
+                    if (selectedTalents.length >= 3) {
+                        alert('您已经选择了3个天赋，无法选择更多。');
+                        return;
+                    }
+                    if (selectedTalents.some(t => t.name === talent.name)) {
+                        alert('您已经选择了这个天赋。');
+                        return;
+                    }
+                    selectedTalents.push(talent);
+                    talentCard.classList.add('selected');
+                    updateSelectedTalents();
+                    updatePreview();
+                });
+                talentDisplay.appendChild(talentCard);
+            });
+        });
+        resetButton.addEventListener('click', () => {
+            selectedTalents = [];
+            updateSelectedTalents();
+            updatePreview();
+            document.querySelectorAll('.talent-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+        });
+        function updateSelectedTalents() {
+            selectedTalentsContainer.innerHTML = '';
+            selectedTalents.forEach((talent, index) => {
+                const talentElement = document.createElement('div');
+                talentElement.className = `selected-talent talent-quality-${talent.quality}`;
+                talentElement.innerHTML = `
+                    ${talent.name}
+                    <span class="remove-talent" data-index="${index}">×</span>
+                `;
+                selectedTalentsContainer.appendChild(talentElement);
+            });
+            document.querySelectorAll('.remove-talent').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.getAttribute('data-index'));
+                    selectedTalents.splice(index, 1);
+                    updateSelectedTalents();
+                    updatePreview();
+                    const talentName = e.target.parentElement.textContent.replace('×', '').trim();
+                    document.querySelectorAll('.talent-card').forEach(card => {
+                        if (card.querySelector('.talent-name').textContent === talentName) {
+                            card.classList.remove('selected');
+                        }
+                    });
+                });
+            });
+        }
+        function bondPreviewText() {
+            const nameEl = document.getElementById('bond-name');
+            const name = nameEl ? nameEl.value.trim() : '';
+            if (!name) return '';
+            const val = (id) => {
+                const el = document.getElementById(id);
+                return el ? el.value.trim() : '';
+            };
+            const pieces = [name, val('bond-gender'), val('bond-realm'), val('bond-faction')].filter(Boolean);
+            return pieces.join(' · ');
+        }
+        function updatePreview() {
+            const name = document.getElementById('char-name').value || "未填写";
+            const age = document.getElementById('char-age').value || "未填写";
+             const gender = document.getElementById('char-gender').value || "未填写";
+             const appearance = document.getElementById('char-appearance').value || "未填写";
+             const figure = document.getElementById('char-figure').value || "未填写";
+             const personality = document.getElementById('char-personality').value || "未填写";
+             const identity = document.getElementById('char-identity').value || "未填写";
+             const cultivation = document.getElementById('char-cultivation').value || "未填写";
+             const other = document.getElementById('char-other').value || "未填写";
+             const startLocation = document.getElementById('start-location').value;
+            let plot;
+            const activePlotOption = document.querySelector('.plot-option.active');
+            if (activePlotOption) {
+                const plotType = activePlotOption.getAttribute('data-plot');
+                if (plotType === 'custom') {
+                    plot = document.getElementById('custom-plot').value || "未填写自定义剧情";
+                } else {
+                    plot = document.getElementById(`${plotType}-plot`).innerText;
+                }
+            } else {
+                plot = "未选择剧情";
+            }
+            let talentsText = "未选择天赋";
+            if (selectedTalents.length > 0) {
+                talentsText = selectedTalents.map(t => `${t.name}（${t.desc}）`).join("；");
+            }
+            const summary = `姓名：${name}
+年龄：${age}
+ 性别：${gender}
+ 外貌：${appearance}
+ 身材：${figure}
+ 性格：${personality}
+ 天赋：${talentsText}
+ 身份：${identity}
+ 境界：${cultivation}
+ 其他设定：${other}
+ 【开场剧情】
+ ${plot}
+  ${startLocation ? '【开局地点】' + startLocation : ''}
+  ${bondPreviewText() ? '【初始羁绊人物】' + bondPreviewText() : ''}`;
+             document.getElementById('character-preview').innerText = summary;
+         }
+                        const PLOT_LOCATIONS = {
+            zhenwu: '益州·巴郡',
+            puti: '中州·荥阳',
+            tianji: '雍州·凤翔',
+            youming: '云州·武陵',
+            qiqing: '扬州·金陵',
+            gaibang: '中州·彭城',
+            shijia: '扬州·姑苏',
+            baicao: '益州·南郑',
+            tingfeng: '中州·洛阳',
+            shenwu: '幽州·渔阳'
+        };
+
+                const plotContexts = {
+            zhenwu: {
+                地点: '益州·巴郡·山道茶棚',
+                时间: '仲春·辰时（山雾未散）',
+                衣服: '青布短打，脚底磨出水泡，腰间系着药钱布袋',
+                身材: '身形匀称，脚力扎实',
+                势力: '真武阁'
+            },
+            puti: {
+                地点: '中州·荥阳·灵山脚下旧茶棚',
+                时间: '仲春·黄昏（暴雨初歇）',
+                衣服: '旧布衣，衣角打满补丁，外衫搭在臂上还滴着水',
+                身材: '体格清瘦，气色疲惫',
+                势力: '菩提禅院'
+            },
+            tianji: {
+                地点: '雍州·秦岭·天剑峰剑冢',
+                时间: '仲春·日暮（雨停云开）',
+                衣服: '短褐劲装，沾着山雨泥点，手里握着半截木枝',
+                身材: '身形修长，指节分明',
+                势力: '天机剑宗'
+            },
+            youming: {
+                地点: '云州·武陵·苗寨集市',
+                时间: '仲春·夜晚（月色朦胧）',
+                衣服: '寨中布衣，货担空了大半，腰间挂着一串山铃',
+                身材: '体态精悍，手脚麻利',
+                势力: '幽冥教'
+            },
+            qiqing: {
+                地点: '扬州·金陵·秦淮河畔',
+                时间: '仲春·戌时（华灯初上）',
+                衣服: '洗得发白的青衫，袖中藏着一支洞箫',
+                身材: '身形清瘦，眉宇间带着落第倦色',
+                势力: '七情谷'
+            },
+            gaibang: {
+                地点: '中州·彭城·码头墙根',
+                时间: '仲春·午时（日头正暖）',
+                衣服: '灰褐短褐，裤脚卷起，肩头搭着汗巾',
+                身材: '体格精壮，手臂粗粝',
+                势力: '丐帮'
+            },
+            shijia: {
+                地点: '扬州·姑苏·瘦西湖畔',
+                时间: '仲春·巳时（湖光潋滟）',
+                衣服: '青布长衫，背着一只旧书箱',
+                身材: '身形修长，站姿如松',
+                势力: '四大世家'
+            },
+            baicao: {
+                地点: '益州·南郑·药王谷口',
+                时间: '仲春·午时（日头正烈）',
+                衣服: '粗布短衣，背着一篓山菌，指缝沾着泥土',
+                身材: '体格匀称，晒得微黑',
+                势力: '百草堂'
+            },
+            tingfeng: {
+                地点: '中州·洛阳·城南街口',
+                时间: '仲春·傍晚（华灯初上）',
+                衣服: '灰布长衫，袖口沾着墨渍，案上还摆着笔砚',
+                身材: '身材适中，手指修长',
+                势力: '听风楼'
+            },
+            shenwu: {
+                地点: '幽州·渔阳·城门口',
+                时间: '仲春·辰时（城门初开）',
+                衣服: '短打劲装，肩头搭着镖旗穗子，赶着一车皮货',
+                身材: '体格精壮，反应敏捷',
+                势力: '神武卫'
+            },
+        };const genericPlotContext = {
+            地点: '行走江湖的起始之地',
+            时间: '仲春·白昼',
+            衣服: '寻常布衣，江湖风尘',
+            身材: '身材适中，精神饱满',
+            势力: '散修'
+        };
+        const startLocations = {
+            '幽州': { '蓟城': '幽州·蓟城·北门镖局街口', '涿郡': '幽州·涿郡·郡府东市茶棚', '清河': '幽州·清河·运河渡头', '常山': '幽州·常山·山道驿亭', '渔阳': '幽州·渔阳·镇抚司外长街' },
+            '凉州': { '姑臧': '凉州·姑臧·河西马市口', '陇西': '凉州·陇西·漠边客栈', '金城': '凉州·金城·黄河渡头', '沙州': '凉州·沙州·绿洲商栈', '玉门': '凉州·玉门·关城茶棚' },
+            '青州': { '临淄': '青州·临淄·盐场西门', '北海': '青州·北海·渔港码头', '东莱': '青州·东莱·海商货栈', '乐安': '青州·乐安·官盐仓外', '高密': '青州·高密·乡间茶寮', '泰山': '青州·泰山·山脚猎户村口', '琅琊': '青州·琅琊·世家别业山道', '东海': '青州·东海·渡口码头' },
+            '中州': { '洛阳': '中州·洛阳·听风楼外市井巷', '颍川': '中州·颍川·书院山门外', '陈留': '中州·陈留·镖路驿站', '汝南': '中州·汝南·郡城东门茶铺', '荥阳': '中州·荥阳·关隘旅店', '濮阳': '中州·濮阳·漕运码头仓场', '东郡': '中州·东郡·官道驿站', '济阴': '中州·济阴·世家别院外巷', '任城': '中州·任城·集市酒肆', '彭城': '中州·彭城·丐帮总舵外街市', '下邳': '中州·下邳·大牢外巷', '沛县': '中州·沛县·酒旗斜巷' },
+            '雍州': { '长安': '雍州·长安·西市马行', '凤翔': '雍州·凤翔·城门口驿亭', '天水': '雍州·天水·陇上马市' },
+            '益州': { '汉中': '益州·汉中·南郑渡口', '南郑': '益州·南郑·蜀锦坊外街', '巴郡': '益州·巴郡·江岸码头', '葭萌': '益州·葭萌·栈道入口', '剑阁': '益州·剑阁·雄关下军市' },
+            '扬州': { '金陵': '扬州·金陵·秦淮河畔柳荫渡', '姑苏': '扬州·姑苏·枫桥东市', '广陵': '扬州·广陵·漕运码头', '京口': '扬州·京口·瓜洲渡头', '丹阳': '扬州·丹阳·官道茶亭' },
+            '荆州': { '江陵': '荆州·江陵·黑虎堂码头边棚', '襄阳': '荆州·襄阳·南关税卡外', '江夏': '荆州·江夏·渡口集市', '长沙': '荆州·长沙·城中夜市口' },
+            '云州': { '五溪': '云州·五溪·山货集市口', '武陵': '云州·武陵·苗寨山道口', '黔中': '云州·黔中·驿道寨门', '苗岭': '云州·苗岭·梯田村落口', '百越': '云州·百越·边贸圩场' }
+        };
+        function getStartSpot(selected) {
+            if (!selected) return '';
+            const parts = String(selected).split('·');
+            if (parts.length < 2) return '';
+            const spot = startLocations[parts[0]] && startLocations[parts[0]][parts[1]];
+            return spot || '';
+        }
+        const timeRules = [
+            [/清晨|黎明|破晓|天刚亮|辰时/, '仲春·清晨（天光微亮）'],
+            [/正午|午时|晌午|日头正/, '仲春·正午（日头高悬）'],
+            [/黄昏|傍晚|日落|酉时|薄暮/, '仲春·黄昏（暮色渐合）'],
+            [/夜|戌时|亥时|三更|月色|星/, '仲春·夜晚（灯火零星）']
+        ];
+                const factionRules = [
+            ['真武阁', '玄岳山·真武阁', '真武阁'],
+            ['菩提禅院', '中州·荥阳·灵山禅院', '菩提禅院'],
+            ['天机剑宗', '雍州·秦岭·天剑峰', '天机剑宗'],
+            ['幽冥教', '云州·武陵·幽冥渊', '幽冥教'],
+            ['七情谷', '七情谷', '七情谷'],
+            ['丐帮', '中州·彭城·丐帮地界', '丐帮'],
+            ['慕容', '扬州·姑苏·瘦西湖畔', '四大世家'],
+            ['百草堂', '益州·南郑·药王谷', '百草堂'],
+            ['听风楼', '中州·洛阳·听风楼', '听风楼'],
+            ['神武卫', '幽州·渔阳·镇抚司', '神武卫'],
+            ['镖局', '城中镖局', '镖局'],
+            ['官府', '州府衙门', '官府'],
+        ];
+        function parseCustomContext(text, appearance) {
+            const ctx = Object.assign({}, genericPlotContext);
+            for (const [re, time] of timeRules) {
+                if (re.test(text)) { ctx.时间 = time; break; }
+            }
+            for (const [kw, place, faction] of factionRules) {
+                if (text.includes(kw)) { ctx.地点 = place; ctx.势力 = faction; break; }
+            }
+            const clothes = extractClothing(appearance, text);
+            if (clothes) ctx.衣服 = clothes;
+            return ctx;
+        }
+        function getActivePlotContext(appearance, startLocation, startSpot) {
+            const activePlotOption = document.querySelector('.plot-option.active');
+            let ctx;
+            if (!activePlotOption) {
+                ctx = Object.assign({}, genericPlotContext);
+            } else {
+                const plotType = activePlotOption.getAttribute('data-plot');
+                ctx = plotContexts[plotType]
+                    ? Object.assign({}, plotContexts[plotType])
+                    : parseCustomContext(plotType === 'custom' ? (document.getElementById('custom-plot').value || '') : '', appearance);
+            }
+            if (startLocation && startSpot) ctx.地点 = startSpot;
+            return ctx;
+        }
+        function extractClothing() {
+            const source = Array.prototype.slice.call(arguments).filter(Boolean).join(' ');
+            if (!source) return '';
+            const segs = source.split(/[，,。；；\n]/);
+            for (const seg of segs) {
+                if (/衣|裙|袍|衫|甲|裘|裳|劲装|襦|锦|布衣|斗篷|披风/.test(seg)) return seg.trim();
+            }
+            return '';
+        }
+        async function ensureMvu() {
+            const probeMvu = () => {
+                try { if (window.Mvu) return window.Mvu; } catch (e) { /* 忽略 */ }
+                try { if (typeof Mvu !== 'undefined') return Mvu; } catch (e) { /* 忽略 */ }
+                try { if (window.parent && window.parent.Mvu) return window.parent.Mvu; } catch (e) { /* 跨域忽略 */ }
+                try { if (window.top && window.top.Mvu) return window.top.Mvu; } catch (e) { /* 跨域忽略 */ }
+                return null;
+            };
+            const direct = probeMvu();
+            if (direct) return direct;
+            const th = window.TavernHelper;
+            if (!th) throw new Error('未找到酒馆助手 TavernHelper，请确认已安装 JS-Slash-Runner');
+            if (typeof th.waitGlobalInitialized !== 'function') throw new Error('酒馆助手未提供 waitGlobalInitialized');
+            let api = null;
+            try { api = await th.waitGlobalInitialized('Mvu'); } catch (e) { /* 忽略，继续轮询兜底 */ }
+            if (api) return api;
+            for (let i = 0; i < 25; i++) {
+                const found = probeMvu();
+                if (found) return found;
+                await new Promise((resolve) => setTimeout(resolve, 200));
+            }
+            throw new Error('Mvu 变量框架未就绪：MagVarUpdate 未能加载（请检查网络，或确认已安装 MagVarUpdate 扩展）');
+        }
+        function normalizeCultivation(text) {
+            const raw = String(text || '').trim();
+            const allowed = ['第一境·淬皮','第一境·通脉','第一境·凝元','第二境·周天','第二境·罡劲','第二境·离体','第三境·明势','第三境·透劲','第三境·破阵','第四境·入微','第四境·归一','第四境·无招','第五境·破军','第五境·裂城','第五境·绝巅'];
+            if (allowed.includes(raw)) return raw;
+            if (!raw || /凡人|未入流|未习武|尚未入门/.test(raw)) return '未入流';
+            return '未入流';
+        }
+        function readBondLines(id, fallbackName, buildEntry) {
+            const el = document.getElementById(id);
+            const raw = el ? el.value.trim() : '';
+            if (!raw) return {};
+            const entries = {};
+            raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean).forEach((line, index) => {
+                const divider = line.search(/[：:]/);
+                const suppliedName = divider >= 0 ? line.slice(0, divider).trim() : '';
+                const description = (divider >= 0 ? line.slice(divider + 1) : line).trim();
+                const rootName = suppliedName || fallbackName;
+                let key = rootName;
+                let serial = 2;
+                while (Object.prototype.hasOwnProperty.call(entries, key)) key = rootName + '·' + serial++;
+                entries[key] = buildEntry(description || rootName, index);
+            });
+            return entries;
+        }
+        function clampBondNumber(id) {
+            const el = document.getElementById(id);
+            const n = Number(el && el.value !== '' ? el.value : 0);
+            return Number.isFinite(n) ? Math.max(0, Math.min(100, Math.round(n))) : 0;
+        }
+        function readBondForm() {
+            const text = (id) => {
+                const el = document.getElementById(id);
+                return el ? el.value.trim() : '';
+            };
+            const name = text('bond-name');
+            if (!name) throw new Error('请填写羁绊人物姓名，或选择「暂不创建」。');
+            if (/[\\/~]/.test(name)) throw new Error('羁绊人物姓名不能包含 / 或 ~。');
+            const required = [
+                ['bond-gender', '性别'], ['bond-realm', '境界'], ['bond-faction', '所属势力'],
+                ['bond-appearance', '外貌'], ['bond-figure', '身材']
+            ];
+            const missing = required.filter(([id]) => !text(id)).map(([, label]) => label);
+            if (missing.length) throw new Error('请填写羁绊人物的必填项：' + missing.join('、') + '。');
+            return {
+                姓名: name,
+                性别: text('bond-gender'),
+                外貌: text('bond-appearance'),
+                身材: text('bond-figure'),
+                衣服: text('bond-clothes'),
+                装备: readBondLines('bond-equipment', '自定义装备', description => ({ 部位: '未指定', 品质: '普通', 描述: description })),
+                武学功法: {
+                    修炼功法: readBondLines('bond-cultivation-skills', '自定义修炼功法', description => ({ 品阶: '普通', 层次: '初窥门径', 熟练度: 0, 描述: description })),
+                    战斗功法: readBondLines('bond-combat-skills', '自定义战斗功法', description => ({ 品阶: '普通', 层次: '初窥门径', 熟练度: 0, 描述: description }))
+                },
+                修为进度: clampBondNumber('bond-progress'),
+                境界: normalizeCultivation(text('bond-realm')),
+                状态: readBondLines('bond-status', '当前状态', description => ({ 描述: description, 剩余回合: 0 })),
+                天赋: readBondLines('bond-talents', '自定义天赋', description => ({ 品阶: '普通', 描述: description })),
+                所属势力: text('bond-faction'),
+                好感度: clampBondNumber('bond-affection')
+            };
+        }
+        function applyInitToMvuData(d, form) {
+            if (!d || typeof d !== 'object') return;
+            if (!d.stat_data || typeof d.stat_data !== 'object') d.stat_data = {};
+            if (!d.stat_data.user || typeof d.stat_data.user !== 'object') d.stat_data.user = {};
+            if (!d.stat_data.世界 || typeof d.stat_data.世界 !== 'object') d.stat_data.世界 = {};
+            if (!d.stat_data.在场人物 || typeof d.stat_data.在场人物 !== 'object') d.stat_data.在场人物 = {};
+            if (!d.stat_data.羁绊人物 || typeof d.stat_data.羁绊人物 !== 'object') d.stat_data.羁绊人物 = {};
+            if (!d.stat_data.传闻 || typeof d.stat_data.传闻 !== 'object') d.stat_data.传闻 = {};
+            const u = d.stat_data.user;
+            u.姓名 = form.name;
+            u.年龄 = form.age;
+            u.性别 = form.gender || '';
+            u.性格 = form.personality || '';
+            u.外貌 = form.appearance || '';
+            u.身材 = form.figure || form.context.身材;
+            u.衣服 = form.clothes || form.context.衣服;
+            u.身份 = form.identity || '';
+            u.其他设定 = form.other || '';
+            if (Object.prototype.hasOwnProperty.call(u, '所属势力')) delete u.所属势力;
+            u.背包物品 = {};
+            u.装备 = {};
+            if (!u.武学功法 || typeof u.武学功法 !== 'object') u.武学功法 = {};
+            if (!u.武学功法.修炼功法 || typeof u.武学功法.修炼功法 !== 'object') u.武学功法.修炼功法 = {};
+            if (!u.武学功法.战斗功法 || typeof u.武学功法.战斗功法 !== 'object') u.武学功法.战斗功法 = {};
+            u.修为进度 = 0;
+            u.境界 = normalizeCultivation(form.cultivation);
+            u.状态 = {};
+            u.天赋 = {};
+            form.talents.forEach(talent => {
+                const key = String(talent.name).replace(/\./g, '·');
+                u.天赋[key] = {
+                    品阶: toTierName(talent.quality),
+                    描述: String(talent.desc)
+                };
+            });
+            d.stat_data.世界.时间 = form.context.时间;
+            d.stat_data.世界.地点 = form.context.地点;
+            if (form.bond) {
+                const b = form.bond;
+                d.stat_data.羁绊人物[b.姓名] = {
+                    性别: b.性别,
+                    外貌: b.外貌,
+                    身材: b.身材,
+                    衣服: b.衣服,
+                    装备: b.装备,
+                    武学功法: b.武学功法,
+                    修为进度: b.修为进度,
+                    境界: b.境界,
+                    状态: b.状态,
+                    天赋: b.天赋,
+                    所属势力: b.所属势力,
+                    好感度: b.好感度
+                };
+            }
+        }
+        function tryFillChatInput(text) {
+            const targets = [window, window.parent];
+            for (const w of targets) {
+                try {
+                    if (w && w.document) {
+                        const ta = w.document.getElementById('send_textarea');
+                        if (ta) {
+                            ta.value = text;
+                            ta.dispatchEvent(new Event('input', { bubbles: true }));
+                            return true;
+                        }
+                    }
+                } catch (e) { /* 跨域或宿主不可访问时忽略 */ }
+            }
+            return false;
+        }
+        async function startGame(includeBond) {
+            const name = document.getElementById('char-name').value.trim();
+            if (!name) {
+                alert('请先填写角色姓名，再开始游戏。');
+                return;
+            }
+            const ageText = document.getElementById('char-age').value.trim();
+            let age = 0;
+            if (ageText !== '' && !Number.isNaN(Number(ageText))) {
+                age = Math.max(0, Math.floor(Number(ageText)));
+            }
+            const appearance = document.getElementById('char-appearance').value.trim();
+            const figure = document.getElementById('char-figure').value.trim();
+            const startLocation = document.getElementById('start-location').value;
+            const startSpot = getStartSpot(startLocation);
+            const context = getActivePlotContext(appearance, startLocation, startSpot);
+            const activePlotOption = document.querySelector('.plot-option.active');
+            const customMode = !activePlotOption || !plotContexts[activePlotOption.getAttribute('data-plot')];
+            const customPlot = document.getElementById('custom-plot').value.trim();
+            let bond = null;
+            try {
+                if (includeBond) bond = readBondForm();
+            } catch (e) {
+                const bondStatus = document.getElementById('bond-game-status');
+                if (bondStatus) bondStatus.textContent = e && e.message ? e.message : String(e);
+                return;
+            }
+            const form = {
+                name: name,
+                age: age,
+                gender: document.getElementById('char-gender').value.trim(),
+                appearance: appearance,
+                figure: figure,
+                personality: document.getElementById('char-personality').value.trim(),
+                identity: document.getElementById('char-identity').value.trim(),
+                cultivation: document.getElementById('char-cultivation').value.trim(),
+                other: document.getElementById('char-other').value.trim(),
+                talents: selectedTalents.slice(),
+                context: context,
+                clothes: extractClothing(appearance, customPlot),
+                startLocation: startLocation,
+                startSpot: startSpot,
+                bond: bond
+            };
+            const btn = document.getElementById(includeBond ? 'bond-start-game-button' : 'start-game-button');
+            const status = document.getElementById(includeBond ? 'bond-game-status' : 'start-game-status');
+            btn.disabled = true;
+            btn.textContent = '正在初始化…';
+            if (status) status.textContent = '正在写入 MVU 变量并准备摘要…';
+            try {
+                const Mvu = await ensureMvu();
+                const chatData = Mvu.getMvuData({ type: 'chat' });
+                if (!chatData || typeof chatData !== 'object') throw new Error('获取变量表失败（getMvuData 返回空）');
+                applyInitToMvuData(chatData, form);
+                await Mvu.replaceMvuData(chatData, { type: 'chat' });
+                let floorNote = '';
+                try {
+                    let messageId = 'latest';
+                    if (typeof getCurrentMessageId === 'function') {
+                        try { messageId = getCurrentMessageId(); } catch (e) { /* 非楼层 iframe，退回 latest */ }
+                    }
+                    const floorData = Mvu.getMvuData({ type: 'message', message_id: messageId });
+                    if (floorData && typeof floorData === 'object') {
+                        applyInitToMvuData(floorData, form);
+                        await Mvu.replaceMvuData(floorData, { type: 'message', message_id: messageId });
+                    }
+                } catch (floorErr) {
+                    console.warn('楼层快照写入失败（不影响聊天级初始化）:', floorErr);
+                    floorNote = '（楼层快照未同步，刷新后可能需模型首轮补齐）';
+                }
+                updatePreview();
+                const summary = document.getElementById('character-preview').innerText;
+                const filled = tryFillChatInput(summary);
+                if (!filled) {
+                    let copied = false;
+                    try {
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(summary);
+                            copied = true;
+                        }
+                    } catch (e) { /* 忽略 */ }
+                    if (!copied) copied = copyWithFallback(summary);
+                    btn.textContent = copied ? '✓ 已复制到剪贴板' : '✓ 初始化完成（请手动复制摘要）';
+                } else {
+                    btn.textContent = '✓ 已初始化并填入输入框';
+                }
+                btn.style.background = '#4CAF50';
+                const bondNote = bond ? '已写入羁绊人物「' + bond.姓名 + '」，' : '';
+                if (status) status.textContent = customMode
+                    ? bondNote + '已写入基础信息，并按你的剧情/开局地点给出时间、地点、衣着、身材、身份初值；AI 会在首轮回复读取剧情、身份与天赋后校准。摘要' + (filled ? '已填入输入框' : '已复制到剪贴板') + '，发送即可开局。' + floorNote
+                    : bondNote + '已写入：姓名/年龄/性别/外貌/身材/性格/天赋，并按开场剧情与开局地点生成时间/地点/衣着/身份。摘要' + (filled ? '已填入输入框' : '已复制到剪贴板') + '，发送即可开局。' + floorNote;
+            } catch (e) {
+                console.error('MVU 初始化失败:', e);
+                btn.disabled = false;
+                btn.textContent = '失败，点此重试';
+                btn.style.background = '#c0392b';
+                if (status) status.textContent = '初始化失败：' + (e && e.message ? e.message : e) + '。请确认已安装并启用 MagVarUpdate 与酒馆助手，且网络可访问变量框架。';
+            }
+        }
+        const startGameButton = document.getElementById('start-game-button');
+        if (startGameButton) startGameButton.addEventListener('click', () => startGame(false));
+        const bondCreatorStep = document.getElementById('bond-creator-step');
+        function openBondCreator() {
+            if (!bondCreatorStep) return;
+            bondCreatorStep.classList.remove('hidden');
+            bondCreatorStep.removeAttribute('aria-hidden');
+            requestAnimationFrame(() => bondCreatorStep.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+        }
+        function closeBondCreator() {
+            if (!bondCreatorStep) return;
+            bondCreatorStep.classList.add('hidden');
+            bondCreatorStep.setAttribute('aria-hidden', 'true');
+            const target = document.getElementById('start-game-button');
+            if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+        }
+        const createBondButton = document.getElementById('create-bond-button');
+        if (createBondButton) createBondButton.addEventListener('click', openBondCreator);
+        const bondBackButton = document.getElementById('bond-back-button');
+        if (bondBackButton) bondBackButton.addEventListener('click', closeBondCreator);
+        const bondSkipButton = document.getElementById('bond-skip-button');
+        if (bondSkipButton) bondSkipButton.addEventListener('click', () => startGame(false));
+        const bondStartButton = document.getElementById('bond-start-game-button');
+        if (bondStartButton) bondStartButton.addEventListener('click', () => startGame(true));
+        const startLocationSelect = document.getElementById('start-location');
+        if (startLocationSelect) startLocationSelect.addEventListener('change', updatePreview);
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('input', updatePreview);
+        });
+        const characterCultivation = document.getElementById('char-cultivation');
+        if (characterCultivation) characterCultivation.addEventListener('change', updatePreview);
+        document.querySelectorAll('#bond-creator-step input, #bond-creator-step select').forEach(input => {
+            input.addEventListener('input', updatePreview);
+            input.addEventListener('change', updatePreview);
+        });
+        function copyText(textToCopy, button) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showCopySuccess(button);
+                }).catch(err => {
+                    console.error('现代复制方案失败:', err);
+                    if (copyWithFallback(textToCopy)) {
+                        showCopySuccess(button);
+                    } else {
+                        showCopyError();
+                    }
+                });
+            } else {
+                if (copyWithFallback(textToCopy)) {
+                    showCopySuccess(button);
+                } else {
+                    showCopyError();
+                }
+            }
+        }
+        function copyWithFallback(text) {
+          try {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.top = '-9999px';
+            textArea.style.left = '-9999px';
+            textArea.style.opacity = '0';
+            document.body.appendChild(textArea);
+            textArea.select();
+            textArea.setSelectionRange(0, 99999); // 移动设备支持
+            const successful = document.execCommand('copy');
+            document.body.removeChild(textArea);
+            return successful;
+          } catch (err) {
+            console.warn('降级复制方案失败:', err);
+            return false;
+          }
+        }
+        function showCopySuccess(copyButton) {
+            if (!copyButton) return;
+            const originalText = copyButton.textContent;
+            copyButton.textContent = "✓ 复制成功!";
+            copyButton.style.background = "#4CAF50";
+            setTimeout(() => {
+                copyButton.textContent = originalText;
+                copyButton.style.background = "";
+            }, 2000);
+        }
+        function showCopyError() {
+            alert('复制失败，请手动选择并复制预览区域的内容。');
+        }
+        // ===== 导出 / 导入角色 =====
+        function collectCharacterSnapshot() {
+            const fieldIds = ['char-name', 'char-age', 'char-gender', 'char-appearance', 'char-figure', 'char-personality', 'char-identity', 'char-cultivation', 'char-other'];
+            const data = {};
+            fieldIds.forEach(id => {
+                const el = document.getElementById(id);
+                data[id] = el ? el.value : '';
+            });
+            const activePlotOption = document.querySelector('.plot-option.active');
+            data.plotType = activePlotOption ? activePlotOption.getAttribute('data-plot') : '';
+            data.customPlot = document.getElementById('custom-plot') ? document.getElementById('custom-plot').value : '';
+            data.startLocation = document.getElementById('start-location') ? document.getElementById('start-location').value : '';
+            data.talents = selectedTalents.map(t => ({
+                name: t.name,
+                desc: t.desc,
+                quality: toTierName(t.quality)
+            }));
+            data.summary = document.getElementById('character-preview') ? document.getElementById('character-preview').innerText : '';
+            return {
+                app: '九州大世界角色存档',
+                version: 1,
+                exportedAt: new Date().toISOString(),
+                character: data
+            };
+        }
+        function exportCharacter() {
+            try {
+                const snap = collectCharacterSnapshot();
+                const json = JSON.stringify(snap, null, 2);
+                const name = String(snap.character['char-name'] || '').trim() || '未命名';
+                const fileName = '九州大世界-角色-' + name + '.json';
+                const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+                let ok = false;
+                try {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    setTimeout(() => URL.revokeObjectURL(url), 2000);
+                    ok = true;
+                } catch (e) {
+                    console.warn('Blob 下载失败，改用 data URL:', e);
+                }
+                if (!ok) {
+                    const a = document.createElement('a');
+                    a.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(json);
+                    a.download = fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+                const status = document.getElementById('start-game-status');
+                if (status) status.textContent = '已导出「' + name + '」的角色存档（' + fileName + '），可在任意电脑上用「角色管理 → 从文件导入」恢复后直接开始游戏。';
+            } catch (e) {
+                console.error('导出角色失败:', e);
+                alert('导出失败：' + (e && e.message ? e.message : e));
+            }
+        }
+        function applyCharacterSnapshot(snap) {
+            const c = (snap && snap.character && typeof snap.character === 'object') ? snap.character : snap;
+            const fieldIds = ['char-name', 'char-age', 'char-gender', 'char-appearance', 'char-figure', 'char-personality', 'char-identity', 'char-cultivation', 'char-other'];
+            fieldIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && c[id] != null) el.value = String(c[id]);
+            });
+            selectedTalents = Array.isArray(c.talents)
+                ? c.talents.map(t => ({
+                    name: String(t && t.name != null ? t.name : ''),
+                    desc: String(t && t.desc != null ? t.desc : ''),
+                    quality: t && t.quality != null ? toTierNum(t.quality) : 3
+                })).filter(t => t.name)
+                : [];
+            updateSelectedTalents();
+            const plotType = c.plotType || '';
+            const plotOption = document.querySelector('.plot-option[data-plot="' + plotType + '"]');
+            if (plotOption) {
+                plotOption.click();
+            } else if (plotType === 'custom') {
+                const customOption = document.querySelector('.plot-option[data-plot="custom"]');
+                if (customOption) customOption.click();
+            }
+            if (c.customPlot != null) {
+                const customPlotEl = document.getElementById('custom-plot');
+                if (customPlotEl) customPlotEl.value = String(c.customPlot);
+            }
+            const locSel = document.getElementById('start-location');
+            if (locSel && c.startLocation != null && c.startLocation !== '') {
+                const target = String(c.startLocation);
+                const exists = Array.from(locSel.options).some(o => o.value === target);
+                if (exists) locSel.value = target;
+            }
+            updatePreview();
+        }
+        function importCharacter(file) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                try {
+                    const snap = JSON.parse(reader.result);
+                    if (!snap || typeof snap !== 'object') throw new Error('文件内容不是有效的角色存档');
+                    const c = (snap.character && typeof snap.character === 'object') ? snap.character : snap;
+                    if (c['char-name'] == null && c.name == null) throw new Error('缺少角色信息字段');
+                    if (c.name != null && c['char-name'] == null) c['char-name'] = c.name;
+                    applyCharacterSnapshot(snap);
+                    const status = document.getElementById('start-game-status');
+                    if (status) status.textContent = '角色已导入完成，检查信息无误后点击「开始游戏」即可开局。';
+                } catch (e) {
+                    console.error('导入角色失败:', e);
+                    alert('导入失败：' + (e && e.message ? e.message : e));
+                }
+            };
+            reader.onerror = function () {
+                alert('读取文件失败，请重试。');
+            };
+            reader.readAsText(file, 'utf-8');
+        }
+        // ===== 角色管理：导出 / 本地存档 / 导入 =====
+        const STORAGE_KEY = 'jiuzhou_dashi_saved_characters';
+        function getSavedCharacters() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                const arr = raw ? JSON.parse(raw) : [];
+                return Array.isArray(arr) ? arr : [];
+            } catch (e) {
+                console.warn('读取本地存档失败:', e);
+                return [];
+            }
+        }
+        function writeSavedCharacters(list) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+            } catch (e) {
+                console.error('写入本地存档失败:', e);
+                alert('保存到本地失败：浏览器存储不可用或已满，可改用「导出为文件」。');
+            }
+        }
+        function renderSavedCharacterList() {
+            const listEl = document.getElementById('cm-saved-list');
+            if (!listEl) return;
+            const list = getSavedCharacters();
+            if (!list.length) {
+                listEl.innerHTML = '<div class="cm-empty">暂无本地存档，先创建角色并点「保存到本地」。</div>';
+                return;
+            }
+            listEl.innerHTML = '';
+            list.forEach(function (item) {
+                const name = String((item && item.name) || '未命名');
+                const savedAt = item && item.savedAt ? new Date(item.savedAt) : null;
+                const timeText = savedAt && !isNaN(savedAt.getTime())
+                    ? savedAt.toLocaleString('zh-CN', { hour12: false })
+                    : '';
+                const row = document.createElement('div');
+                row.className = 'cm-item';
+                const info = document.createElement('div');
+                info.className = 'cm-item-info';
+                const nm = document.createElement('div');
+                nm.className = 'cm-item-name';
+                nm.textContent = name;
+                const tm = document.createElement('div');
+                tm.className = 'cm-item-time';
+                tm.textContent = timeText ? '保存于 ' + timeText : '';
+                info.appendChild(nm);
+                info.appendChild(tm);
+                const actions = document.createElement('div');
+                actions.className = 'cm-item-actions';
+                const loadBtn = document.createElement('button');
+                loadBtn.type = 'button';
+                loadBtn.className = 'cm-load';
+                loadBtn.textContent = '载入';
+                loadBtn.addEventListener('click', function () { loadCharacterFromLocal(item.id); });
+                const delBtn = document.createElement('button');
+                delBtn.type = 'button';
+                delBtn.className = 'cm-del';
+                delBtn.textContent = '删除';
+                delBtn.addEventListener('click', function () { deleteSavedCharacter(item.id); });
+                actions.appendChild(loadBtn);
+                actions.appendChild(delBtn);
+                row.appendChild(info);
+                row.appendChild(actions);
+                listEl.appendChild(row);
+            });
+        }
+        function saveCharacterToLocal() {
+            try {
+                const snap = collectCharacterSnapshot();
+                const name = String(snap.character['char-name'] || '').trim() || '未命名';
+                const list = getSavedCharacters();
+                list.push({
+                    id: 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+                    name: name,
+                    savedAt: new Date().toISOString(),
+                    character: snap.character
+                });
+                writeSavedCharacters(list);
+                renderSavedCharacterList();
+                const status = document.getElementById('start-game-status');
+                if (status) status.textContent = '已把「' + name + '」保存到本地存档，可在角色管理中随时载入。';
+            } catch (e) {
+                console.error('保存本地角色失败:', e);
+                alert('保存失败：' + (e && e.message ? e.message : e));
+            }
+        }
+        function loadCharacterFromLocal(id) {
+            const item = getSavedCharacters().find(function (x) { return x && x.id === id; });
+            if (!item) {
+                alert('未找到该存档，可能已被删除。');
+                renderSavedCharacterList();
+                return;
+            }
+            try {
+                applyCharacterSnapshot(item.character);
+                const status = document.getElementById('start-game-status');
+                if (status) status.textContent = '已载入本地存档「' + item.name + '」，检查信息无误后点击「开始游戏」即可。';
+            } catch (e) {
+                console.error('载入本地角色失败:', e);
+                alert('载入失败：' + (e && e.message ? e.message : e));
+            }
+        }
+        function deleteSavedCharacter(id) {
+            const list = getSavedCharacters().filter(function (x) { return x && x.id !== id; });
+            writeSavedCharacters(list);
+            renderSavedCharacterList();
+        }
+        function openCharacterManager() {
+            const overlay = document.getElementById('character-manager-overlay');
+            if (!overlay) return;
+            const container = document.querySelector('.jz-page .container');
+            if (container) {
+                overlay.style.top = container.scrollTop + 'px';
+                overlay.style.height = container.clientHeight + 'px';
+                container._jzPrevOverflowY = container.style.overflowY;
+                container.style.overflowY = 'hidden';
+            }
+            renderSavedCharacterList();
+            overlay.classList.remove('hidden');
+        }
+        function closeCharacterManager() {
+            const overlay = document.getElementById('character-manager-overlay');
+            if (overlay) overlay.classList.add('hidden');
+            const container = document.querySelector('.jz-page .container');
+            if (container) container.style.overflowY = container._jzPrevOverflowY || '';
+        }
+        const characterManagerButton = document.getElementById('character-manager-button');
+        if (characterManagerButton) characterManagerButton.addEventListener('click', openCharacterManager);
+        const characterManagerClose = document.getElementById('character-manager-close');
+        if (characterManagerClose) characterManagerClose.addEventListener('click', closeCharacterManager);
+        const cmOverlay = document.getElementById('character-manager-overlay');
+        if (cmOverlay) cmOverlay.addEventListener('click', function (e) { if (e.target === cmOverlay) closeCharacterManager(); });
+        const cmExportButton = document.getElementById('cm-export-button');
+        if (cmExportButton) cmExportButton.addEventListener('click', exportCharacter);
+        const cmSaveButton = document.getElementById('cm-save-button');
+        if (cmSaveButton) cmSaveButton.addEventListener('click', saveCharacterToLocal);
+        const cmImportButton = document.getElementById('cm-import-button');
+        const importCharacterInput = document.getElementById('import-character-input');
+        if (cmImportButton && importCharacterInput) {
+            cmImportButton.addEventListener('click', function () {
+                importCharacterInput.click();
+            });
+            importCharacterInput.addEventListener('change', function () {
+                const file = importCharacterInput.files && importCharacterInput.files[0];
+                if (file) importCharacter(file);
+                importCharacterInput.value = '';
+            });
+        }
+        updatePreview();
+    
+        // ===== 新交互：九州详情 / 势力分布 / 武学境界 =====
+        var PROVINCES = {
+            '幽州': { '首府': '蓟城', '区县': '涿郡、清河、常山、渔阳', '地理': '北境边关，苦寒之地，燕山横亘，冬长夏短', '利益格局': '边军、马匪、镖局、马帮围绕北疆商路角力；丐帮北分舵以蓟城为心；神武卫北镇抚司坐镇渔阳；雁门关为北疆要冲，边军与马匪暗通款曲。', '切入点': '押镖出关、马匪劫道、边军军情、豪强械斗' },
+            '凉州': { '首府': '姑臧', '区县': '陇西、金城、沙州、玉门', '地理': '大漠孤烟，边塞豪情，河西走廊，黄沙接天', '利益格局': '风沙渡为沙漠商路咽喉，黑沙帮把持；陇西马帮世代养马贩马，官市与私市并存；凉州与雍州长安以陇道相连，商队驼铃不绝；沙匪与马贼时聚时散。', '切入点': '风沙渡黑店、马市黑幕、沙漠遗迹、军粮私贩' },
+            '青州': { '首府': '临淄', '区县': '北海、东莱、乐安、高密、泰山、琅琊、东海', '地理': '齐鲁故地，东临大海，盐场连绵，海贸兴盛', '利益格局': '盐场与海贸为官府、世家、海商三方分利；泰山多绿林，琅琊世家别业与东海渔港并立；海匪勾结官差走私；听风楼沿海情报线以东莱为锚；丐帮海港眼线遍布码头。', '切入点': '私盐案、海匪洗港、泰山绿林、洋货黑市' },
+            '中州': { '首府': '洛阳', '区县': '颍川、陈留、汝南、荥阳、濮阳、东郡、济阴、任城、彭城、下邳、沛县', '地理': '中原腹地，四战之地，河洛形胜，沃野千里', '利益格局': '朝廷与神武卫直接掌控洛阳；武林大会常设之地；听风楼总楼隐于洛阳市井；濮阳为漕运枢纽，盐商与漕帮共治；彭城为南北通衢商埠，丐帮总舵设于彭城；颍川多世家书院，陈留为镖路枢纽；四大世家联姻网络以济阴为中心。', '切入点': '武林大会、神武卫大狱、漕粮失窃、盐引之争、丐帮总舵、朝堂暗流' },
+            '雍州': { '首府': '长安', '区县': '凤翔、天水', '地理': '关中沃土，帝王之基，八水绕长安', '利益格局': '长安为关中第一大城，军镇与官市并立；天机剑宗的天剑峰隐于秦岭；西接凉州大漠，商旅经凤翔转输河西。', '切入点': '马市黑幕、军粮案、天剑峰秘闻、关中豪族' },
+            '益州': { '首府': '汉中', '区县': '南郑、巴郡、葭萌、剑阁', '地理': '天府之国，巴蜀天险，山高林密，蜀道难行', '利益格局': '盐井与蜀锦之利归官府与当地豪族；真武阁在巴蜀影响深厚，百草堂药王谷隐于南郑秦巴山中；剑阁为天下雄关，一夫当关；枯藤寺所在深山多秘境传闻。', '切入点': '蜀道劫镖、盐井之争、古刹秘境、剑阁军情' },
+            '扬州': { '首府': '金陵', '区县': '姑苏、广陵、京口、丹阳', '地理': '江南水乡，鱼米之乡，天下财赋之地', '利益格局': '盐铁茶丝之利集中于盐商与四大世家；秦淮风月是情报暗线集散地；漕帮、盐商、官府三方分利；姑苏为世家根基，广陵为漕运重港。', '切入点': '盐引黑幕、秦淮花魁大会、漕运沉船、世家婚宴' },
+            '荆州': { '首府': '江陵', '区县': '襄阳、江夏、长沙', '地理': '九省通衢，水陆交汇，鱼米之乡', '利益格局': '黑虎堂与漕帮争夺江陵码头；襄阳为南北商旅咽喉，税关盘剥严重；长沙粮仓、江夏冶铁；南接云州十万大山，边贸盐铁有来有往。', '切入点': '码头械斗、税关舞弊、漕运沉船、粮仓亏空' },
+            '云州': { '首府': '五溪', '区县': '武陵、黔中、苗岭、百越', '地理': '十万大山，苗疆秘域，瘴雾弥漫，山深林密', '利益格局': '七情谷与幽冥教在武陵一带明争暗斗；苗夷山寨自给自足，以山货药材蛊毒易中原盐铁；百越诸寨与汉地商旅规矩不同，边贸纠纷常起；官府悬赏难进深山。', '切入点': '苗疆秘药、蛊毒疑案、魅术案、山寨联姻' },
+            '西域': { '国家': '月河王国、白玉城邦盟、天山雪国', '地区': '赤沙走廊、玉河绿洲、天山南麓', '地理': '沙漠、绿洲与雪山交错，玉门关外商路纵横，水源与山口决定城邦兴衰', '利益格局': '月河王国以水利田租、关市和玉石转运立国；白玉城邦盟由行会与商城议席共治；天山雪国以牧场、马匹与药材换取部落效忠。九州需要良马、玉石、香料和药材，西域需要盐、铁器、茶与丝绸。', '切入点': '关市加税、商队失踪、绿洲争水、王位继承、玉门走私' },
+            '北方诸部': { '国家': '北辰汗庭、黑水部盟、雪岭诸部', '地区': '草原腹地、黑水林海、雪岭边地', '地理': '草原利于迁徙骑牧，林海出产皮毛矿砂，雪岭控制山口、药场与西行支路', '利益格局': '北辰汗庭以婚盟、牧场和互市税维系部落；黑水部盟由猎部、矿部与河畔聚落共议；雪岭诸部依靠季节会盟维持山口平衡。九州依赖北方马匹和边军情报，北方依赖粮食、茶盐、铁器与冬季边市。', '切入点': '互市封闭、军马被截、部落质子、矿山争夺、边关误杀' },
+            '东瀛': { '国家': '东瀛国', '地区': '中部稻作平原、东部山地、南方海峡诸岛', '地理': '日京为唯一政治中心，海峡与港口由海防府巡检；火山、山路与矿场分布于诸岛之间', '利益格局': '东瀛国以稻税、银矿、硫磺、海盐、木材和港税维持国库；太政院理政，兵部寮统兵，海防府掌航契与海路。九州与东瀛往来于海贸、银、硫磺、珍珠、船材、茶与丝绸，也长期受走私与海盗牵制。', '切入点': '航契纠纷、山路封锁、剑印决斗、硫磺走私、海峡劫掠' }
+        };
+
+        var FACTION_ZONES = {
+            '幽州': [['丐帮·北分舵', '丐帮'], ['神武卫·北镇抚司', '神武卫'], ['鹰扬镖局·总号', '鹰扬镖局']],
+            '凉州': [['黑沙帮', '黑沙帮'], ['陇西马帮', '陇西马帮'], ['落日刀门·玉门', '落日刀门']],
+            '青州': [['听风楼·沿海线', '听风楼'], ['丐帮·海港眼线', '丐帮'], ['沧海盟·鲸波岛', '沧海盟']],
+            '中州': [['神武卫·总司', '神武卫'], ['听风楼·总楼', '听风楼'], ['丐帮·总舵', '丐帮'], ['菩提禅院', '菩提禅院'], ['四大世家·济阴', '四大世家'], ['漕帮/盐商', '漕帮盐商']],
+            '雍州': [['天机剑宗', '天机剑宗']],
+            '益州': [['真武阁', '真武阁'], ['百草堂', '百草堂'], ['枯藤寺(无主)', '枯藤寺'], ['蜀中唐门·唐家堡', '蜀中唐门']],
+            '扬州': [['四大世家', '四大世家'], ['漕帮/盐商', '漕帮盐商'], ['听风楼·秦淮', '听风楼'], ['广陵琴院·琼花坞', '广陵琴院']],
+            '荆州': [['黑虎堂', '黑虎堂'], ['漕帮', '漕帮盐商'], ['洞庭龙君寨', '洞庭龙君寨']],
+            '云州': [['七情谷', '七情谷'], ['幽冥教', '幽冥教'], ['银月峒·月牙岭', '银月峒']],
+            '西域': [['赤沙刀门·白玉城邦', '赤沙刀门'], ['昆仑雪宫·雪国', '昆仑雪宫'], ['月轮禅院·玉河', '月轮禅院']],
+            '北方诸部': [['天狼骑门·北辰汗庭', '天狼骑门'], ['雪原长生坛·雪岭诸部', '雪原长生坛'], ['黑水铁衣堂·黑水部盟', '黑水铁衣堂']],
+            '东瀛': [['神乐御剑院·日京', '神乐御剑院'], ['潮灯舟会·海峡诸港', '潮灯舟会'], ['黑岳修验寺·东部群山', '黑岳修验寺']],
+        };
+
+        var FACTION_DETAILS = {
+            '真武阁': { '定位': '正道之首，道法自然', '在地': '益州·巴郡·真武山，香火道观散布汉中、南郑', '组织架构': '掌门总摄；传功长老云清瑶掌传承；大师兄沈孤鸿掌外务；大师姐苏青梧掌内务；执事洛轻尘掌药阁；护法秦无咎掌戒律；分丹房、剑院、经楼、药阁四部', '经营模式': '山田香火自足；采药炼丹售予百草堂；为商队祈福收功德钱；贵胄捐建观宇换取入门名额', '行政关系': '门规不涉朝堂，与益州官府敬而远之；官府借其声威镇慑巴蜀豪强' },
+            '菩提禅院': { '定位': '佛门圣地，慈悲为怀，亦藏金刚怒目', '在地': '中州·荥阳·灵山禅院，下院香火寺分布于洛阳、颍川、陈留', '组织架构': '方丈空闻总持；戒律院首座慧净；罗汉堂首座玄苦掌武僧；药僧素问掌药坊；小尼明澈为侍者；分讲经、武僧、药僧、杂役四类', '经营模式': '寺产田庄自养；素斋伤药佛经流通；洛阳贵人设斋供僧；药坊成药经百草堂行销；武僧受聘护送香客商队', '行政关系': '皇家赐田赐匾；神武卫对灵山武僧网开一面；寺中亦为洛阳官宦子弟寄读之所' },
+            '天机剑宗': { '定位': '剑道通神，窥天机之变，亦正亦傲', '在地': '雍州·秦岭·天剑峰，剑庐散于长安、天水', '组织架构': '掌门谢无涯；圣女顾青霜；剑侍统领冷月心；剑侍白鹭；藏剑阁晏清欢；弟子风满楼；门人稀少而精', '经营模式': '铸剑授剑收取重酬；天机推演、占验吉凶明码标价；门人出山历练须上缴出山金', '行政关系': '天剑峰自成禁地，官府不得擅入；朝廷聘其铸剑授艺，剑宗以天机不可泄婉拒征召' },
+            '幽冥教': { '定位': '邪道巨擘，诡秘难测，行事亦正亦邪', '在地': '云州·武陵·幽冥渊，暗舵散布荆州江陵、襄阳与云州苗寨', '组织架构': '教主统摄（行踪成谜）；左使白骨书生掌毒经刑堂；右使阴九娘掌蛊术药庐；圣女幽若；魅影月无瑕、夜未央；护法厉无咎；分渊主—使者—圣女—魅影—香主五级', '经营模式': '毒蛊秘药、暗杀佣兵、控心术三大营生；南疆地下赌局、牙行亦有涉足；苗寨以蛊毒易药', '行政关系': '荆州、云州官府悬赏通缉却难进武陵深山；与土司苗寨暗通款曲，征剿屡扑空' },
+            '七情谷': { '定位': '操纵人心，魅术冠绝江湖', '在地': '云州·武陵·七情谷（南疆花谷），乐坊青楼画舫暗线延展至江陵、襄阳乃至扬州·金陵秦淮', '组织架构': '谷主总领；副谷主梦瑶；圣女花想容；圣女候选情丝；乐师蝶衣；公子花无缺；客卿段无尘；多女弟子，以情色乐香四艺入门', '经营模式': '歌舞乐伎、合欢药物、魅术服务敛财；秦淮画舫、金陵青楼为暗线产业；为权贵牵线搭桥换取庇护', '行政关系': '以脂粉歌舞渗透州府官宦，官府半依半防；与幽冥教争夺南疆暗面' },
+            '丐帮': { '定位': '弟子遍布天下，侠义存于市井', '在地': '总舵设中州·彭城；北分舵以幽州·蓟城为心；青州海港、扬州画舫各有眼线', '组织架构': '帮主统辖（陈布袋为候选人）；九袋长老铁拐李掌刑律；八袋长老洪九娘掌北地分舵；歌女柳三娘掌消息；底袋弟子充作街巷耳目；以袋数定地位', '经营模式': '行乞为表、消息为利；帮众兼做纤夫脚力更夫护院；替人寻人盯梢传话明码标价；沿商路设丐眼贩售情报', '行政关系': '与官府半敌半友；严守不劫妇孺、不卖国两条底线' },
+            '四大世家': { '定位': '累世簪缨，底蕴深厚（慕容、南宫、西门、东方）', '在地': '根基在扬州·姑苏；中州·济阴为联姻结盟中心；青州·琅琊多别业田庄；金陵、洛阳设商会分号', '组织架构': '各家族长总领；家老会制约族长；慕容清月、慕容瑾、南宫婉、南宫烈、西门雪、东方瑶为新一代核心；分掌盐铁钱庄漕运文教', '经营模式': '盐铁茶丝、钱庄银号、漕运田庄并举；联姻结盟、捐官入仕；别业兼作情报与银窖；灾年放贷囤粮', '行政关系': '半官半民——通婚捐官、把持税关；四家互有联姻又有竞争，朝廷既借重又猜忌' },
+            '百草堂': { '定位': '医武双修，悬壶济世，中立超然', '在地': '总堂设益州·南郑·药王谷；分号遍布九州，以荆州江陵、扬州金陵、中州洛阳为三大分号', '组织架构': '堂主总领（少堂主药灵儿为接班人）；护法青黛掌护运；大弟子杜仲掌炮制；坐堂女医白芷；客卿薛神医；分号设坐堂—账房—护院三级', '经营模式': '药材成药行销九州；兼营银号汇兑与消息转售；坐堂行医收诊金；药王谷不纳租赋，条件是灾荒平价供药', '行政关系': '中立超然，官府与江湖都买账；与真武阁丹房、菩提禅院药坊合作；严禁参与江湖仇杀' },
+            '听风楼': { '定位': '掌握天下秘闻，明码标价的情报组织', '在地': '总楼隐于中州·洛阳市井；中州·濮阳设中转站；扬州·金陵秦淮与画舫为暗线集散地；青州东莱沿海线以海商身份为锚', '组织架构': '楼主云间客（真容无人识）；首席闻莺；暗线苏幕遮；新秀秋瞳；记事宋知微；账房铁算盘；分采风核验典藏交易四部', '经营模式': '情报明码标价、只认钱不认人，七真三假；可买断包月订制；代传密信、伪造文书；从不亲自出面参与争斗', '行政关系': '与神武卫互相忌惮——卫中重金购线，楼中替豪强藏匿行踪；朝廷屡欲收编而不得其门' },
+            '神武卫': { '定位': '朝廷监管江湖的武力机构', '在地': '卫所遍及九州州府；北镇抚司坐镇幽州·渔阳；总司驻中州·洛阳（大狱档房所在）', '组织架构': '统领裴铮；副统领秦霜；千户赵铁衣掌缉捕；教习穆青鸾；暗探萧云；文书韩凤楼；分缉捕暗探刑狱教习四司', '经营模式': '朝廷拨饷为主；抄没江湖产业充公；大狱审案收规费；兼管州府武备与路引查验', '行政关系': '朝廷直属，与州府地方官互不统属，权责摩擦不断；皇权与江湖自治的张力全系于此卫' },
+            '蜀中唐门': { '定位': '蜀地暗器机关世家，亦商亦武', '在地': '益州·葭萌·唐家堡，嘉陵江畔崖壁堡垒，机关暗道通剑阁；商号分设汉中、南郑', '组织架构': '门主总摄，嫡系长者代掌外务；分暗器、毒、机关、轻功、商号五房；外姓入赘方可学核心暗器', '经营模式': '暗器机关定制；解毒丹经百草堂售卖而留一手；护镖走货避税卡；官府商队求其开机关关隘', '行政关系': '官府忌其毒术又倚其守剑阁；与真武阁明面互不侵犯、暗地争蜀中话语权；与百草堂买卖又互相提防' },
+            '鹰扬镖局': { '定位': '北地第一大镖局，走镖护商', '在地': '总号幽州·蓟城·北门镖局街；分局雁门关内外；镖路幽州→中州→雍州', '组织架构': '总镖头韩九山；四大镖头分掌关内外；趟子手、车把式、马倌分工；与丐帮北分舵换耳目、与边军有同袍之谊', '经营模式': '走镖护商、押官银、护药材军马；雁门互市半数为鹰扬承运；兼营马市栈房；不接红货但暗运军需', '行政关系': '持路引通行各关，与雁门守将利益交错；神武卫疑其走私；马匪劫镖由鹰扬牵头复仇' },
+            '沧海盟': { '定位': '青州海贸护航霸主，亦商亦盗', '在地': '总舵青州·东莱·鲸波岛；分舵北海港、琅琊湾、东海渔镇', '组织架构': '盟主燕沧溟；三分舵设舵主；护商队与巡海队两支', '经营模式': '海船护航、盐场护运、沉船打捞；暗营私盐海货；东莱船行洋货行；海匪见旗不抢', '行政关系': '与海税衙门互利；与听风楼沿海线互为客户对手；神武卫查无实据' },
+            '落日刀门': { '定位': '大漠孤门的刀客传承，守峡护路', '在地': '凉州·玉门·落日峡，沙州以西戈壁孤门；弟子散居绿洲驿站，风沙渡有暗哨', '组织架构': '门主百里霜单传核心刀法；外门弟子多为绿洲孤儿、弃刀客，十年可离门', '经营模式': '无田产商铺，靠商队供奉与斩匪悬赏；玉门商旅敬水保路；沙匪劫道，刀门出手收尸立碑', '行政关系': '共守玉门得“守峡使”虚名无俸禄；与黑沙帮、陇西马帮划界分守' },
+            '广陵琴院': { '定位': '以琴证道的雅派武学圣地', '在地': '扬州·广陵·琼花坞；金陵秦淮、丹阳设琴社分塾', '组织架构': '院主沈知微；清商、正声、变徵三席；弟子多书香商贾；剑道藏于琴道', '经营模式': '授琴束脩、代修乐器、办雅集；江湖恩怨“一曲定输赢”仲裁；与七情谷乐坊一雅一俗竞争', '行政关系': '与扬州文官清流交好，世家子弟入院；不涉漕盐；听风楼偶借雅集接头' },
+            '洞庭龙君寨': { '定位': '洞庭水寨，劫富济贫的水上豪强', '在地': '荆州·江夏·洞庭君山；分哨江陵外港、长沙湘口；芦苇荡水道如迷宫', '组织架构': '寨主萧九渊；风、雨、雷、电四哨；船娘老艄公掌密图', '经营模式': '设卡抽水税、劫官府漕船豪商、赈灾；卖“平安旗”；与黑虎堂明暗斗', '行政关系': '官府征剿屡扑空，水军将领有旧；漕帮盐商暗买平安旗' },
+            '银月峒': { '定位': '苗岭十八寨盟主峒，巫蛊银饰之源', '在地': '云州·黔中·月牙岭；与武陵幽冥教势力犬牙交错', '组织架构': '圣女阿月掌祭祀、蛊母、盟约；峒主蒙岩掌兵事外务；寨老议事会；养蛊、织银、猎山、盐铁四部，汉人不任实职', '经营模式': '山货药材蛊毒银饰易货；汉商买“山牌”守山规；解蛊放蛊明码标价、一蛊一诺；与百草堂暗线易货', '行政关系': '官府羁縻封虚衔贡银；视幽冥教为“偷蛊的”大敌、与七情谷有摩擦' },
+            '黑沙帮': { '定位': '大漠绿洲的私市把持者', '在地': '凉州·风沙渡一带', '组织架构': '帮主、堂口、沙盗马贼依附', '经营模式': '把持沙漠商路，抽保护费、设黑店、走私皮货', '行政关系': '官军剿而不绝，与马匪时分时合' },
+            '陇西马帮': { '定位': '凉州世代养马贩马的边商', '在地': '凉州·陇西', '组织架构': '帮头、马贩、驼队脚夫', '经营模式': '官市私市并贩，兼做镖运', '行政关系': '与官市争利，军马采买多有往来' },
+            '漕帮盐商': { '定位': '漕运与盐业利益共同体', '在地': '中州·濮阳、扬州·广陵、荆州·江陵一带', '组织架构': '漕帮帮众、船行、盐商行会', '经营模式': '漕粮盐引、码头抽成、仓场囤积', '行政关系': '与官府税关分利，遇灾年粮价即生火并' },
+            '黑虎堂': { '定位': '荆州江陵码头的帮会势力', '在地': '荆州·江陵外港码头', '组织架构': '堂主、香主、力夫船娘帮众', '经营模式': '码头抽成、私盐、货物失踪生意', '行政关系': '与漕帮争码头，官府默许势力范围' },
+            '枯藤寺': { '定位': '益州深山废弃古刹，无主之地', '在地': '益州深山', '组织架构': '无主，各路亡命徒歇脚', '经营模式': '无；地宫传闻与藏宝图残页引探宝客', '行政关系': '官府不闻不问，魔教旧坛传闻不断' },
+            '赤沙刀门': { '定位': '赤沙走廊的路上武门，以十二面沙旗分管商道，重“人货同归”', '在地': '西域·白玉城邦盟、赤沙走廊；玉门关外设路契联络栈', '组织架构': '十二持旗人三年一推；刀客、驼队首领与井泉守人各守路段，不设世袭掌门', '经营模式': '护商、寻人、追赃与商约仲裁；收下路契便须护到底，劫掠受保商队者削旗逐出', '行政关系': '与白玉城邦盟互相需要又争井泉、税例和通行权；九州将其视为可贸易但需严查军械的外域武门' },
+            '昆仑雪宫': { '定位': '天山雪线上的高山武学圣地，守山口旧约而不为王族私战', '在地': '西域·天山雪国·冰谷、猎坡、药圃与矿道', '组织架构': '冰谷、猎坡、药圃、矿道四院共推宫主；门人多为牧人、猎手、药师与失去部族的孤儿', '经营模式': '山口护送、雪莲药材、良马鉴定与矿路引导；危时封山救人，平时以旧约收取向导供养', '行政关系': '获雪国王族承认却不受其任意差遣；若旧约被毁可停发向导、封闭药路，使军队难越雪线' },
+            '月轮禅院': { '定位': '玉河绿洲的跨国禅门，兼修医术、译经、杖法、金针与药烟', '在地': '西域·月河王国·玉河绿洲；分院沿绿洲与玉门商道分布', '组织架构': '沙行僧、医师、译者与护院武僧皆以月契记名；各绿洲分院自治，大事由三座主院共议', '经营模式': '行医、译契、仲裁与商队供养；保存月契副本，掌握债约、婚盟和货契，却拒接刺杀与掠夺', '行政关系': '月河王国给予免税药棚，也长期试图取得月契账册；九州官府在疫病与商队纠纷时常借其译者' },
+            '神乐御剑院': { '定位': '日京旧都传下的剑术院派，主持仪卫与武人决斗见证', '在地': '东瀛国·日京、宫城与各地官办道场', '组织架构': '持剑印者主持院务，师范分驻道场；不得私立军旗或干涉政令', '经营模式': '训练仪卫、护送使节、见证决斗；以朝廷俸给、道场束脩和公开比武赏金维持', '行政关系': '受朝廷礼遇，可申请暂缓决斗处置；权贵常争取其剑印名分，剑院却可拒绝参与宫廷暗杀' },
+            '潮灯舟会': { '定位': '舵手、渔人和商旅武人结成的航海会盟，掌海上护航与救难规矩', '在地': '东瀛国·南方海峡诸港及青州外海航线', '组织架构': '船老大与会头于季风前议定航线、税例与救援规矩；以船队为单位，无终身盟主', '经营模式': '护航、救难、盐渔、转口与沉船打捞；持航契可私贸，不许掠夺挂有舟会灯号的船只', '行政关系': '持海防府航契却不接受军方无偿征船；能决定商船是否出海，因此常与海防府就航路和军需冲突' },
+            '黑岳修验寺': { '定位': '火山与深山古道间的修验寺，僧兵、药师、山伏同修', '在地': '东瀛国·东部群山、火山矿区与雪线古道', '组织架构': '各山坊共议，由轮值山主协调药棚、吊桥、泉眼和山火；门人须经徒步苦修', '经营模式': '行医、修桥、山路救援、采药与矿路向导；以供养和药材交换维持，不涉港市争斗', '行政关系': '朝廷承认其山路裁断权，但严禁囤积硫磺、私售军用矿料或收留逃兵；违者由兵部寮查办' },
+            '天狼骑门': { '定位': '北辰汗庭的精锐骑武门派，兼任护帐、追猎与边市护卫', '在地': '北方诸部·北辰汗庭·草原腹地与互市边线', '组织架构': '各部勇士按骑门编队，战时听从汗庭军旗，平时归本部首领；战功和牧场份额决定地位', '经营模式': '以马匹、护商、狩猎与互市分成维生；战时获得战利品份额，和平时为九州商队提供草原向导', '行政关系': '名义听命大汗，实则各部可拒绝远征；与幽州鹰扬镖局常有生意往来，边军也会雇其追踪失马' },
+            '雪原长生坛': { '定位': '北方雪岭的长生武门，兼具医者、猎户与山口守望者传统', '在地': '北方诸部·雪岭边地，连接西域山路与九州北境', '组织架构': '坛中药师、猎首和山口守人于季节会盟，坛主只负责协调药场、水源与仇杀', '经营模式': '骨伤医治、寒地药材、鹰隼传讯与山口护送；以盐粮、布帛和药材交换为主要收入', '行政关系': '不隶属北辰汗庭，常被各国争取；九州若只与一部签约易破坏平衡，百草堂则与其保持药材互市' },
+            '黑水铁衣堂': { '定位': '黑水部盟的铁衣武门，兼具护矿武人和军械工匠传统', '在地': '北方诸部·黑水林海的矿山、渡口与冬季粮仓', '组织架构': '矿主家族、炉主和铁衣弟子共同议价；大宗军械交易须经部盟首领会议许可', '经营模式': '锻铁、马具、重斧、矿材和船钉；护矿与河运抽成并行，暗中也存在向多方出售配件的商路', '行政关系': '向北辰汗庭供给铁器，也向九州边军出售马具矿材；神武卫重点查缉其军械走私，黑水部盟则借其维持自治' }
+        };
+
+        var REALMS = {
+            '第一境': { '别称': '凡胎入武', '小境界': [['淬皮', '皮膜坚韧，寻常拳脚难伤'], ['通脉', '气血贯通，内劲运转更顺，速度与恢复力提升'], ['凝元', '内力凝成稳定元力，连续攻防能力明显增强']], '质变': '通脉→凝元：内力凝成稳定元力', '地位': '外门弟子、普通帮众、镖师、武馆学徒' },
+            '第二境': { '别称': '真劲外放', '小境界': [['周天', '内力成周天循环，持久战力大增'], ['罡劲', '劲力覆盖身体或兵器，普通刀剑与弓弩难破防'], ['离体', '刀风掌劲可短距离离体攻击，但距离与消耗受限']], '质变': '罡劲→离体：劲力可脱离身体短距离攻击', '地位': '真传弟子、精英骨干、一方舵主、小门派掌门' },
+            '第三境': { '别称': '化劲成势', '小境界': [['明势', '能判断重心、发力方向与攻击意图，提前避开劲力路线'], ['透劲', '劲力可穿透护甲、震伤内腑，并能卸力借力'], ['破阵', '能控制一片战斗空间，正面击溃小型阵势']], '质变': '透劲→破阵：从针对单一目标变为控制战斗空间', '地位': '一方豪杰、武林名宿、大派长老' },
+            '第四境': { '别称': '宗师归真', '小境界': [['入微', '精确控制呼吸、筋骨、步法、兵器与内力'], ['归一', '身体、兵器、内力和意图形成完整攻防闭环'], ['无招', '不让对手看到完整招式，主动打断归一高手的节奏']], '质变': '归一→无招：主动打断归一体系的节奏闭环', '地位': '武林宗师、大派掌门、朝廷供奉' },
+            '第五境': { '别称': '镇国绝巅', '小境界': [['破军', '可击溃精锐小队、重甲军阵和普通城防据点'], ['裂城', '可持续破坏城门、城墙和大型建筑群，改变攻城战局'], ['绝巅', '长时间作战、蓄力或借地形可摧毁一座普通城池，但不可一击毁城']], '质变': '裂城→绝巅：破坏力与战场覆盖达到城池级，但受时间、体力和地形限制', '地位': '镇国级人物、战略威慑、传说中的绝顶武者' }
+        };
+
+        function mapLine(label, value) {
+            return '<div class="detail-line"><span class="dl-lbl">' + label + '</span><span>' + esc(value) + '</span></div>';
+        }
+
+        function closeMapPopover() {
+            var popover = document.getElementById('map-popover');
+            if (popover) { popover.style.display = 'none'; popover.removeAttribute('data-active-key'); popover.innerHTML = ''; }
+        }
+
+        function showMapPopover(title, fields, event, kind) {
+            var popover = document.getElementById('map-popover');
+            if (!popover) return;
+            var key = kind + ':' + title;
+            if (popover.style.display === 'block' && popover.getAttribute('data-active-key') === key) {
+                closeMapPopover();
+                return;
+            }
+            var html = '<h3>' + esc(title) + '</h3>';
+            fields.forEach(function (field) { html += mapLine(field[0], field[1]); });
+            popover.innerHTML = html;
+            popover.setAttribute('data-active-key', key);
+            popover.style.display = 'block';
+            var x = event && typeof event.clientX === 'number' ? event.clientX : window.innerWidth / 2;
+            var y = event && typeof event.clientY === 'number' ? event.clientY : window.innerHeight / 2;
+            var width = popover.offsetWidth || 320, height = popover.offsetHeight || 180;
+            var left = Math.max(8, Math.min(window.innerWidth - width - 8, x + 12));
+            var top = y + 12;
+            if (top + height > window.innerHeight - 8) top = Math.max(8, y - height - 12);
+            popover.style.left = left + 'px';
+            popover.style.top = top + 'px';
+        }
+
+        function showProvince(name, event) {
+            var d = PROVINCES[name];
+            if (!d) return;
+            var fields = d['国家']
+                ? [['主要国家', d['国家']], ['相关地区', d['地区']], ['地理', d['地理']], ['利益格局', d['利益格局']], ['切入点', d['切入点']]]
+                : [['首府', d['首府']], ['区县', d['区县']], ['地理', d['地理']], ['利益格局', d['利益格局']], ['切入点', d['切入点']]];
+            showMapPopover(name, fields, event, 'province');
+        }
+
+        function showFaction(key, event) {
+            var d = FACTION_DETAILS[key];
+            if (!d) return;
+            showMapPopover(key, [['定位', d['定位']], ['在地', d['在地']], ['组织架构', d['组织架构']], ['经营模式', d['经营模式']], ['行政关系', d['行政关系']]], event, 'faction');
+        }
+
+        function esc(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        document.addEventListener('click', function (event) {
+            var popover = document.getElementById('map-popover');
+            if (!popover || popover.style.display !== 'block') return;
+            if (popover.contains(event.target) || event.target.closest('.province, .ftag')) return;
+            closeMapPopover();
+        });
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') closeMapPopover();
+        });
+
+        buildFactionMap();
+        renderRealmList();
+
+    
+        function renderRealmList() {
+            var box = document.getElementById('realm-list');
+            if (!box) return;
+            var html = '';
+            Object.keys(REALMS).forEach(function (name) {
+                var d = REALMS[name];
+                html += '<div class="realm-col">';
+                html += '<div class="realm-col-head"><span class="realm-no">' + name + '</span><span class="realm-sub">' + d['别称'] + '</span></div>';
+                html += '<ol class="sub-realm-list">';
+                d['小境界'].forEach(function (s) {
+                    html += '<li><b>' + s[0] + '</b>' + s[1] + '</li>';
+                });
+                html += '</ol>';
+                html += '</div>';
+            });
+            box.innerHTML = html;
+        }
+
+    
+        function buildFactionMap() {
+            var box = document.getElementById('faction-map');
+            if (!box) return;
+            var html = '';
+            Object.keys(FACTION_ZONES).forEach(function (z) {
+                var tags = FACTION_ZONES[z];
+                html += '<div class="fzone"><div class="fzone-name">' + z + '</div><div class="fzone-tags">';
+                tags.forEach(function (t) {
+                    html += '<button type="button" class="ftag" data-faction="' + t[1] + '">' + t[0] + '</button>';
+                });
+                html += '</div></div>';
+            });
+            box.innerHTML = html;
+            box.querySelectorAll('.ftag').forEach(function (btn) {
+                btn.addEventListener('click', function (event) { event.stopPropagation(); showFaction(this.getAttribute('data-faction'), event); });
+            });
+        }
+
+    </script>
+<script>
+    // 酒馆助手把前端包在 iframe 里，iframe 高度由内容撑开；
+    // vh 在 iframe 内以 iframe 为基准，直接用 vh 会高度塌缩。
+    // 这里读取最外层浏览器视口高度，把页面定成像素高度，保持“固定高度 + 内部滚动”。
+    (function () {
+        function getViewportHeight() {
+            try { if (window.top && window.top !== window && window.top.innerHeight) return window.top.innerHeight; } catch (e) { /* 跨域时降级 */ }
+            try { if (window.parent && window.parent !== window && window.parent.innerHeight) return window.parent.innerHeight; } catch (e) { /* 降级到自身 */ }
+            return window.innerHeight || 900;
+        }
+        function sizeJzPage() {
+            var page = document.querySelector('.jz-page');
+            if (!page) return;
+            var vh = getViewportHeight();
+            var h = Math.round(vh);
+            page.style.height = h + 'px';
+            page.style.minHeight = h + 'px';
+        }
+        sizeJzPage();
+        window.addEventListener('resize', sizeJzPage);
+        try { if (window.top && window.top !== window) window.top.addEventListener('resize', sizeJzPage); } catch (e) { /* 忽略 */ }
+    })();
+</script>
+<p id="jz-completion-note" style="flex:0 0 auto;margin:12px auto 16px;padding:0 18px;text-align:center;color:#7a5a31;font-family:serif;">完成创建后，请把页面中的「角色摘要」复制并粘贴到对话中，我将为你开启江湖。</p>
+<script>
+(() => {
+  let pending = false;
+  const fitFrame = () => {
+    pending = false;
+    let viewport = 700;
+    try { viewport = window.top && window.top.innerHeight ? window.top.innerHeight : viewport; } catch (_) {}
+    try { viewport = window.parent && window.parent.innerHeight ? window.parent.innerHeight : viewport; } catch (_) {}
+    const page = document.querySelector('.jz-page');
+    const entry = document.getElementById('jz-entry-screen');
+    if (!page) return;
+    const isOpening = entry && !entry.classList.contains('is-hidden') && !document.body.classList.contains('jz-entered');
+    let height;
+    if (isOpening) {
+      height = Math.ceil(Math.max(entry.offsetHeight, entry.scrollHeight, 1));
+    } else {
+      page.style.setProperty('--jz-min-height', viewport + 'px');
+      page.style.height = 'auto';
+      height = Math.max(viewport, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight);
+    }
+    try {
+      if (window.frameElement) {
+        window.frameElement.setAttribute('scrolling', 'no');
+        window.frameElement.style.height = height + 'px';
+        window.frameElement.style.minHeight = height + 'px';
+        window.frameElement.style.maxHeight = height + 'px';
+        window.frameElement.style.overflow = 'hidden';
+      }
+    } catch (_) {}
+  };
+  const requestFit = () => {
+    if (!pending) { pending = true; requestAnimationFrame(fitFrame); }
+  };
+  requestFit();
+  setTimeout(requestFit, 80);
+  window.addEventListener('resize', requestFit);
+  if (window.ResizeObserver) new ResizeObserver(requestFit).observe(document.body);
+})();
+</script>
+<script>
+  (function () {
+    const screen = document.getElementById('jz-entry-screen');
+    const enter = document.getElementById('jz-enter-create');
+    const page = document.querySelector('.jz-page');
+    if (!screen || !enter || !page) return;
+    page.setAttribute('aria-hidden', 'true');
+    enter.addEventListener('click', function () {
+      enter.disabled = true;
+      enter.textContent = '江湖已开';
+      screen.classList.add('is-hidden');
+      document.body.classList.add('jz-entered');
+      page.removeAttribute('aria-hidden');
+      window.dispatchEvent(new Event('resize'));
+    }, { once: true });
+  }());
+</script>
+</body>
+</html>
