@@ -1550,6 +1550,26 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                 好感度: clampBondNumber('bond-affection')
             };
         }
+        // 开局页直接把可选地点转换为舆图可读的地理层级，避免等待首轮模型补写。
+        function getInitialGeo(form) {
+            const regionIds = { 幽州:'jiuzhou.youzhou', 凉州:'jiuzhou.liangzhou', 青州:'jiuzhou.qingzhou', 中州:'jiuzhou.zhongzhou', 雍州:'jiuzhou.yongzhou', 益州:'jiuzhou.yizhou', 荆州:'jiuzhou.jingzhou', 扬州:'jiuzhou.yangzhou', 云州:'jiuzhou.yunzhou', 西域:'outer.xiyu', 北方诸部:'outer.north', 东瀛:'outer.dongying' };
+            const selected = String(form.startLocation || '').split('·').map(x => x.trim()).filter(Boolean);
+            const full = String(form.startSpot || (form.context && form.context.地点) || form.startLocation || '');
+            const parts = full.split('·').map(x => x.trim()).filter(Boolean);
+            const region = selected[0] || parts.find(x => Object.prototype.hasOwnProperty.call(regionIds, x)) || '';
+            const division = selected[1] || (region ? parts[parts.indexOf(region) + 1] : '') || '';
+            const divisionIndex = division ? parts.indexOf(division) : -1;
+            const spot = divisionIndex >= 0 ? parts.slice(divisionIndex + 1).join('·') : (parts.slice(2).join('·') || '');
+            return {
+                当前地点ID: regionIds[region] || '',
+                一级区域: ['西域', '北方诸部', '东瀛'].includes(region) ? '外域' : (region ? '九州' : ''),
+                二级区域: region,
+                三级区域: division,
+                四级区域: '',
+                场所: spot,
+                旅行: { 状态: '停留', 出发地ID: '', 目的地ID: '', 路线ID: '' }
+            };
+        }
         function applyInitToMvuData(d, form) {
             if (!d || typeof d !== 'object') return;
             if (!d.stat_data || typeof d.stat_data !== 'object') d.stat_data = {};
@@ -1587,6 +1607,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
             });
             d.stat_data.世界.时间 = form.context.时间;
             d.stat_data.世界.地点 = form.context.地点;
+            d.stat_data.地理 = getInitialGeo(form);
             if (form.bond) {
                 const b = form.bond;
                 d.stat_data.羁绊人物[b.姓名] = {
