@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <base href="https://raw.githubusercontent.com/Sodesine-Art/jiuzhou-create-page/main/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>九州啸歌行 - 武侠世界</title>
+    <title>九州长歌 - 角色与羁绊创建</title>
     <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -213,7 +211,44 @@
         .jz-page .cm-item-actions button.cm-load:hover { background: #2a9d8f; color: #fff; }
         .jz-page .cm-item-actions button.cm-del:hover { background: #a94442; color: #fff; }
         .jz-page .cm-empty { text-align: center; color: #8a6d33; font-size: 0.85rem; padding: 14px 0; }
-        .jz-page .cm-tip { font-size: 0.8rem; color: #7a6a4f; margin-top: 10px; line-height: 1.7; }
+.jz-page .cm-tip { font-size: 0.8rem; color: #7a6a4f; margin-top: 10px; line-height: 1.7; }
+
+        /* ===== 羁绊人物创建 ===== */
+        .jz-page .bond-intro { margin: 0 0 14px; padding: 10px 12px; border-left: 4px solid #a33b2e; background: rgba(163,59,46,.08); color: #5a3d1f; }
+        .jz-page .bond-section { margin: 14px 0; padding: 12px; border: 1px solid #b08d4f; border-radius: 8px; background: rgba(255,253,246,.52); }
+        .jz-page .bond-section h3 { margin-top: 0; font-size: 1.18rem; }
+        .jz-page .bond-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px 12px; }
+        .jz-page .bond-grid .form-group { min-width: 0; }
+        .jz-page .bond-wide { grid-column: 1 / -1; }
+        .jz-page .bond-help { margin: 2px 0 0; color: #7a6a4f; font-size: .78rem; line-height: 1.5; }
+        .jz-page .bond-json { min-height: 116px; font-family: ui-monospace, Consolas, monospace; font-size: .78rem; }
+        .jz-page .bond-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+        .jz-page .bond-actions button { min-height:44px; flex:1 1 180px; }
+        .jz-page .bond-skip { background:#7a6a4f; }
+        .jz-page .bond-start { background:#a33b2e; }
+        .jz-page .bond-start:hover { background:#87382b; }
+        .jz-page .bond-creator-panel { order: 1; }
+        .jz-page .bond-creator-panel.hidden { display: none !important; }
+        /* 主角与羁绊人物共用的舒适填写卡片 */
+        .jz-page .form-section .form-group,
+        .jz-page .bond-grid .form-group { margin: 0; padding: 10px 12px 12px; border: 1px solid rgba(176,141,79,.62); border-radius: 10px; background: rgba(255,253,246,.55); box-shadow: inset 0 1px rgba(255,255,255,.72); }
+        .jz-page .form-section .form-group:focus-within,
+        .jz-page .bond-grid .form-group:focus-within { border-color: #a33b2e; box-shadow: 0 0 0 3px rgba(163,59,46,.12), inset 0 1px rgba(255,255,255,.72); }
+        .jz-page .form-section .form-group label,
+        .jz-page .bond-grid .form-group label { margin-bottom: 7px; color: #5a3d1f; font-size: .92rem; }
+        .jz-page .form-section .form-group textarea,
+        .jz-page .bond-grid .form-group textarea,
+        .jz-page .bond-grid .form-group input,
+        .jz-page .bond-grid .form-group select { min-height: 58px; padding: 10px 12px; border: 1px solid #cbb58a; border-radius: 7px; background: rgba(255,255,255,.88); color: #302316; line-height: 1.55; box-shadow: inset 0 1px 2px rgba(75,52,27,.06); }
+        .jz-page .form-section .form-group textarea:focus,
+        .jz-page .bond-grid .form-group textarea:focus,
+        .jz-page .bond-grid .form-group input:focus,
+        .jz-page .bond-grid .form-group select:focus { outline: none; border-color: #a33b2e; background: #fffdf7; }
+        .jz-page .bond-grid .form-group input,
+        .jz-page .bond-grid .form-group select { min-height: 44px; }
+        .jz-page .bond-grid .bond-json { min-height: 88px; }
+        .jz-page .bond-grid .bond-wide { max-width: 760px; justify-self: start; width: 100%; }
+        @media (max-width: 640px) { .jz-page .bond-grid { grid-template-columns:minmax(0,1fr); } .jz-page .bond-section { padding:10px; } }
 
 </style>
 <style>
@@ -301,7 +336,8 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
   .jz-page h3{font-size:1.25rem;}
   .jz-page p{font-size:1rem;line-height:1.75;}
   .jz-page input,.jz-page select,.jz-page textarea{max-width:100%;font-size:16px;}
-  .jz-page textarea{min-height:110px;}
+  .jz-page textarea{min-height:64px;}
+  .jz-page .bond-grid .bond-json{min-height:96px;}
   .jz-page .character-form,.jz-page .form-section{grid-template-columns:minmax(0,1fr)!important;}
   .jz-page .talent-roll-area{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px;}
   .jz-page .talent-card{min-width:0;padding:6px 5px;font-size:.76rem;line-height:1.35;}
@@ -333,7 +369,24 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
 }
 @media (prefers-reduced-motion: reduce) {
   .jz-entry-screen *, .jz-entry-screen *::before, .jz-entry-screen *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
-}</style></head>
+}</style>
+<style id="jz-single-page-bond-view">
+/* 羁绊人物是同一网页中的独立视图：原表单仍保留在 DOM，返回时无需重建或转存草稿。 */
+body.jz-bond-page .jz-entry-screen,
+body.jz-bond-page .jz-footer{display:none!important;}
+body.jz-bond-page .accordion-container,
+body.jz-bond-page .accordion-container > .accordion-item{display:block!important;min-height:0!important;height:auto!important;background:transparent!important;}
+body.jz-bond-page .accordion-container > .wizard-nav{display:none!important;}
+body.jz-bond-page .accordion-container > .accordion-item > .accordion-header,
+body.jz-bond-page .accordion-container > .accordion-item > .accordion-content{display:none!important;}
+/* 羁绊页高度由表单本身决定，不能沿用主创建页的整屏高度和底纹。 */
+body.jz-bond-page .jz-page{display:block!important;min-height:0!important;height:auto!important;padding:0!important;background:transparent!important;}
+body.jz-bond-page .jz-page .container{min-height:0!important;height:auto!important;padding-bottom:0!important;}
+body.jz-bond-page #bond-creator-step,
+body.jz-bond-page #bond-creator-step.hidden{display:block!important;max-width:980px;margin:0 auto;padding:18px 16px 28px;}
+body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
+</style>
+</head>
 <body>
 <section class="jz-entry-screen" id="jz-entry-screen" aria-label="九州大世界进入页面">
     <div class="entry-content"><h1 class="entry-title"><small>九州卷 · 入江湖</small></h1><p class="entry-poem entry-poem-left">少年侠气，交结五都雄。肝胆洞，毛发耸。立谈中，死生同。一诺千金重。推翘勇，矜豪纵。轻盖拥，联飞鞚，斗城东。轰饮酒垆，春色浮寒瓮。吸海垂虹。闲呼鹰嗾犬，白羽摘雕弓。狡穴俄空。乐匆匆。</p><img class="entry-portrait" src="146562056_p0_master1200.jpg" alt="执伞行于九州的江湖人物"><p class="entry-poem entry-poem-right">似黄粱梦，辞丹凤；明月共，漾孤篷。官冗从，怀倥偬；落尘笼，簿书丛。鹖弁如云众，供粗用，忽奇功。笳鼓动，渔阳弄，思悲翁。不请长缨，系取天骄种。剑吼西风。恨登山临水，手寄七弦桐。目送归鸿。</p><div class="entry-action"><button class="entry-button" type="button" id="jz-enter-create">踏入江湖</button><p>卷轴展开，江湖在前。</p></div></div>
@@ -541,8 +594,15 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
                                 <textarea id="char-identity" placeholder="描述角色的身份背景"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="char-cultivation">修为：</label>
-                                <textarea id="char-cultivation" placeholder="描述角色的修为境界"></textarea>
+                                <label for="char-cultivation">境界：</label>
+                                <select id="char-cultivation">
+                                    <option value="未入流">未入流</option>
+                                    <option>第一境·淬皮</option><option>第一境·通脉</option><option>第一境·凝元</option>
+                                    <option>第二境·周天</option><option>第二境·罡劲</option><option>第二境·离体</option>
+                                    <option>第三境·明势</option><option>第三境·透劲</option><option>第三境·破阵</option>
+                                    <option>第四境·入微</option><option>第四境·归一</option><option>第四境·无招</option>
+                                    <option>第五境·破军</option><option>第五境·裂城</option><option>第五境·绝巅</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="char-other">其他设定：</label>
@@ -681,14 +741,15 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
 性格：
 天赋：（抽取的天赋）
 身份：
-修为：
+ 境界：
 其他设定：
 【开场剧情】
                             </div>
                             <p class="footer-note">角色信息将自动更新；点击下方「开始游戏」会初始化变量并把摘要填入输入框</p>
                             <div class="button-group" style="margin-top:14px;">
-                                <button id="character-manager-button" type="button">角色管理</button>
-                                <button id="start-game-button" type="button">开始游戏</button>
+                                 <button id="character-manager-button" type="button">角色管理</button>
+                                <button id="create-bond-button" type="button">创建羁绊人物（可选）</button>
+                                 <button id="start-game-button" type="button">开始游戏</button>
                                 <input type="file" id="import-character-input" accept=".json,application/json" style="display:none;">
                             </div>
                             <p class="footer-note" id="start-game-status">填写角色信息、抽取天赋、确定剧情与开局地点后，点击「开始游戏」：写入 MVU 变量并把角色摘要填入聊天输入框，发送即可开局。</p>
@@ -696,6 +757,50 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
                 </div>
             </div>
         </div>
+        <section class="bond-creator-panel hidden" id="bond-creator-step" aria-hidden="true">
+                <div class="accordion-content-inner">
+                    <h2>羁绊人物创建</h2>
+                    <p class="bond-intro">此步骤完全可选。创建完成后，该人物会在发送第一条开局消息前直接写入「羁绊人物」变量；衣服与所属势力可留空，之后由剧情自然补全。</p>
+                    <div class="bond-section">
+                        <h3>基础信息</h3>
+                        <div class="bond-grid">
+                            <div class="form-group"><label for="bond-name">姓名（必填）：</label><textarea id="bond-name" placeholder="例如：沈青萝"></textarea><p class="bond-help">姓名将作为变量中的人物键名；不可含 / 或 ~。</p></div>
+                            <div class="form-group"><label for="bond-gender">性别（必填）：</label><textarea id="bond-gender" placeholder="例如：女"></textarea></div>
+                            <div class="form-group"><label for="bond-realm">境界（必填）：</label><select id="bond-realm"><option value="">请选择境界</option><option>未入流</option><option>第一境·淬皮</option><option>第一境·通脉</option><option>第一境·凝元</option><option>第二境·周天</option><option>第二境·罡劲</option><option>第二境·离体</option><option>第三境·明势</option><option>第三境·透劲</option><option>第三境·破阵</option><option>第四境·入微</option><option>第四境·归一</option><option>第四境·无招</option><option>第五境·破军</option><option>第五境·裂城</option><option>第五境·绝巅</option></select></div>
+                            <div class="form-group"><label for="bond-progress">修为进度（0—100）：</label><input id="bond-progress" type="number" min="0" max="100" value="0"></div>
+                            <div class="form-group"><label for="bond-affection">好感度（0—100）：</label><input id="bond-affection" type="number" min="0" max="100" value="0"></div>
+                            <div class="form-group"><label for="bond-faction">所属势力（必填）：</label><select id="bond-faction"><option value="">请选择所属势力</option><optgroup label="大晟朝廷"><option>大晟皇室</option><option>政事堂</option><option>枢密院</option><option>御史台</option><option>大理寺</option><option>神武卫</option><option>大晟边军</option></optgroup><optgroup label="九州江湖"><option>真武阁</option><option>菩提禅院</option><option>天机剑宗</option><option>幽冥教</option><option>七情谷</option><option>丐帮</option><option>四大世家</option><option>百草堂</option><option>听风楼</option><option>蜀中唐门</option><option>鹰扬镖局</option><option>沧海盟</option><option>落日刀门</option><option>广陵琴院</option><option>洞庭龙君寨</option><option>银月峒</option><option>黑沙帮</option><option>陇西马帮</option><option>黑虎堂</option><option>漕帮盐商</option></optgroup><optgroup label="外域势力"><option>赤沙刀门</option><option>昆仑雪宫</option><option>神乐御剑院</option><option>潮灯舟会</option><option>黑岳修验寺</option><option>影御众</option><option>天狼骑门</option><option>雪原长生坛</option><option>黑水铁衣堂</option></optgroup><option value="__custom__">自定义（手动填写）</option></select></div><div class="form-group bond-wide hidden" id="bond-faction-custom-wrap"><label for="bond-faction-custom">自定义所属势力（必填）：</label><textarea id="bond-faction-custom" placeholder="请输入世界书外或自设势力名称"></textarea></div>
+                            <div class="form-group"><label for="bond-identity">身份（可选）：</label><textarea id="bond-identity" placeholder="例如：听风楼执事、侯府客卿"></textarea></div>
+                            <div class="form-group bond-wide"><label for="bond-appearance">外貌（必填）：</label><textarea id="bond-appearance" placeholder="描述相貌、神情、气质等"></textarea></div>
+                            <div class="form-group bond-wide"><label for="bond-figure">身材（必填）：</label><textarea id="bond-figure" placeholder="描述身形、体态等"></textarea></div>
+                            <div class="form-group bond-wide"><label for="bond-clothes">衣服（可空）：</label><textarea id="bond-clothes" placeholder="可不填，后续由剧情补全"></textarea></div>
+                        </div>
+                    </div>
+                    <div class="bond-section">
+                        <h3>状态、天赋与装备</h3>
+                        <p class="bond-help">以下全部可选，每行填写一项，格式为「名称：描述」。不写名称也可以，页面会自动命名；无需 JSON。</p>
+                        <div class="bond-grid">
+                            <div class="form-group"><label for="bond-status">状态（可选）：</label><textarea id="bond-status" class="bond-json" placeholder="旧伤：左臂旧伤隐痛\n警觉：初到陌生地界，戒心未消"></textarea></div>
+                            <div class="form-group"><label for="bond-talents">天赋（可选）：</label><textarea id="bond-talents" class="bond-json" placeholder="听风辨位：能从风声分辨来者方位"></textarea></div>
+                            <div class="form-group bond-wide"><label for="bond-equipment">装备（可选）：</label><textarea id="bond-equipment" class="bond-json" placeholder="佩剑：一柄旧青锋"></textarea></div>
+                        </div>
+                    </div>
+                    <div class="bond-section">
+                        <h3>武学功法</h3>
+                        <div class="bond-grid">
+                            <div class="form-group"><label for="bond-cultivation-skills">修炼功法（可选）：</label><textarea id="bond-cultivation-skills" class="bond-json" placeholder="吐纳诀：以吐纳调息、温养内息"></textarea></div>
+                            <div class="form-group"><label for="bond-combat-skills">战斗功法（可选）：</label><textarea id="bond-combat-skills" class="bond-json" placeholder="流云剑法：剑路轻灵，擅长游斗"></textarea></div>
+                        </div>
+                    </div>
+                    <div class="bond-actions">
+                        <button id="bond-back-button" type="button">← 返回角色创建</button>
+                        <button id="bond-character-manager-button" type="button">角色管理</button>
+                        <button id="bond-skip-button" class="bond-skip" type="button">暂不创建，直接开始游戏</button>
+                        <button id="bond-start-game-button" class="bond-start" type="button">保存羁绊人物并开始游戏</button>
+                    </div>
+                    <p class="footer-note" id="bond-game-status" aria-live="polite">填写完毕后保存并开始游戏；所有已填写字段会直接写入初始变量。</p>
+                </div>
+        </section>
         <!-- ===== 角色管理弹窗 ===== -->
         <div class="cm-overlay hidden" id="character-manager-overlay">
             <div class="cm-modal" role="dialog" aria-modal="true" aria-label="角色管理">
@@ -1107,6 +1212,32 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
                 });
             });
         }
+        function selectedBondFaction() {
+            const select = document.getElementById('bond-faction');
+            if (!select) return '';
+            return select.value === '__custom__'
+                ? String(document.getElementById('bond-faction-custom')?.value || '').trim()
+                : String(select.value || '').trim();
+        }
+        function syncBondFactionCustom() {
+            const select = document.getElementById('bond-faction');
+            const wrap = document.getElementById('bond-faction-custom-wrap');
+            if (!select || !wrap) return;
+            const custom = select.value === '__custom__';
+            wrap.classList.toggle('hidden', !custom);
+            wrap.setAttribute('aria-hidden', custom ? 'false' : 'true');
+        }
+        function bondPreviewText() {
+            const nameEl = document.getElementById('bond-name');
+            const name = nameEl ? nameEl.value.trim() : '';
+            if (!name) return '';
+            const val = (id) => {
+                const el = document.getElementById(id);
+                return el ? el.value.trim() : '';
+            };
+            const pieces = [name, val('bond-gender'), val('bond-realm'), selectedBondFaction(), val('bond-identity')].filter(Boolean);
+            return pieces.join(' · ');
+        }
         function updatePreview() {
             const name = document.getElementById('char-name').value || "未填写";
             const age = document.getElementById('char-age').value || "未填写";
@@ -1142,11 +1273,12 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
  性格：${personality}
  天赋：${talentsText}
  身份：${identity}
- 修为：${cultivation}
+ 境界：${cultivation}
  其他设定：${other}
  【开场剧情】
  ${plot}
- ${startLocation ? '【开局地点】' + startLocation : ''}`;
+  ${startLocation ? '【开局地点】' + startLocation : ''}
+  ${bondPreviewText() ? '【初始羁绊人物】' + bondPreviewText() : ''}`;
              document.getElementById('character-preview').innerText = summary;
          }
                         const PLOT_LOCATIONS = {
@@ -1275,6 +1407,7 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             ['百草堂', '益州·南郑·药王谷', '百草堂'],
             ['听风楼', '中州·洛阳·听风楼', '听风楼'],
             ['神武卫', '幽州·渔阳·镇抚司', '神武卫'],
+            ['影御众', '东瀛·日京·宫城外廷文库', '影御众'],
             ['镖局', '城中镖局', '镖局'],
             ['官府', '州府衙门', '官府'],
         ];
@@ -1313,28 +1446,64 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             }
             return '';
         }
-        async function ensureMvu() {
+        const MVU_WAIT_TIMEOUT_MS = 8000;
+        const MVU_FALLBACK_WINDOW_MS = 3000;
+        const MVU_OPERATION_TIMEOUT_MS = 8000;
+        let gameInitializationRunning = false;
+
+        function waitFor(promise, timeoutMs, message) {
+            let timer = null;
+            const timeout = new Promise((_, reject) => {
+                timer = setTimeout(() => reject(new Error(message)), timeoutMs);
+            });
+            return Promise.race([Promise.resolve(promise), timeout]).finally(() => {
+                if (timer) clearTimeout(timer);
+            });
+        }
+
+        function isMvuApi(candidate) {
+            return !!candidate
+                && typeof candidate.getMvuData === 'function'
+                && typeof candidate.replaceMvuData === 'function';
+        }
+
+        async function ensureMvu(onProgress) {
             const probeMvu = () => {
-                try { if (window.Mvu) return window.Mvu; } catch (e) { /* 忽略 */ }
-                try { if (typeof Mvu !== 'undefined') return Mvu; } catch (e) { /* 忽略 */ }
-                try { if (window.parent && window.parent.Mvu) return window.parent.Mvu; } catch (e) { /* 跨域忽略 */ }
-                try { if (window.top && window.top.Mvu) return window.top.Mvu; } catch (e) { /* 跨域忽略 */ }
+                try { if (isMvuApi(window.Mvu)) return window.Mvu; } catch (e) { /* 忽略 */ }
+                try { if (typeof Mvu !== 'undefined' && isMvuApi(Mvu)) return Mvu; } catch (e) { /* 忽略 */ }
+                try { if (window.parent && isMvuApi(window.parent.Mvu)) return window.parent.Mvu; } catch (e) { /* 跨域忽略 */ }
+                try { if (window.top && isMvuApi(window.top.Mvu)) return window.top.Mvu; } catch (e) { /* 跨域忽略 */ }
                 return null;
             };
             const direct = probeMvu();
             if (direct) return direct;
+            if (typeof onProgress === 'function') onProgress('正在检测变量框架…');
             const th = window.TavernHelper;
-            if (!th) throw new Error('未找到酒馆助手 TavernHelper，请确认已安装 JS-Slash-Runner');
-            if (typeof th.waitGlobalInitialized !== 'function') throw new Error('酒馆助手未提供 waitGlobalInitialized');
             let api = null;
-            try { api = await th.waitGlobalInitialized('Mvu'); } catch (e) { /* 忽略，继续轮询兜底 */ }
-            if (api) return api;
-            for (let i = 0; i < 25; i++) {
+            let waitProblem = null;
+            if (th && typeof th.waitGlobalInitialized === 'function') {
+                try {
+                    api = await waitFor(
+                        th.waitGlobalInitialized('Mvu'),
+                        MVU_WAIT_TIMEOUT_MS,
+                        '等待 MVU 变量框架超过 8 秒'
+                    );
+                } catch (e) {
+                    waitProblem = e;
+                }
+            } else {
+                waitProblem = new Error(th ? '酒馆助手未提供 waitGlobalInitialized' : '未找到酒馆助手 TavernHelper');
+            }
+            if (isMvuApi(api)) return api;
+            if (typeof onProgress === 'function') onProgress('变量框架未立即响应，正在备用检测…');
+            const deadline = Date.now() + MVU_FALLBACK_WINDOW_MS;
+            while (Date.now() < deadline) {
                 const found = probeMvu();
                 if (found) return found;
                 await new Promise((resolve) => setTimeout(resolve, 200));
             }
-            throw new Error('Mvu 变量框架未就绪：MagVarUpdate 未能加载（请检查网络，或确认已安装 MagVarUpdate 扩展）');
+            const detail = waitProblem && waitProblem.message ? '（' + waitProblem.message + '）' : '';
+            throw new Error('未检测到 MVU 变量框架' + detail + '。请确认已启用 MagVarUpdate 与酒馆助手，再刷新当前聊天重试');
         }
         function normalizeCultivation(text) {
             const raw = String(text || '').trim();
@@ -1342,6 +1511,84 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             if (allowed.includes(raw)) return raw;
             if (!raw || /凡人|未入流|未习武|尚未入门/.test(raw)) return '未入流';
             return '未入流';
+        }
+        function readBondLines(id, fallbackName, buildEntry) {
+            const el = document.getElementById(id);
+            const raw = el ? el.value.trim() : '';
+            if (!raw) return {};
+            const entries = {};
+            raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean).forEach((line, index) => {
+                const divider = line.search(/[：:]/);
+                const suppliedName = divider >= 0 ? line.slice(0, divider).trim() : '';
+                const description = (divider >= 0 ? line.slice(divider + 1) : line).trim();
+                const rootName = suppliedName || fallbackName;
+                let key = rootName;
+                let serial = 2;
+                while (Object.prototype.hasOwnProperty.call(entries, key)) key = rootName + '·' + serial++;
+                entries[key] = buildEntry(description || rootName, index);
+            });
+            return entries;
+        }
+        function clampBondNumber(id) {
+            const el = document.getElementById(id);
+            const n = Number(el && el.value !== '' ? el.value : 0);
+            return Number.isFinite(n) ? Math.max(0, Math.min(100, Math.round(n))) : 0;
+        }
+        function readBondForm() {
+            const text = (id) => {
+                const el = document.getElementById(id);
+                return el ? el.value.trim() : '';
+            };
+            const name = text('bond-name');
+            if (!name) throw new Error('请填写羁绊人物姓名，或选择「暂不创建」。');
+            if (/[\\/~]/.test(name)) throw new Error('羁绊人物姓名不能包含 / 或 ~。');
+            const required = [
+                ['bond-gender', '性别'], ['bond-realm', '境界'],
+                ['bond-appearance', '外貌'], ['bond-figure', '身材']
+            ];
+            const missing = required.filter(([id]) => !text(id)).map(([, label]) => label);
+            const faction = selectedBondFaction();
+            if (!faction) missing.push('所属势力');
+            if (missing.length) throw new Error('请填写羁绊人物的必填项：' + missing.join('、') + '。');
+            return {
+                姓名: name,
+                性别: text('bond-gender'),
+                外貌: text('bond-appearance'),
+                身材: text('bond-figure'),
+                身份: text('bond-identity'),
+                衣服: text('bond-clothes'),
+                装备: readBondLines('bond-equipment', '自定义装备', description => ({ 部位: '未指定', 品质: '普通', 描述: description })),
+                武学功法: {
+                    修炼功法: readBondLines('bond-cultivation-skills', '自定义修炼功法', description => ({ 品阶: '普通', 层次: '初窥门径', 熟练度: 0, 描述: description })),
+                    战斗功法: readBondLines('bond-combat-skills', '自定义战斗功法', description => ({ 品阶: '普通', 层次: '初窥门径', 熟练度: 0, 描述: description }))
+                },
+                修为进度: clampBondNumber('bond-progress'),
+                境界: normalizeCultivation(text('bond-realm')),
+                状态: readBondLines('bond-status', '当前状态', description => ({ 描述: description, 剩余回合: 0 })),
+                天赋: readBondLines('bond-talents', '自定义天赋', description => ({ 品阶: '普通', 描述: description })),
+                所属势力: faction,
+                好感度: clampBondNumber('bond-affection')
+            };
+        }
+        // 开局页直接把可选地点转换为舆图可读的地理层级，避免等待首轮模型补写。
+        function getInitialGeo(form) {
+            const regionIds = { 幽州:'jiuzhou.youzhou', 凉州:'jiuzhou.liangzhou', 青州:'jiuzhou.qingzhou', 中州:'jiuzhou.zhongzhou', 雍州:'jiuzhou.yongzhou', 益州:'jiuzhou.yizhou', 荆州:'jiuzhou.jingzhou', 扬州:'jiuzhou.yangzhou', 云州:'jiuzhou.yunzhou', 西域:'outer.xiyu', 北方诸部:'outer.north', 东瀛:'outer.dongying' };
+            const selected = String(form.startLocation || '').split('·').map(x => x.trim()).filter(Boolean);
+            const full = String(form.startSpot || (form.context && form.context.地点) || form.startLocation || '');
+            const parts = full.split('·').map(x => x.trim()).filter(Boolean);
+            const region = selected[0] || parts.find(x => Object.prototype.hasOwnProperty.call(regionIds, x)) || '';
+            const division = selected[1] || (region ? parts[parts.indexOf(region) + 1] : '') || '';
+            const divisionIndex = division ? parts.indexOf(division) : -1;
+            const spot = divisionIndex >= 0 ? parts.slice(divisionIndex + 1).join('·') : (parts.slice(2).join('·') || '');
+            return {
+                当前地点ID: regionIds[region] || '',
+                一级区域: ['西域', '北方诸部', '东瀛'].includes(region) ? '外域' : (region ? '九州' : ''),
+                二级区域: region,
+                三级区域: division,
+                四级区域: '',
+                场所: spot,
+                旅行: { 状态: '停留', 出发地ID: '', 目的地ID: '', 路线ID: '' }
+            };
         }
         function applyInitToMvuData(d, form) {
             if (!d || typeof d !== 'object') return;
@@ -1360,7 +1607,7 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             u.身材 = form.figure || form.context.身材;
             u.衣服 = form.clothes || form.context.衣服;
             u.身份 = form.identity || '';
-            u.其他设定 = form.other || '';
+            u.补充设定 = form.other || '';
             if (Object.prototype.hasOwnProperty.call(u, '所属势力')) delete u.所属势力;
             u.背包物品 = {};
             u.装备 = {};
@@ -1380,6 +1627,25 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             });
             d.stat_data.世界.时间 = form.context.时间;
             d.stat_data.世界.地点 = form.context.地点;
+            d.stat_data.地理 = getInitialGeo(form);
+            if (form.bond) {
+                const b = form.bond;
+                d.stat_data.羁绊人物[b.姓名] = {
+                    性别: b.性别,
+                    外貌: b.外貌,
+                    身材: b.身材,
+                    身份: b.身份,
+                    衣服: b.衣服,
+                    装备: b.装备,
+                    武学功法: b.武学功法,
+                    修为进度: b.修为进度,
+                    境界: b.境界,
+                    状态: b.状态,
+                    天赋: b.天赋,
+                    所属势力: b.所属势力,
+                    好感度: b.好感度
+                };
+            }
         }
         function tryFillChatInput(text) {
             const targets = [window, window.parent];
@@ -1397,7 +1663,8 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             }
             return false;
         }
-        async function startGame() {
+        async function startGame(includeBond, skipBond) {
+            if (gameInitializationRunning) return;
             const name = document.getElementById('char-name').value.trim();
             if (!name) {
                 alert('请先填写角色姓名，再开始游戏。');
@@ -1416,6 +1683,15 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             const activePlotOption = document.querySelector('.plot-option.active');
             const customMode = !activePlotOption || !plotContexts[activePlotOption.getAttribute('data-plot')];
             const customPlot = document.getElementById('custom-plot').value.trim();
+            let bond = null;
+            try {
+                const shouldUseBond = !skipBond && (includeBond || !!collectBondSnapshot());
+                if (shouldUseBond) bond = readBondForm();
+            } catch (e) {
+                const bondStatus = document.getElementById('bond-game-status');
+                if (bondStatus) bondStatus.textContent = e && e.message ? e.message : String(e);
+                return;
+            }
             const form = {
                 name: name,
                 age: age,
@@ -1430,34 +1706,61 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
                 context: context,
                 clothes: extractClothing(appearance, customPlot),
                 startLocation: startLocation,
-                startSpot: startSpot
+                startSpot: startSpot,
+                bond: bond
             };
-            const btn = document.getElementById('start-game-button');
-            const status = document.getElementById('start-game-status');
+            const btn = document.getElementById(includeBond ? 'bond-start-game-button' : 'start-game-button');
+            const status = document.getElementById(includeBond ? 'bond-game-status' : 'start-game-status');
+            const updateStatus = (text) => {
+                if (status) status.textContent = text;
+            };
+            if (!btn) return;
+            gameInitializationRunning = true;
             btn.disabled = true;
             btn.textContent = '正在初始化…';
-            if (status) status.textContent = '正在写入 MVU 变量并准备摘要…';
+            btn.style.background = '';
+            updateStatus('正在检测变量框架…');
             try {
-                const Mvu = await ensureMvu();
-                const chatData = Mvu.getMvuData({ type: 'chat' });
+                const Mvu = await ensureMvu(updateStatus);
+                updateStatus('正在读取当前变量…');
+                const chatData = await waitFor(
+                    Promise.resolve().then(() => Mvu.getMvuData({ type: 'chat' })),
+                    MVU_OPERATION_TIMEOUT_MS,
+                    '读取聊天变量超过 8 秒'
+                );
                 if (!chatData || typeof chatData !== 'object') throw new Error('获取变量表失败（getMvuData 返回空）');
                 applyInitToMvuData(chatData, form);
-                await Mvu.replaceMvuData(chatData, { type: 'chat' });
+                updateStatus('正在写入角色与羁绊人物…');
+                await waitFor(
+                    Mvu.replaceMvuData(chatData, { type: 'chat' }),
+                    MVU_OPERATION_TIMEOUT_MS,
+                    '写入聊天变量超过 8 秒'
+                );
                 let floorNote = '';
                 try {
+                    updateStatus('正在同步首楼变量…');
                     let messageId = 'latest';
                     if (typeof getCurrentMessageId === 'function') {
                         try { messageId = getCurrentMessageId(); } catch (e) { /* 非楼层 iframe，退回 latest */ }
                     }
-                    const floorData = Mvu.getMvuData({ type: 'message', message_id: messageId });
+                    const floorData = await waitFor(
+                        Promise.resolve().then(() => Mvu.getMvuData({ type: 'message', message_id: messageId })),
+                        MVU_OPERATION_TIMEOUT_MS,
+                        '读取首楼变量超过 8 秒'
+                    );
                     if (floorData && typeof floorData === 'object') {
                         applyInitToMvuData(floorData, form);
-                        await Mvu.replaceMvuData(floorData, { type: 'message', message_id: messageId });
+                        await waitFor(
+                            Mvu.replaceMvuData(floorData, { type: 'message', message_id: messageId }),
+                            MVU_OPERATION_TIMEOUT_MS,
+                            '写入首楼变量超过 8 秒'
+                        );
                     }
                 } catch (floorErr) {
                     console.warn('楼层快照写入失败（不影响聊天级初始化）:', floorErr);
                     floorNote = '（楼层快照未同步，刷新后可能需模型首轮补齐）';
                 }
+                updateStatus('正在生成角色摘要…');
                 updatePreview();
                 const summary = document.getElementById('character-preview').innerText;
                 const filled = tryFillChatInput(summary);
@@ -1475,23 +1778,72 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
                     btn.textContent = '✓ 已初始化并填入输入框';
                 }
                 btn.style.background = '#4CAF50';
+                const bondNote = bond ? '已写入羁绊人物「' + bond.姓名 + '」，' : '';
                 if (status) status.textContent = customMode
-                    ? '已写入基础信息，并按你的剧情/开局地点给出时间、地点、衣着、身材、身份初值；AI 会在首轮回复读取剧情、身份与天赋后校准。摘要' + (filled ? '已填入输入框' : '已复制到剪贴板') + '，发送即可开局。' + floorNote
-                    : '已写入：姓名/年龄/性别/外貌/身材/性格/天赋，并按开场剧情与开局地点生成时间/地点/衣着/身份。摘要' + (filled ? '已填入输入框' : '已复制到剪贴板') + '，发送即可开局。' + floorNote;
+                    ? bondNote + '已写入基础信息，并按你的剧情/开局地点给出时间、地点、衣着、身材、身份初值；AI 会在首轮回复读取剧情、身份与天赋后校准。摘要' + (filled ? '已填入输入框' : '已复制到剪贴板') + '，发送即可开局。' + floorNote
+                    : bondNote + '已写入：姓名/年龄/性别/外貌/身材/性格/天赋，并按开场剧情与开局地点生成时间/地点/衣着/身份。摘要' + (filled ? '已填入输入框' : '已复制到剪贴板') + '，发送即可开局。' + floorNote;
             } catch (e) {
                 console.error('MVU 初始化失败:', e);
                 btn.disabled = false;
                 btn.textContent = '失败，点此重试';
                 btn.style.background = '#c0392b';
                 if (status) status.textContent = '初始化失败：' + (e && e.message ? e.message : e) + '。请确认已安装并启用 MagVarUpdate 与酒馆助手，且网络可访问变量框架。';
+            } finally {
+                gameInitializationRunning = false;
             }
         }
         const startGameButton = document.getElementById('start-game-button');
-        if (startGameButton) startGameButton.addEventListener('click', startGame);
+        if (startGameButton) startGameButton.addEventListener('click', () => startGame(false));
+
+        function showMvuPreflight() {
+            const status = document.getElementById('start-game-status');
+            if (!status) return;
+            let direct = null;
+            try { direct = window.Mvu; } catch (e) { /* 忽略 */ }
+            if (isMvuApi(direct)) {
+                status.textContent = 'MVU 变量框架已就绪。填写完成后可开始游戏。';
+                return;
+            }
+            const th = window.TavernHelper;
+            status.textContent = th
+                ? 'MVU 变量框架正在准备；若开始游戏后提示未检测到，请刷新当前聊天或检查扩展。'
+                : '暂未检测到酒馆助手；开始游戏时会再次检测并给出可重试提示。';
+        }
+        setTimeout(showMvuPreflight, 300);
+        const bondCreatorStep = document.getElementById('bond-creator-step');
+        function openBondCreator() {
+            if (!bondCreatorStep) return;
+            bondCreatorStep.classList.remove('hidden');
+            bondCreatorStep.removeAttribute('aria-hidden');
+            document.body.classList.add('jz-bond-page');
+            requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+        function closeBondCreator() {
+            if (!bondCreatorStep) return;
+            document.body.classList.remove('jz-bond-page');
+            bondCreatorStep.classList.add('hidden');
+            bondCreatorStep.setAttribute('aria-hidden', 'true');
+            wizardGo(1);
+            requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+        const createBondButton = document.getElementById('create-bond-button');
+        if (createBondButton) createBondButton.addEventListener('click', openBondCreator);
+        const bondBackButton = document.getElementById('bond-back-button');
+        if (bondBackButton) bondBackButton.addEventListener('click', closeBondCreator);
+        const bondSkipButton = document.getElementById('bond-skip-button');
+        if (bondSkipButton) bondSkipButton.addEventListener('click', () => startGame(false, true));
+        const bondStartButton = document.getElementById('bond-start-game-button');
+        if (bondStartButton) bondStartButton.addEventListener('click', () => startGame(true));
         const startLocationSelect = document.getElementById('start-location');
         if (startLocationSelect) startLocationSelect.addEventListener('change', updatePreview);
         document.querySelectorAll('textarea').forEach(textarea => {
             textarea.addEventListener('input', updatePreview);
+        });
+        const characterCultivation = document.getElementById('char-cultivation');
+        if (characterCultivation) characterCultivation.addEventListener('change', updatePreview);
+        document.querySelectorAll('#bond-creator-step input, #bond-creator-step select').forEach(input => {
+            input.addEventListener('input', updatePreview);
+            input.addEventListener('change', updatePreview);
         });
         function copyText(textToCopy, button) {
             if (navigator.clipboard && window.isSecureContext) {
@@ -1546,6 +1898,27 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             alert('复制失败，请手动选择并复制预览区域的内容。');
         }
         // ===== 导出 / 导入角色 =====
+        function collectBondSnapshot() {
+            const ids = ['bond-name', 'bond-gender', 'bond-realm', 'bond-progress', 'bond-affection', 'bond-faction', 'bond-faction-custom', 'bond-identity', 'bond-appearance', 'bond-figure', 'bond-clothes', 'bond-status', 'bond-talents', 'bond-equipment', 'bond-cultivation-skills', 'bond-combat-skills'];
+            const meaningful = ['bond-name', 'bond-gender', 'bond-realm', 'bond-faction', 'bond-faction-custom', 'bond-identity', 'bond-appearance', 'bond-figure', 'bond-clothes', 'bond-status', 'bond-talents', 'bond-equipment', 'bond-cultivation-skills', 'bond-combat-skills'];
+            const bond = {};
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                bond[id] = el && 'value' in el ? String(el.value) : '';
+            });
+            return meaningful.some(id => bond[id].trim() !== '') ? bond : null;
+        }
+        function applyBondSnapshot(bond) {
+            const ids = ['bond-name', 'bond-gender', 'bond-realm', 'bond-progress', 'bond-affection', 'bond-faction', 'bond-faction-custom', 'bond-identity', 'bond-appearance', 'bond-figure', 'bond-clothes', 'bond-status', 'bond-talents', 'bond-equipment', 'bond-cultivation-skills', 'bond-combat-skills'];
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el || !('value' in el)) return;
+                if (bond && Object.prototype.hasOwnProperty.call(bond, id)) el.value = String(bond[id] ?? '');
+                else if (id === 'bond-progress' || id === 'bond-affection') el.value = '0';
+                else el.value = '';
+            });
+            syncBondFactionCustom();
+        }
         function collectCharacterSnapshot() {
             const fieldIds = ['char-name', 'char-age', 'char-gender', 'char-appearance', 'char-figure', 'char-personality', 'char-identity', 'char-cultivation', 'char-other'];
             const data = {};
@@ -1567,7 +1940,8 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
                 app: '九州大世界角色存档',
                 version: 1,
                 exportedAt: new Date().toISOString(),
-                character: data
+                character: data,
+                bond: collectBondSnapshot()
             };
         }
         function exportCharacter() {
@@ -1608,6 +1982,7 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
         }
         function applyCharacterSnapshot(snap) {
             const c = (snap && snap.character && typeof snap.character === 'object') ? snap.character : snap;
+            const bond = snap && snap.bond && typeof snap.bond === 'object' ? snap.bond : null;
             const fieldIds = ['char-name', 'char-age', 'char-gender', 'char-appearance', 'char-figure', 'char-personality', 'char-identity', 'char-cultivation', 'char-other'];
             fieldIds.forEach(id => {
                 const el = document.getElementById(id);
@@ -1639,6 +2014,7 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
                 const exists = Array.from(locSel.options).some(o => o.value === target);
                 if (exists) locSel.value = target;
             }
+            applyBondSnapshot(bond);
             updatePreview();
         }
         function importCharacter(file) {
@@ -1707,7 +2083,8 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
                 nm.textContent = name;
                 const tm = document.createElement('div');
                 tm.className = 'cm-item-time';
-                tm.textContent = timeText ? '保存于 ' + timeText : '';
+                const bondName = item && item.bond ? String(item.bond['bond-name'] || '').trim() : '';
+                tm.textContent = (timeText ? '保存于 ' + timeText : '') + (bondName ? ' · 羁绊：' + bondName : ' · 未创建羁绊人物');
                 info.appendChild(nm);
                 info.appendChild(tm);
                 const actions = document.createElement('div');
@@ -1738,7 +2115,8 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
                     id: 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
                     name: name,
                     savedAt: new Date().toISOString(),
-                    character: snap.character
+                    character: snap.character,
+                    bond: snap.bond
                 });
                 writeSavedCharacters(list);
                 renderSavedCharacterList();
@@ -1757,7 +2135,7 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
                 return;
             }
             try {
-                applyCharacterSnapshot(item.character);
+                applyCharacterSnapshot({ character: item.character, bond: item.bond || null });
                 const status = document.getElementById('start-game-status');
                 if (status) status.textContent = '已载入本地存档「' + item.name + '」，检查信息无误后点击「开始游戏」即可。';
             } catch (e) {
@@ -1791,6 +2169,13 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
         }
         const characterManagerButton = document.getElementById('character-manager-button');
         if (characterManagerButton) characterManagerButton.addEventListener('click', openCharacterManager);
+        const bondCharacterManagerButton = document.getElementById('bond-character-manager-button');
+        if (bondCharacterManagerButton) bondCharacterManagerButton.addEventListener('click', openCharacterManager);
+        const bondFactionSelect = document.getElementById('bond-faction');
+        const bondFactionCustom = document.getElementById('bond-faction-custom');
+        if (bondFactionSelect) bondFactionSelect.addEventListener('change', () => { syncBondFactionCustom(); updatePreview(); });
+        if (bondFactionCustom) bondFactionCustom.addEventListener('input', updatePreview);
+        syncBondFactionCustom();
         const characterManagerClose = document.getElementById('character-manager-close');
         if (characterManagerClose) characterManagerClose.addEventListener('click', closeCharacterManager);
         const cmOverlay = document.getElementById('character-manager-overlay');
@@ -1841,7 +2226,7 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             '云州': [['七情谷', '七情谷'], ['幽冥教', '幽冥教'], ['银月峒·月牙岭', '银月峒']],
             '西域': [['赤沙刀门·白玉城邦', '赤沙刀门'], ['昆仑雪宫·雪国', '昆仑雪宫'], ['月轮禅院·玉河', '月轮禅院']],
             '北方诸部': [['天狼骑门·北辰汗庭', '天狼骑门'], ['雪原长生坛·雪岭诸部', '雪原长生坛'], ['黑水铁衣堂·黑水部盟', '黑水铁衣堂']],
-            '东瀛': [['神乐御剑院·日京', '神乐御剑院'], ['潮灯舟会·海峡诸港', '潮灯舟会'], ['黑岳修验寺·东部群山', '黑岳修验寺']],
+            '东瀛': [['神乐御剑院·日京', '神乐御剑院'], ['潮灯舟会·海峡诸港', '潮灯舟会'], ['黑岳修验寺·东部群山', '黑岳修验寺'], ['影御众·宫城与诸港', '影御众']],
         };
 
         var FACTION_DETAILS = {
@@ -1873,6 +2258,7 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
             '神乐御剑院': { '定位': '日京旧都传下的剑术院派，主持仪卫与武人决斗见证', '在地': '东瀛国·日京、宫城与各地官办道场', '组织架构': '持剑印者主持院务，师范分驻道场；不得私立军旗或干涉政令', '经营模式': '训练仪卫、护送使节、见证决斗；以朝廷俸给、道场束脩和公开比武赏金维持', '行政关系': '受朝廷礼遇，可申请暂缓决斗处置；权贵常争取其剑印名分，剑院却可拒绝参与宫廷暗杀' },
             '潮灯舟会': { '定位': '舵手、渔人和商旅武人结成的航海会盟，掌海上护航与救难规矩', '在地': '东瀛国·南方海峡诸港及青州外海航线', '组织架构': '船老大与会头于季风前议定航线、税例与救援规矩；以船队为单位，无终身盟主', '经营模式': '护航、救难、盐渔、转口与沉船打捞；持航契可私贸，不许掠夺挂有舟会灯号的船只', '行政关系': '持海防府航契却不接受军方无偿征船；能决定商船是否出海，因此常与海防府就航路和军需冲突' },
             '黑岳修验寺': { '定位': '火山与深山古道间的修验寺，僧兵、药师、山伏同修', '在地': '东瀛国·东部群山、火山矿区与雪线古道', '组织架构': '各山坊共议，由轮值山主协调药棚、吊桥、泉眼和山火；门人须经徒步苦修', '经营模式': '行医、修桥、山路救援、采药与矿路向导；以供养和药材交换维持，不涉港市争斗', '行政关系': '朝廷承认其山路裁断权，但严禁囤积硫磺、私售军用矿料或收留逃兵；违者由兵部寮查办' },
+            '影御众': { '定位': '东瀛朝廷的隐务武职体系，兼具官府密探与江湖忍者属性', '在地': '东瀛国·日京宫城外廷文库；西港潮仓、黑岳山影所与潮见港均有暗点', '组织架构': '影监藤原绫女总领；宫城番、海道番、山道番、里番、外夷番分掌宫禁、海路、山道、市井与外来人；雨宫澪为里番影役，雾岛玄真统海道番', '经营模式': '朝廷密费为本，兼替商旅查内鬼、护送密使、核验文牒与转卖经删改的情报；外围忍者偶接江湖私活，严禁以影御众名义行私仇刺杀', '行政关系': '内廷密授、日常受京畿奉行节制；公开刑案归奉行所，武人决斗归御剑院，海上事务须与海防府及潮灯舟会协作，权势极大却处处受制' },
             '天狼骑门': { '定位': '北辰汗庭的精锐骑武门派，兼任护帐、追猎与边市护卫', '在地': '北方诸部·北辰汗庭·草原腹地与互市边线', '组织架构': '各部勇士按骑门编队，战时听从汗庭军旗，平时归本部首领；战功和牧场份额决定地位', '经营模式': '以马匹、护商、狩猎与互市分成维生；战时获得战利品份额，和平时为九州商队提供草原向导', '行政关系': '名义听命大汗，实则各部可拒绝远征；与幽州鹰扬镖局常有生意往来，边军也会雇其追踪失马' },
             '雪原长生坛': { '定位': '北方雪岭的长生武门，兼具医者、猎户与山口守望者传统', '在地': '北方诸部·雪岭边地，连接西域山路与九州北境', '组织架构': '坛中药师、猎首和山口守人于季节会盟，坛主只负责协调药场、水源与仇杀', '经营模式': '骨伤医治、寒地药材、鹰隼传讯与山口护送；以盐粮、布帛和药材交换为主要收入', '行政关系': '不隶属北辰汗庭，常被各国争取；九州若只与一部签约易破坏平衡，百草堂则与其保持药材互市' },
             '黑水铁衣堂': { '定位': '黑水部盟的铁衣武门，兼具护矿武人和军械工匠传统', '在地': '北方诸部·黑水林海的矿山、渡口与冬季粮仓', '组织架构': '矿主家族、炉主和铁衣弟子共同议价；大宗军械交易须经部盟首领会议许可', '经营模式': '锻铁、马具、重斧、矿材和船钉；护矿与河运抽成并行，暗中也存在向多方出售配件的商路', '行政关系': '向北辰汗庭供给铁器，也向九州边军出售马具矿材；神武卫重点查缉其军械走私，黑水部盟则借其维持自治' }
