@@ -374,13 +374,14 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
 /* 羁绊人物是同一网页中的独立视图：原表单仍保留在 DOM，返回时无需重建或转存草稿。 */
 body.jz-bond-page .jz-entry-screen,
 body.jz-bond-page .jz-footer{display:none!important;}
-body.jz-bond-page .accordion-container{display:block!important;}
+body.jz-bond-page .accordion-container,
+body.jz-bond-page .accordion-container > .accordion-item{display:block!important;min-height:0!important;height:auto!important;background:transparent!important;}
 body.jz-bond-page .accordion-container > .wizard-nav{display:none!important;}
-body.jz-bond-page .accordion-container > .accordion-item{display:block!important;}
 body.jz-bond-page .accordion-container > .accordion-item > .accordion-header,
 body.jz-bond-page .accordion-container > .accordion-item > .accordion-content{display:none!important;}
-body.jz-bond-page .jz-page{display:block!important;min-height:100dvh!important;padding:0!important;}
-body.jz-bond-page .jz-page .container{min-height:100dvh;}
+/* 羁绊页高度由表单本身决定，不能沿用主创建页的整屏高度和底纹。 */
+body.jz-bond-page .jz-page{display:block!important;min-height:0!important;height:auto!important;padding:0!important;background:transparent!important;}
+body.jz-bond-page .jz-page .container{min-height:0!important;height:auto!important;padding-bottom:0!important;}
 body.jz-bond-page #bond-creator-step,
 body.jz-bond-page #bond-creator-step.hidden{display:block!important;max-width:980px;margin:0 auto;padding:18px 16px 28px;}
 body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
