@@ -769,7 +769,8 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                             <div class="form-group"><label for="bond-realm">境界（必填）：</label><select id="bond-realm"><option value="">请选择境界</option><option>未入流</option><option>第一境·淬皮</option><option>第一境·通脉</option><option>第一境·凝元</option><option>第二境·周天</option><option>第二境·罡劲</option><option>第二境·离体</option><option>第三境·明势</option><option>第三境·透劲</option><option>第三境·破阵</option><option>第四境·入微</option><option>第四境·归一</option><option>第四境·无招</option><option>第五境·破军</option><option>第五境·裂城</option><option>第五境·绝巅</option></select></div>
                             <div class="form-group"><label for="bond-progress">修为进度（0—100）：</label><input id="bond-progress" type="number" min="0" max="100" value="0"></div>
                             <div class="form-group"><label for="bond-affection">好感度（0—100）：</label><input id="bond-affection" type="number" min="0" max="100" value="0"></div>
-                            <div class="form-group"><label for="bond-faction">所属势力（必填）：</label><textarea id="bond-faction" placeholder="例如：听风楼"></textarea></div>
+                            <div class="form-group"><label for="bond-faction">所属势力（必填）：</label><select id="bond-faction"><option value="">请选择所属势力</option><optgroup label="大晟朝廷"><option>大晟皇室</option><option>政事堂</option><option>枢密院</option><option>御史台</option><option>大理寺</option><option>神武卫</option><option>大晟边军</option></optgroup><optgroup label="九州江湖"><option>真武阁</option><option>菩提禅院</option><option>天机剑宗</option><option>幽冥教</option><option>七情谷</option><option>丐帮</option><option>四大世家</option><option>百草堂</option><option>听风楼</option><option>蜀中唐门</option><option>鹰扬镖局</option><option>沧海盟</option><option>落日刀门</option><option>广陵琴院</option><option>洞庭龙君寨</option><option>银月峒</option><option>黑沙帮</option><option>陇西马帮</option><option>黑虎堂</option><option>漕帮盐商</option></optgroup><optgroup label="外域势力"><option>赤沙刀门</option><option>昆仑雪宫</option><option>神乐御剑院</option><option>潮灯舟会</option><option>黑岳修验寺</option><option>影御众</option><option>天狼骑门</option><option>雪原长生坛</option><option>黑水铁衣堂</option></optgroup><option value="__custom__">自定义（手动填写）</option></select></div><div class="form-group bond-wide hidden" id="bond-faction-custom-wrap"><label for="bond-faction-custom">自定义所属势力（必填）：</label><textarea id="bond-faction-custom" placeholder="请输入世界书外或自设势力名称"></textarea></div>
+                            <div class="form-group"><label for="bond-identity">身份（可选）：</label><textarea id="bond-identity" placeholder="例如：听风楼执事、侯府客卿"></textarea></div>
                             <div class="form-group bond-wide"><label for="bond-appearance">外貌（必填）：</label><textarea id="bond-appearance" placeholder="描述相貌、神情、气质等"></textarea></div>
                             <div class="form-group bond-wide"><label for="bond-figure">身材（必填）：</label><textarea id="bond-figure" placeholder="描述身形、体态等"></textarea></div>
                             <div class="form-group bond-wide"><label for="bond-clothes">衣服（可空）：</label><textarea id="bond-clothes" placeholder="可不填，后续由剧情补全"></textarea></div>
@@ -1211,6 +1212,21 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                 });
             });
         }
+        function selectedBondFaction() {
+            const select = document.getElementById('bond-faction');
+            if (!select) return '';
+            return select.value === '__custom__'
+                ? String(document.getElementById('bond-faction-custom')?.value || '').trim()
+                : String(select.value || '').trim();
+        }
+        function syncBondFactionCustom() {
+            const select = document.getElementById('bond-faction');
+            const wrap = document.getElementById('bond-faction-custom-wrap');
+            if (!select || !wrap) return;
+            const custom = select.value === '__custom__';
+            wrap.classList.toggle('hidden', !custom);
+            wrap.setAttribute('aria-hidden', custom ? 'false' : 'true');
+        }
         function bondPreviewText() {
             const nameEl = document.getElementById('bond-name');
             const name = nameEl ? nameEl.value.trim() : '';
@@ -1219,7 +1235,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                 const el = document.getElementById(id);
                 return el ? el.value.trim() : '';
             };
-            const pieces = [name, val('bond-gender'), val('bond-realm'), val('bond-faction')].filter(Boolean);
+            const pieces = [name, val('bond-gender'), val('bond-realm'), selectedBondFaction(), val('bond-identity')].filter(Boolean);
             return pieces.join(' · ');
         }
         function updatePreview() {
@@ -1527,16 +1543,19 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
             if (!name) throw new Error('请填写羁绊人物姓名，或选择「暂不创建」。');
             if (/[\\/~]/.test(name)) throw new Error('羁绊人物姓名不能包含 / 或 ~。');
             const required = [
-                ['bond-gender', '性别'], ['bond-realm', '境界'], ['bond-faction', '所属势力'],
+                ['bond-gender', '性别'], ['bond-realm', '境界'],
                 ['bond-appearance', '外貌'], ['bond-figure', '身材']
             ];
             const missing = required.filter(([id]) => !text(id)).map(([, label]) => label);
+            const faction = selectedBondFaction();
+            if (!faction) missing.push('所属势力');
             if (missing.length) throw new Error('请填写羁绊人物的必填项：' + missing.join('、') + '。');
             return {
                 姓名: name,
                 性别: text('bond-gender'),
                 外貌: text('bond-appearance'),
                 身材: text('bond-figure'),
+                身份: text('bond-identity'),
                 衣服: text('bond-clothes'),
                 装备: readBondLines('bond-equipment', '自定义装备', description => ({ 部位: '未指定', 品质: '普通', 描述: description })),
                 武学功法: {
@@ -1547,7 +1566,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                 境界: normalizeCultivation(text('bond-realm')),
                 状态: readBondLines('bond-status', '当前状态', description => ({ 描述: description, 剩余回合: 0 })),
                 天赋: readBondLines('bond-talents', '自定义天赋', description => ({ 品阶: '普通', 描述: description })),
-                所属势力: text('bond-faction'),
+                所属势力: faction,
                 好感度: clampBondNumber('bond-affection')
             };
         }
@@ -1588,7 +1607,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
             u.身材 = form.figure || form.context.身材;
             u.衣服 = form.clothes || form.context.衣服;
             u.身份 = form.identity || '';
-            u.其他设定 = form.other || '';
+            u.补充设定 = form.other || '';
             if (Object.prototype.hasOwnProperty.call(u, '所属势力')) delete u.所属势力;
             u.背包物品 = {};
             u.装备 = {};
@@ -1615,6 +1634,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                     性别: b.性别,
                     外貌: b.外貌,
                     身材: b.身材,
+                    身份: b.身份,
                     衣服: b.衣服,
                     装备: b.装备,
                     武学功法: b.武学功法,
@@ -1879,8 +1899,8 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
         }
         // ===== 导出 / 导入角色 =====
         function collectBondSnapshot() {
-            const ids = ['bond-name', 'bond-gender', 'bond-realm', 'bond-progress', 'bond-affection', 'bond-faction', 'bond-appearance', 'bond-figure', 'bond-clothes', 'bond-status', 'bond-talents', 'bond-equipment', 'bond-cultivation-skills', 'bond-combat-skills'];
-            const meaningful = ['bond-name', 'bond-gender', 'bond-realm', 'bond-faction', 'bond-appearance', 'bond-figure', 'bond-clothes', 'bond-status', 'bond-talents', 'bond-equipment', 'bond-cultivation-skills', 'bond-combat-skills'];
+            const ids = ['bond-name', 'bond-gender', 'bond-realm', 'bond-progress', 'bond-affection', 'bond-faction', 'bond-faction-custom', 'bond-identity', 'bond-appearance', 'bond-figure', 'bond-clothes', 'bond-status', 'bond-talents', 'bond-equipment', 'bond-cultivation-skills', 'bond-combat-skills'];
+            const meaningful = ['bond-name', 'bond-gender', 'bond-realm', 'bond-faction', 'bond-faction-custom', 'bond-identity', 'bond-appearance', 'bond-figure', 'bond-clothes', 'bond-status', 'bond-talents', 'bond-equipment', 'bond-cultivation-skills', 'bond-combat-skills'];
             const bond = {};
             ids.forEach(id => {
                 const el = document.getElementById(id);
@@ -1889,7 +1909,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
             return meaningful.some(id => bond[id].trim() !== '') ? bond : null;
         }
         function applyBondSnapshot(bond) {
-            const ids = ['bond-name', 'bond-gender', 'bond-realm', 'bond-progress', 'bond-affection', 'bond-faction', 'bond-appearance', 'bond-figure', 'bond-clothes', 'bond-status', 'bond-talents', 'bond-equipment', 'bond-cultivation-skills', 'bond-combat-skills'];
+            const ids = ['bond-name', 'bond-gender', 'bond-realm', 'bond-progress', 'bond-affection', 'bond-faction', 'bond-faction-custom', 'bond-identity', 'bond-appearance', 'bond-figure', 'bond-clothes', 'bond-status', 'bond-talents', 'bond-equipment', 'bond-cultivation-skills', 'bond-combat-skills'];
             ids.forEach(id => {
                 const el = document.getElementById(id);
                 if (!el || !('value' in el)) return;
@@ -1897,6 +1917,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                 else if (id === 'bond-progress' || id === 'bond-affection') el.value = '0';
                 else el.value = '';
             });
+            syncBondFactionCustom();
         }
         function collectCharacterSnapshot() {
             const fieldIds = ['char-name', 'char-age', 'char-gender', 'char-appearance', 'char-figure', 'char-personality', 'char-identity', 'char-cultivation', 'char-other'];
@@ -2150,6 +2171,11 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
         if (characterManagerButton) characterManagerButton.addEventListener('click', openCharacterManager);
         const bondCharacterManagerButton = document.getElementById('bond-character-manager-button');
         if (bondCharacterManagerButton) bondCharacterManagerButton.addEventListener('click', openCharacterManager);
+        const bondFactionSelect = document.getElementById('bond-faction');
+        const bondFactionCustom = document.getElementById('bond-faction-custom');
+        if (bondFactionSelect) bondFactionSelect.addEventListener('change', () => { syncBondFactionCustom(); updatePreview(); });
+        if (bondFactionCustom) bondFactionCustom.addEventListener('input', updatePreview);
+        syncBondFactionCustom();
         const characterManagerClose = document.getElementById('character-manager-close');
         if (characterManagerClose) characterManagerClose.addEventListener('click', closeCharacterManager);
         const cmOverlay = document.getElementById('character-manager-overlay');
