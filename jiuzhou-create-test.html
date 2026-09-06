@@ -2416,9 +2416,16 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
     if (isOpening) {
       height = Math.ceil(Math.max(entry.offsetHeight, entry.scrollHeight, 1));
     } else {
-      page.style.setProperty('--jz-min-height', viewport + 'px');
+      const compact = window.matchMedia && window.matchMedia('(max-width: 700px)').matches;
+      const content = page.querySelector('.container') || page;
       page.style.height = 'auto';
-      height = Math.max(viewport, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight);
+      if (compact) {
+        page.style.setProperty('--jz-min-height', '0px');
+        height = Math.ceil(Math.max(1, content.scrollHeight, page.scrollHeight));
+      } else {
+        page.style.setProperty('--jz-min-height', viewport + 'px');
+        height = Math.max(viewport, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight);
+      }
     }
     try {
       if (window.frameElement) {
