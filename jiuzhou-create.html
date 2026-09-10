@@ -386,6 +386,29 @@ body.jz-bond-page #bond-creator-step,
 body.jz-bond-page #bond-creator-step.hidden{display:block!important;max-width:980px;margin:0 auto;padding:18px 16px 28px;}
 body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
 </style>
+<style id="jz-preset-opening-styles">
+/* 预制开局：固定数据仅填充草稿，真正写入变量仍由「开始游戏」统一处理。 */
+.jz-page .preset-opening{margin:0 0 18px;padding:14px;border:1px solid #b08d4f;border-radius:10px;background:linear-gradient(135deg,rgba(255,253,246,.82),rgba(225,211,179,.72));box-shadow:inset 0 1px rgba(255,255,255,.75);}
+.jz-page .preset-opening h3{margin:0 0 4px;font-family:'Ma Shan Zheng',cursive;font-size:1.5rem;color:#2a2a4a;border:0;padding:0;}
+.jz-page .preset-opening-note{margin:0 0 12px;font-size:.86rem;color:#6d5635;line-height:1.65;}
+.jz-page .preset-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
+.jz-page .preset-card{min-width:0;padding:11px;border:1px solid rgba(138,109,51,.72);border-top:3px solid #2a9d8f;border-radius:8px;background:rgba(255,253,246,.84);box-shadow:0 2px 5px rgba(61,43,24,.1);}
+.jz-page .preset-card[data-preset='jinzun'],.jz-page .preset-card[data-preset='beijing']{border-top-color:#a33b2e;}
+.jz-page .preset-card.is-selected{outline:3px solid rgba(42,157,143,.28);border-color:#2a9d8f;}
+.jz-page .preset-title{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;margin-bottom:4px;color:#1a1a2e;}
+.jz-page .preset-title strong{font-family:'Ma Shan Zheng',cursive;font-size:1.4rem;letter-spacing:.05em;}
+.jz-page .preset-title span{font-size:.76rem;color:#8d3629;}
+.jz-page .preset-meta{margin:0 0 7px;font-size:.78rem;line-height:1.55;color:#654b2d;}
+.jz-page .preset-hook{margin:0 0 9px;font-size:.82rem;line-height:1.6;color:#3d3022;}
+.jz-page .preset-actions{display:flex;gap:6px;flex-wrap:wrap;}
+.jz-page .preset-actions button{flex:1 1 108px;min-height:40px;padding:8px 10px;border:1px solid #1a1a2e;background:#f5eddb;color:#1a1a2e;font-size:.8rem;}
+.jz-page .preset-actions .preset-start{background:#a33b2e;color:#fff;border-color:#87382b;}
+.jz-page .preset-actions button:hover,.jz-page .preset-actions button:focus-visible{transform:translateY(-1px);outline:2px solid rgba(42,157,143,.45);outline-offset:2px;}
+.jz-page .preset-selected-note{display:none;margin:12px 0 0;padding:8px 10px;border-left:3px solid #2a9d8f;background:rgba(42,157,143,.09);font-size:.82rem;color:#3f5d52;}
+.jz-page .preset-selected-note.is-visible{display:block;}
+@media (max-width:760px){.jz-page .preset-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.jz-page .preset-card{padding:10px;}}
+@media (max-width:430px){.jz-page .preset-grid{grid-template-columns:minmax(0,1fr);}.jz-page .preset-actions button{min-height:44px;}.jz-page .preset-opening{padding:12px 10px;}}
+</style>
 </head>
 <body>
 <section class="jz-entry-screen" id="jz-entry-screen" aria-label="九州大世界进入页面">
@@ -561,6 +584,19 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                 <div class="accordion-content">
                     <div class="accordion-content-inner">
                         <h2>角色创建系统</h2>
+                        <section class="preset-opening" aria-labelledby="preset-opening-title">
+                            <h3 id="preset-opening-title">一键预制开局</h3>
+                            <p class="preset-opening-note">选择后会填入完整主角资料、世界起点、天赋与功法；仍可继续修改。羁绊人物和在场人物不会预设，开始游戏时也会保持为空。</p>
+                            <div class="preset-grid">
+                                <article class="preset-card" data-preset="jinzun"><div class="preset-title"><strong>金尊夜宴</strong><span>朝局 · 权贵</span></div><p class="preset-meta">云晚烟 · 19岁 · 女 · 大晟长公主</p><p class="preset-hook">洛阳顶层雅间，一封密信打破本该奢靡安稳的夜宴。</p><div class="preset-actions"><button type="button" data-preset-apply="jinzun">填入并编辑</button><button type="button" class="preset-start" data-preset-start="jinzun">以此开始</button></div></article>
+                                <article class="preset-card" data-preset="tingfeng"><div class="preset-title"><strong>听风楼风波</strong><span>悬案 · 江湖</span></div><p class="preset-meta">沈照川 · 22岁 · 男 · 听风楼外执事</p><p class="preset-hook">一封伪造密信、一桩旧案，令洛阳长街骤起杀机。</p><div class="preset-actions"><button type="button" data-preset-apply="tingfeng">填入并编辑</button><button type="button" class="preset-start" data-preset-start="tingfeng">以此开始</button></div></article>
+                                <article class="preset-card" data-preset="tianji"><div class="preset-title"><strong>天机问剑</strong><span>宗门 · 剑修</span></div><p class="preset-meta">陆清衡 · 18岁 · 女 · 天机剑宗外门</p><p class="preset-hook">入门试剑当日，问剑阵被人篡改，剑光直指同门。</p><div class="preset-actions"><button type="button" data-preset-apply="tianji">填入并编辑</button><button type="button" class="preset-start" data-preset-start="tianji">以此开始</button></div></article>
+                                <article class="preset-card" data-preset="yantie"><div class="preset-title"><strong>盐铁商路</strong><span>商道 · 官商</span></div><p class="preset-meta">谢蘅 · 24岁 · 女 · 谢氏商会少东家</p><p class="preset-hook">三船铁料与账簿同时失踪，漕运码头暗流翻涌。</p><div class="preset-actions"><button type="button" data-preset-apply="yantie">填入并编辑</button><button type="button" class="preset-start" data-preset-start="yantie">以此开始</button></div></article>
+                                <article class="preset-card" data-preset="beijing"><div class="preset-title"><strong>北境烽火</strong><span>军旅 · 边关</span></div><p class="preset-meta">霍临渊 · 27岁 · 男 · 神武卫校尉</p><p class="preset-hook">军械疑被偷运出关，一纸急报将你推到风雪前线。</p><div class="preset-actions"><button type="button" data-preset-apply="beijing">填入并编辑</button><button type="button" class="preset-start" data-preset-start="beijing">以此开始</button></div></article>
+                                <article class="preset-card" data-preset="jiangnan"><div class="preset-title"><strong>江南会盟</strong><span>门派 · 暗线</span></div><p class="preset-meta">柳疏影 · 21岁 · 女 · 七情谷行走</p><p class="preset-hook">会盟前夜盟主遇袭，琴声未歇，疑云已落满江南。</p><div class="preset-actions"><button type="button" data-preset-apply="jiangnan">填入并编辑</button><button type="button" class="preset-start" data-preset-start="jiangnan">以此开始</button></div></article>
+                            </div>
+                            <p class="preset-selected-note" id="preset-selected-note" aria-live="polite"></p>
+                        </section>
                         <div class="form-section">
                             <div class="left-column">
                             <div class="form-group">
@@ -1113,8 +1149,105 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
         const rollButton = document.getElementById('roll-talents');
         const resetButton = document.getElementById('reset-talents');
         const rollCountElement = document.getElementById('roll-count');
+        // 预制开局只持有玩家与世界起点。人物关系一律留给正式剧情生成。
+        const PRESET_OPENINGS = {
+            jinzun: {
+                title: '金尊夜宴', name: '云晚烟', age: '19', gender: '女',
+                appearance: '银色长发垂至腰际，冰蓝色眼眸，眉眼明艳而带疏离感；常以红金舞衣与轻纱披帛示人。',
+                figure: '身量高挑丰润，骨架舒展，舞者体态轻盈而有力量。',
+                personality: '骄矜、敏锐，善于掩饰真实心绪；面对局势时不轻易失态。',
+                identity: '大晟皇家长公主', cultivation: '未入流',
+                other: '所属势力：大晟皇室。天赋使她能洞察虚实、以言语影响局部局势。主线任务：MQ.Ⅰ_金尊夜宴疑云。',
+                location: '中州·洛阳', context: { 时间: '仲春·夜晚（华灯初上）', 地点: '中州·洛阳·醉琼林顶层雅间', 衣服: '红金舞衣、轻纱披帛与银铃足饰', 身材: '身量高挑丰润，舞者体态轻盈而有力量', 势力: '大晟皇室' },
+                plot: '仲春夜，洛阳醉琼林顶层雅间。你本在夜宴中周旋，一封未署名的密信却被送至席前：它既点出朝中一桩旧案，也提醒你今夜的宾客中有人不该出现在这里。',
+                talents: [{ name: '天眼通', quality: 5, desc: '能洞察事物本质，看破虚妄与伪饰。' }, { name: '言灵（武侠版）', quality: 5, desc: '语言带有规则之力，可短暂影响局部现实。' }],
+                skills: { 修炼功法: { 皇室吐纳法: { 品阶: '上乘', 描述: '大晟内廷传承的养气之法。' } }, 战斗功法: {} }
+            },
+            tingfeng: {
+                title: '听风楼风波', name: '沈照川', age: '22', gender: '男',
+                appearance: '眉目清朗，肤色偏冷，鬓发利落；着深青窄袖长衫，腰佩短剑与铜哨。', figure: '身形修长结实，步伐轻稳，常年奔走城巷留下克制的警觉。',
+                personality: '沉静、重承诺、善于观察；对陌生人留三分余地，对真相却很执拗。', identity: '听风楼外执事', cultivation: '第一境·凝元',
+                other: '所属势力：听风楼。主线任务：MQ.Ⅰ_洛阳密信旧案。你掌握城内消息脉络，却不知有人正借你的名义布下杀局。',
+                location: '中州·洛阳', context: { 时间: '仲春·黄昏（城灯初起）', 地点: '中州·洛阳·听风楼外市井巷', 衣服: '深青窄袖长衫，腰佩短剑与铜哨', 身材: '身形修长结实，步伐轻稳', 势力: '听风楼' },
+                plot: '洛阳城南，一封用你笔迹写成的密信出现在命案现场。捕快与刀客先后逼近，而听风楼递来的第二封信只有一句：别回楼里。',
+                talents: [{ name: '闻弦知意', quality: 4, desc: '能从语气、节奏与呼吸中辨识情绪和破绽。' }],
+                skills: { 修炼功法: { 听风养息诀: { 品阶: '良品', 描述: '调息养气，利于久行与感知。' } }, 战斗功法: { 巷战短剑: { 品阶: '良品', 描述: '适合狭窄街巷的近身短剑术。' } } }
+            },
+            tianji: {
+                title: '天机问剑', name: '陆清衡', age: '18', gender: '女',
+                appearance: '乌发束作高马尾，眉眼清锐；月白劲装简洁利落，背负制式长剑。', figure: '身形匀称矫健，肩背挺直，握剑时指节稳定。',
+                personality: '克制、好胜、嘴硬心软；不愿借父辈余荫证明自己。', identity: '天机剑宗外门弟子', cultivation: '第一境·凝元',
+                other: '所属势力：天机剑宗。主线任务：MQ.Ⅰ_失控的问剑阵。父亲曾是边军铸剑师，你凭自身剑感拜入山门。',
+                location: '雍州·凤翔', context: { 时间: '仲春·日暮（雨停云开）', 地点: '雍州·凤翔·天剑峰问剑台', 衣服: '月白劲装，背负制式长剑', 身材: '身形匀称矫健，肩背挺直', 势力: '天机剑宗' },
+                plot: '入门问剑当日，剑阵忽然逆转。你发现阵眼被人改动，而所有人的剑光都在向同一处失控汇聚。',
+                talents: [{ name: '剑感', quality: 4, desc: '能捕捉剑招、剑势与剑阵的细微失衡。' }],
+                skills: { 修炼功法: { 天机吐纳诀: { 品阶: '良品', 描述: '天机剑宗外门基础吐纳法。' } }, 战斗功法: { 流云十三式: { 品阶: '良品', 描述: '以步带剑、连绵不断的入门剑法。' } } }
+            },
+            yantie: {
+                title: '盐铁商路', name: '谢蘅', age: '24', gender: '女',
+                appearance: '乌发挽髻，眸色沉静，容貌端丽；常穿墨绿圆领袍，腰间悬着玉算盘。', figure: '身量高挑玲珑，举止从容，久坐理账亦保持端正仪态。',
+                personality: '温和而精明，擅于算账，不轻信空口承诺；遇事先保全人手。', identity: '河东谢氏旁支、盐铁商号少东家', cultivation: '未入流',
+                other: '所属势力：谢氏商会。主线任务：MQ.Ⅰ_失踪的三船铁料。你熟知盐铁、漕运与账目，却第一次发现账簿里有人抹去了整段航程。',
+                location: '中州·濮阳', context: { 时间: '仲春·清晨（河雾未散）', 地点: '中州·濮阳·漕运码头仓场', 衣服: '墨绿圆领袍，腰悬玉算盘', 身材: '身量高挑玲珑，举止从容', 势力: '谢氏商会' },
+                plot: '码头晨雾里，原定入仓的三船铁料无影无踪，负责押运的人也全部失联。你在残缺账簿上看见一个不该出现的官印。',
+                talents: [{ name: '识货', quality: 3, desc: '能辨矿材、药材与兵器的优劣及异常。' }],
+                skills: { 修炼功法: {}, 战斗功法: { 防身短刃术: { 品阶: '普通', 描述: '商队常用的短刃防身术。' } } }
+            },
+            beijing: {
+                title: '北境烽火', name: '霍临渊', age: '27', gender: '男',
+                appearance: '轮廓硬朗，肤色因风霜略深；穿玄铁轻甲与黑红披风，枪杆常握在手侧。', figure: '肩背宽阔、身形强健，久经军旅，举动干净利落。',
+                personality: '寡言、守纪、极护短；认定的军令和同袍都会守到底。', identity: '神武卫校尉', cultivation: '第二境·周天',
+                other: '所属势力：神武卫。主线任务：MQ.Ⅰ_失踪的军械。你出身北境军户，发现有人借商队掩护把制式军械运往关外。',
+                location: '幽州·渔阳', context: { 时间: '仲春·清晨（城门初开）', 地点: '幽州·渔阳·镇抚司外长街', 衣服: '玄铁轻甲与黑红披风', 身材: '肩背宽阔、身形强健', 势力: '神武卫' },
+                plot: '风雪未尽，一封边军急报送入渔阳。被截获的货单指向军中，而失踪军械已可能越过关墙。',
+                talents: [{ name: '战阵直觉', quality: 4, desc: '能快速判断战场阵势、薄弱处与撤离路线。' }],
+                skills: { 修炼功法: { 玄甲行气篇: { 品阶: '上乘', 描述: '神武卫军中行气法。' } }, 战斗功法: { 破军枪: { 品阶: '上乘', 描述: '重势破阵的军阵枪术。' } } }
+            },
+            jiangnan: {
+                title: '江南会盟', name: '柳疏影', age: '21', gender: '女',
+                appearance: '长发如墨，眼尾微挑，容貌清丽；身着烟紫广袖裙，腰悬短笛。', figure: '身形纤长柔韧，举止轻缓，抚琴或行走都不失分寸。',
+                personality: '圆融、善察人心，对亲近者格外真诚；越是危险越能保持耐心。', identity: '七情谷行走、琴师', cultivation: '第一境·凝元',
+                other: '所属势力：七情谷。主线任务：MQ.Ⅰ_会盟前夜。你奉命联络各派，却在盟主遇袭后发现每一方都有不可说的动机。',
+                location: '扬州·金陵', context: { 时间: '仲春·夜晚（细雨初歇）', 地点: '扬州·金陵·秦淮画舫会盟别院', 衣服: '烟紫广袖裙，腰悬短笛', 身材: '身形纤长柔韧，举止轻缓', 势力: '七情谷' },
+                plot: '江南会盟前夜，盟主在密室中遇袭。窗外琴声未歇，屋内却留下了一枚足以挑起各派猜疑的令牌。',
+                talents: [{ name: '听心', quality: 4, desc: '可从呼吸与气息判断谎言、恐惧和敌意。' }],
+                skills: { 修炼功法: { 七情养息法: { 品阶: '良品', 描述: '以情绪调息、养神的七情谷心法。' } }, 战斗功法: { 碎梦音: { 品阶: '良品', 描述: '借笛音扰乱心神、制造破绽。' } } }
+            }
+        };
+        let activePresetId = '';
+        function setFieldValue(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.value = value == null ? '' : String(value);
+        }
+        function selectCustomPlot(text) {
+            document.querySelectorAll('.plot-option').forEach(opt => opt.classList.toggle('active', opt.getAttribute('data-plot') === 'custom'));
+            document.querySelectorAll('.plot-scene').forEach(scene => scene.classList.remove('active'));
+            const customPlot = document.getElementById('custom-plot');
+            if (customPlot) { customPlot.value = text; customPlot.classList.add('active'); }
+        }
+        function applyPreset(id) {
+            const preset = PRESET_OPENINGS[id];
+            if (!preset) return false;
+            activePresetId = id;
+            setFieldValue('char-name', preset.name); setFieldValue('char-age', preset.age); setFieldValue('char-gender', preset.gender);
+            setFieldValue('char-appearance', preset.appearance); setFieldValue('char-figure', preset.figure); setFieldValue('char-personality', preset.personality);
+            setFieldValue('char-identity', preset.identity); setFieldValue('char-other', preset.other); setFieldValue('char-cultivation', preset.cultivation);
+            setFieldValue('start-location', preset.location); selectCustomPlot(preset.plot);
+            selectedTalents = preset.talents.map(t => Object.assign({}, t));
+            updateSelectedTalents(); updatePreview();
+            document.querySelectorAll('.preset-card').forEach(card => card.classList.toggle('is-selected', card.getAttribute('data-preset') === id));
+            const note = document.getElementById('preset-selected-note');
+            if (note) { note.textContent = '已填入「' + preset.title + '」。你可继续修改；点击下方「开始游戏」将以此世界起点初始化，并清空羁绊人物与在场人物。'; note.classList.add('is-visible'); }
+            return true;
+        }
+        document.querySelectorAll('[data-preset-apply]').forEach(button => button.addEventListener('click', () => applyPreset(button.getAttribute('data-preset-apply'))));
+        document.querySelectorAll('[data-preset-start]').forEach(button => button.addEventListener('click', () => {
+            if (applyPreset(button.getAttribute('data-preset-start'))) startGame(false, true);
+        }));
         document.querySelectorAll('.plot-option').forEach(option => {
             option.addEventListener('click', () => {
+                activePresetId = '';
+                document.querySelectorAll('.preset-card').forEach(card => card.classList.remove('is-selected'));
                 document.querySelectorAll('.plot-option').forEach(opt => {
                     opt.classList.remove('active');
                 });
@@ -1611,7 +1744,9 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
             if (Object.prototype.hasOwnProperty.call(u, '所属势力')) delete u.所属势力;
             u.背包物品 = {};
             u.装备 = {};
-            if (!u.武学功法 || typeof u.武学功法 !== 'object') u.武学功法 = {};
+            u.武学功法 = form.skills && typeof form.skills === 'object'
+                ? JSON.parse(JSON.stringify(form.skills))
+                : { 修炼功法: {}, 战斗功法: {} };
             if (!u.武学功法.修炼功法 || typeof u.武学功法.修炼功法 !== 'object') u.武学功法.修炼功法 = {};
             if (!u.武学功法.战斗功法 || typeof u.武学功法.战斗功法 !== 'object') u.武学功法.战斗功法 = {};
             u.修为进度 = 0;
@@ -1628,6 +1763,10 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
             d.stat_data.世界.时间 = form.context.时间;
             d.stat_data.世界.地点 = form.context.地点;
             d.stat_data.地理 = getInitialGeo(form);
+            if (form.clearPeople) {
+                d.stat_data.羁绊人物 = {};
+                d.stat_data.在场人物 = {};
+            }
             if (form.bond) {
                 const b = form.bond;
                 d.stat_data.羁绊人物[b.姓名] = {
@@ -1678,8 +1817,11 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
             const appearance = document.getElementById('char-appearance').value.trim();
             const figure = document.getElementById('char-figure').value.trim();
             const startLocation = document.getElementById('start-location').value;
-            const startSpot = getStartSpot(startLocation);
-            const context = getActivePlotContext(appearance, startLocation, startSpot);
+            const preset = activePresetId ? PRESET_OPENINGS[activePresetId] : null;
+            const startSpot = preset ? preset.context.地点 : getStartSpot(startLocation);
+            const context = preset
+                ? Object.assign({}, preset.context, (startLocation && startLocation !== preset.location && getStartSpot(startLocation)) ? { 地点: getStartSpot(startLocation) } : {})
+                : getActivePlotContext(appearance, startLocation, startSpot);
             const activePlotOption = document.querySelector('.plot-option.active');
             const customMode = !activePlotOption || !plotContexts[activePlotOption.getAttribute('data-plot')];
             const customPlot = document.getElementById('custom-plot').value.trim();
@@ -1707,7 +1849,9 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                 clothes: extractClothing(appearance, customPlot),
                 startLocation: startLocation,
                 startSpot: startSpot,
-                bond: bond
+                bond: bond,
+                skills: preset ? preset.skills : null,
+                clearPeople: !!preset
             };
             const btn = document.getElementById(includeBond ? 'bond-start-game-button' : 'start-game-button');
             const status = document.getElementById(includeBond ? 'bond-game-status' : 'start-game-status');
@@ -1779,9 +1923,10 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                 }
                 btn.style.background = '#4CAF50';
                 const bondNote = bond ? '已写入羁绊人物「' + bond.姓名 + '」，' : '';
+                const presetNote = preset ? '预制开局「' + preset.title + '」已写入，羁绊人物与在场人物已保持为空，' : '';
                 if (status) status.textContent = customMode
-                    ? bondNote + '已写入基础信息，并按你的剧情/开局地点给出时间、地点、衣着、身材、身份初值；AI 会在首轮回复读取剧情、身份与天赋后校准。摘要' + (filled ? '已填入输入框' : '已复制到剪贴板') + '，发送即可开局。' + floorNote
-                    : bondNote + '已写入：姓名/年龄/性别/外貌/身材/性格/天赋，并按开场剧情与开局地点生成时间/地点/衣着/身份。摘要' + (filled ? '已填入输入框' : '已复制到剪贴板') + '，发送即可开局。' + floorNote;
+                    ? presetNote + bondNote + '已写入基础信息，并按你的剧情/开局地点给出时间、地点、衣着、身材、身份初值；AI 会在首轮回复读取剧情、身份与天赋后校准。摘要' + (filled ? '已填入输入框' : '已复制到剪贴板') + '，发送即可开局。' + floorNote
+                    : presetNote + bondNote + '已写入：姓名/年龄/性别/外貌/身材/性格/天赋，并按开场剧情与开局地点生成时间/地点/衣着/身份。摘要' + (filled ? '已填入输入框' : '已复制到剪贴板') + '，发送即可开局。' + floorNote;
             } catch (e) {
                 console.error('MVU 初始化失败:', e);
                 btn.disabled = false;
