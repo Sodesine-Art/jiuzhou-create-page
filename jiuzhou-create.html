@@ -409,6 +409,20 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
 @media (max-width:760px){.jz-page .preset-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.jz-page .preset-card{padding:10px;}}
 @media (max-width:430px){.jz-page .preset-grid{grid-template-columns:minmax(0,1fr);}.jz-page .preset-actions button{min-height:44px;}.jz-page .preset-opening{padding:12px 10px;}}
 </style>
+<style id="jz-opening-package-styles">
+/* 开局预设包：当前仅提供选择容器；具体剧情包由后续审核后填入 OPENING_PACKAGES。 */
+.jz-page .opening-package-bar{display:flex;align-items:center;gap:10px;margin:0 0 18px;padding:9px 11px;border:1px solid #b08d4f;border-left:4px solid #2a9d8f;border-radius:8px;background:rgba(255,253,246,.76);box-shadow:inset 0 1px rgba(255,255,255,.72);}
+.jz-page .plot-block{display:none!important;} /* 旧“九州江湖·开场剧情”仅保留后台兼容字段，不再参与页面呈现。 */
+.jz-page .opening-package-copy{min-width:0;flex:1;}.jz-page .opening-package-label{display:block;font-family:'Ma Shan Zheng',cursive;font-size:1.22rem;color:#2a2a4a;letter-spacing:.05em;}.jz-page .opening-package-summary{display:block;overflow:hidden;color:#6d5635;font-size:.78rem;line-height:1.45;text-overflow:ellipsis;white-space:nowrap;}.jz-page .opening-package-trigger{flex:0 0 auto;min-height:38px;padding:7px 11px;border:1px solid #1a1a2e;border-radius:5px;background:#2a2a4a;color:#fff;font-family:'Ma Shan Zheng',cursive;font-size:1.05rem;}
+.jz-opening-modal{position:fixed;z-index:9999;inset:0;display:none;place-items:center;padding:18px;background:rgba(18,18,31,.54);backdrop-filter:blur(2px);}.jz-opening-modal.is-open{display:grid;}.jz-opening-dialog{width:min(840px,100%);max-height:min(680px,calc(100vh - 36px));overflow:hidden;border:1px solid #b08d4f;border-radius:12px;background:#f7f0df;box-shadow:0 20px 60px rgba(10,10,18,.42);display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;}
+.jz-opening-modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 15px;border-bottom:1px solid #c9aa72;background:linear-gradient(90deg,#ead5a8,#f7efd9);}.jz-opening-modal-title{margin:0;font-family:'Ma Shan Zheng',cursive;font-size:1.55rem;color:#2a2a4a;}.jz-opening-close{width:34px;height:34px;border:0;background:transparent;color:#8d3629;font-size:1.45rem;cursor:pointer;}.jz-opening-category{display:flex;gap:7px;overflow-x:auto;padding:10px 14px;border-bottom:1px solid #dfc99d;scrollbar-width:thin;}.jz-opening-category button{flex:0 0 auto;min-height:33px;padding:5px 10px;border:1px solid #bb9658;border-radius:999px;background:#fffaf0;color:#654b2d;font-size:.8rem;}.jz-opening-category button.is-active{background:#2a9d8f;border-color:#237f74;color:#fff;}.jz-opening-body{min-height:0;display:grid;grid-template-columns:minmax(210px,.9fr) minmax(290px,1.1fr);}.jz-opening-list{min-height:0;overflow:auto;padding:12px;border-right:1px solid #dfc99d;}.jz-opening-empty{margin:0;padding:16px 12px;border:1px dashed #c9aa72;border-radius:7px;color:#786344;font-size:.85rem;line-height:1.7;text-align:center;}.jz-opening-detail{min-height:0;overflow:auto;padding:18px;background:rgba(255,253,246,.54);}.jz-opening-detail h4{margin:0 0 8px;font-family:'Ma Shan Zheng',cursive;font-size:1.5rem;color:#2a2a4a;}.jz-opening-detail p{margin:0;color:#6d5635;font-size:.85rem;line-height:1.75;}.jz-opening-detail dl{display:grid;grid-template-columns:74px 1fr;gap:7px 9px;margin:14px 0 0;font-size:.82rem;line-height:1.5;}.jz-opening-detail dt{color:#a33b2e;font-weight:700;}.jz-opening-detail dd{margin:0;color:#493a29;}.jz-opening-modal-foot{display:flex;justify-content:flex-end;gap:8px;padding:11px 14px;border-top:1px solid #dfc99d;background:#f3e7cc;}.jz-opening-modal-foot button{min-height:38px;padding:7px 14px;border:1px solid #1a1a2e;border-radius:5px;background:#fffaf0;color:#1a1a2e;}.jz-opening-confirm{background:#a33b2e!important;border-color:#87382b!important;color:#fff!important;}.jz-opening-confirm:disabled{opacity:.45;cursor:not-allowed;}
+@media (max-width:640px){.jz-page .opening-package-bar{align-items:flex-start;}.jz-page .opening-package-trigger{min-height:44px;}.jz-opening-modal{align-items:end;padding:0;}.jz-opening-dialog{width:100%;max-height:86vh;border-radius:14px 14px 0 0;}.jz-opening-body{grid-template-columns:1fr;grid-template-rows:minmax(150px,.75fr) minmax(180px,1fr);}.jz-opening-list{border-right:0;border-bottom:1px solid #dfc99d;}.jz-opening-detail{padding:14px;}}
+</style>
+<style id="jz-opening-package-list-styles">
+.jz-opening-list .opening-package-item{display:block;width:100%;margin:0 0 8px;padding:10px 11px;border:1px solid #c9aa72;border-radius:6px;background:#fffaf0;color:#3d3023;font-family:inherit;font-size:.9rem;font-weight:700;text-align:left;cursor:pointer;}
+.jz-opening-list .opening-package-item:hover,.jz-opening-list .opening-package-item:focus{border-color:#2a9d8f;background:#eef8f5;outline:0;}
+.jz-opening-list .opening-package-item:last-child{margin-bottom:0;}
+</style>
 </head>
 <body>
 <section class="jz-entry-screen" id="jz-entry-screen" aria-label="九州大世界进入页面">
@@ -646,7 +660,14 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                             </div>
                             </div>
                         </div>
-                        <div class="plot-block">
+                        <section class="opening-package-bar" aria-labelledby="opening-package-label">
+                            <div class="opening-package-copy">
+                                <span class="opening-package-label" id="opening-package-label">开局卷轴</span>
+                                <span class="opening-package-summary" id="opening-package-summary">尚未选择开局预设包；确认后将同时绑定剧情与地点。</span>
+                            </div>
+                            <button type="button" class="opening-package-trigger" id="opening-package-trigger" aria-haspopup="dialog" aria-controls="opening-package-modal">选择开局 ›</button>
+                        </section>
+                        <div class="plot-block" aria-hidden="true">
                             <h3>九州江湖 · 开场剧情</h3>
                             <div class="plot-options">
                                      <div class="plot-option active" data-plot="zhenwu">真武阁</div>
@@ -751,6 +772,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                                         </optgroup>
                             </select>
                         </div>
+                        </div><!-- /.plot-block：旧开场剧情与旧地点选择仅作兼容保留，不得包裹后续创建流程 -->
 <div class="talent-system">
                             <h3>天赋抽取系统</h3>
                             <p>点击下方按钮抽取天赋，您可以选择并保留最多3个天赋</p>
@@ -837,6 +859,14 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                     <p class="footer-note" id="bond-game-status" aria-live="polite">填写完毕后保存并开始游戏；所有已填写字段会直接写入初始变量。</p>
                 </div>
         </section>
+        <div class="jz-opening-modal" id="opening-package-modal" aria-hidden="true" role="presentation">
+            <section class="jz-opening-dialog" role="dialog" aria-modal="true" aria-labelledby="opening-package-modal-title">
+                <header class="jz-opening-modal-head"><h3 class="jz-opening-modal-title" id="opening-package-modal-title">开局卷轴</h3><button type="button" class="jz-opening-close" id="opening-package-close" aria-label="关闭开局卷轴">×</button></header>
+                <nav class="jz-opening-category" id="opening-package-categories" aria-label="开局分类"></nav>
+                <div class="jz-opening-body"><div class="jz-opening-list" id="opening-package-list"></div><aside class="jz-opening-detail" id="opening-package-detail"><h4>待选开局</h4><p>此处将展示你确认后的开局剧情、固定地点、时间、初始人物与主线任务。当前没有写入任何新剧情。</p></aside></div>
+                <footer class="jz-opening-modal-foot"><button type="button" id="opening-package-cancel">取消</button><button type="button" class="jz-opening-confirm" id="opening-package-confirm" disabled>确认此开局</button></footer>
+            </section>
+        </div>
         <!-- ===== 角色管理弹窗 ===== -->
         <div class="cm-overlay hidden" id="character-manager-overlay">
             <div class="cm-modal" role="dialog" aria-modal="true" aria-label="角色管理">
@@ -1149,7 +1179,613 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
         const rollButton = document.getElementById('roll-talents');
         const resetButton = document.getElementById('reset-talents');
         const rollCountElement = document.getElementById('roll-count');
-        // 预制开局只持有玩家与世界起点。人物关系一律留给正式剧情生成。
+        // 开局预设包只定义结构，不在测试页预置剧情；待内容审核后再填入数组。
+        // 每一项字段：id、分类、标题、引子、时间、地点、地点选择、在场人物、羁绊人物、主线任务、已知情报、开场指令。
+        const OPENING_PACKAGES = [
+  {
+    "id": "legacy-zhenwu",
+    "title": "真武·茶钱之缘",
+    "分类": "门派",
+    "标题": "真武·茶钱之缘",
+    "时间": "仲春·午后",
+    "地点": "益州·巴郡",
+    "地点选择": "益州·巴郡",
+    "引子": "你替镇上药铺往巴郡送一包药材钱，三天的山路走得脚底起泡。头一日在山道茶棚歇脚，一位鹤发老道摸了半天衣袋，赊欠两文茶钱。你顺手替他付了，他搁下一句「缘法到了自会相见」便走了。三日后你送完货折返，当真武山门已在望，青石阶上竟坐着那位老道，手边两壶清茶：「茶钱已还。你绕山三日不抄近路，这壶茶，请你喝。」",
+    "开场指令": "你替镇上药铺往巴郡送一包药材钱，三天的山路走得脚底起泡。头一日在山道茶棚歇脚，一位鹤发老道摸了半天衣袋，赊欠两文茶钱。你顺手替他付了，他搁下一句「缘法到了自会相见」便走了。三日后你送完货折返，当真武山门已在望，青石阶上竟坐着那位老道，手边两壶清茶：「茶钱已还。你绕山三日不抄近路，这壶茶，请你喝。」",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_真武山门",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "legacy-puti",
+    "title": "菩提·雨护经卷",
+    "分类": "门派",
+    "标题": "菩提·雨护经卷",
+    "时间": "仲春·雨后",
+    "地点": "中州·荥阳",
+    "地点选择": "中州·荥阳",
+    "引子": "你替人往荥阳送一封家书，半路赶上暴雨，躲进灵山脚下旧茶棚。棚里坐着一位行脚老僧，守着半筐经卷发愁——雨水顺着瓦缝直往筐上滴。你二话不说脱下外衫盖住经筐，又帮他把经卷搬进檐下。雨停时，老僧见你浑身湿透，却护得经卷半点未湿，忽然开口：「灵山藏经阁缺个晒经的人。你若无事，跟贫僧上山晒三日经，柴房有铺，锅里有粥。」他顿了顿：「你护经的模样，像极了我年轻时入寺的样子。」",
+    "开场指令": "你替人往荥阳送一封家书，半路赶上暴雨，躲进灵山脚下旧茶棚。棚里坐着一位行脚老僧，守着半筐经卷发愁——雨水顺着瓦缝直往筐上滴。你二话不说脱下外衫盖住经筐，又帮他把经卷搬进檐下。雨停时，老僧见你浑身湿透，却护得经卷半点未湿，忽然开口：「灵山藏经阁缺个晒经的人。你若无事，跟贫僧上山晒三日经，柴房有铺，锅里有粥。」他顿了顿：「你护经的模样，像极了我年轻时入寺的样子。」",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_灵山晒经",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "legacy-tianji",
+    "title": "天机·剑冢避雨",
+    "分类": "门派",
+    "标题": "天机·剑冢避雨",
+    "时间": "仲春·日暮",
+    "地点": "益州·剑阁",
+    "地点选择": "益州·剑阁",
+    "引子": "你随马帮走秦岭，一场山雨把你逼进天剑峰下的剑冢避雨。满山断剑插地如林，你闲得发慌，折了根木枝照着剑痕比划，谁知一描便入了神，从雨停描到日暮。身后不知何时站了一名白衣剑侍，他看你收势，沉默半晌才开口：「你方才第三剑的收势，宗门入门弟子要练三年。你叫什么名字，师承何人？」",
+    "开场指令": "你随马帮走秦岭，一场山雨把你逼进天剑峰下的剑冢避雨。满山断剑插地如林，你闲得发慌，折了根木枝照着剑痕比划，谁知一描便入了神，从雨停描到日暮。身后不知何时站了一名白衣剑侍，他看你收势，沉默半晌才开口：「你方才第三剑的收势，宗门入门弟子要练三年。你叫什么名字，师承何人？」",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_剑痕初见",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "legacy-youming",
+    "title": "幽冥·月下山铃",
+    "分类": "悬疑·凶险",
+    "标题": "幽冥·月下山铃",
+    "时间": "仲春·深夜",
+    "地点": "云州·苗岭",
+    "地点选择": "云州·苗岭",
+    "引子": "你是个走寨串乡的货郎，卖完最后一串山铃就能赶在阿妹生辰前回家。集市收摊时，一位蒙着黑纱的女子买走了那串铃，多搁下一枚铜钱：「铃音可避蛊，今夜风声不对，早些回寨。」你半信半疑，夜里果真被山风里隐约的铃声引出寨子。月下，那女子指尖悬着一只泛幽光的蛊虫，正偏头看你：「跟了这么远——是想讨回那枚铜钱，还是想听个故事？」",
+    "开场指令": "你是个走寨串乡的货郎，卖完最后一串山铃就能赶在阿妹生辰前回家。集市收摊时，一位蒙着黑纱的女子买走了那串铃，多搁下一枚铜钱：「铃音可避蛊，今夜风声不对，早些回寨。」你半信半疑，夜里果真被山风里隐约的铃声引出寨子。月下，那女子指尖悬着一只泛幽光的蛊虫，正偏头看你：「跟了这么远——是想讨回那枚铜钱，还是想听个故事？」",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_山铃引路",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "legacy-qiqing",
+    "title": "七情·秦淮续曲",
+    "分类": "江湖",
+    "标题": "七情·秦淮续曲",
+    "时间": "仲春·夜晚",
+    "地点": "扬州·金陵",
+    "地点选择": "扬州·金陵",
+    "引子": "你赴金陵赶考落第，盘缠只剩最后几文，夜来在秦淮河畔吹箫卖艺。你吹的是一支乡间小调，讲的是少年离家、老母倚门。画舫二层的帘子忽然掀开，抛下一朵海棠，蒙纱的乐师倚窗笑道：「曲子里有故事的人，箫声才入得了耳。」她指尖拨起琵琶，接的正是你那曲子的后半阙——分毫不差，又比你多了一段归乡的调子。",
+    "开场指令": "你赴金陵赶考落第，盘缠只剩最后几文，夜来在秦淮河畔吹箫卖艺。你吹的是一支乡间小调，讲的是少年离家、老母倚门。画舫二层的帘子忽然掀开，抛下一朵海棠，蒙纱的乐师倚窗笑道：「曲子里有故事的人，箫声才入得了耳。」她指尖拨起琵琶，接的正是你那曲子的后半阙——分毫不差，又比你多了一段归乡的调子。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_一曲归乡",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "legacy-gaibang",
+    "title": "丐帮·槐下烈酒",
+    "分类": "江湖",
+    "标题": "丐帮·槐下烈酒",
+    "时间": "仲春·傍晚",
+    "地点": "中州·彭城",
+    "地点选择": "中州·彭城",
+    "引子": "你在彭城码头扛了一天麻包，散工后用最后两文钱买了两个炊饼。蹲在墙根啃饼时，见老乞丐盯着你的饼咽口水，你掰了半个递过去。老乞丐也不客气，接过去咬了一口，从怀里摸出一只豁口酒葫芦塞给你：「吃饼不喝酒，白来世上走。」你灌了一口，酒烈得呛出眼泪，却有一股暖意直沉丹田。老乞丐眯起眼：「这酒是降龙掌传人当年埋在槐树下的，香不香？」",
+    "开场指令": "你在彭城码头扛了一天麻包，散工后用最后两文钱买了两个炊饼。蹲在墙根啃饼时，见老乞丐盯着你的饼咽口水，你掰了半个递过去。老乞丐也不客气，接过去咬了一口，从怀里摸出一只豁口酒葫芦塞给你：「吃饼不喝酒，白来世上走。」你灌了一口，酒烈得呛出眼泪，却有一股暖意直沉丹田。老乞丐眯起眼：「这酒是降龙掌传人当年埋在槐树下的，香不香？」",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_槐下酒缘",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "legacy-shijia",
+    "title": "世家·诗剑小宴",
+    "分类": "江湖",
+    "标题": "世家·诗剑小宴",
+    "时间": "仲春·午后",
+    "地点": "扬州·广陵",
+    "地点选择": "扬州·广陵",
+    "引子": "你是游学的寒门书生，盘缠将尽，路过瘦西湖时正赶上慕容家办诗剑会。你本只想看个热闹，瞥见柳枝上挂着一盏灯谜，下联缺了半句，随口对了出来，竟引来满座喝彩。一位华服少女分开人群走到你面前，把一枚刻着「慕容」的玉佩放进你掌心：「灯谜是我出的，下联是你解的，这局算我输。明日枫桥东市有场小宴，这顿酒，该我请你。」",
+    "开场指令": "你是游学的寒门书生，盘缠将尽，路过瘦西湖时正赶上慕容家办诗剑会。你本只想看个热闹，瞥见柳枝上挂着一盏灯谜，下联缺了半句，随口对了出来，竟引来满座喝彩。一位华服少女分开人群走到你面前，把一枚刻着「慕容」的玉佩放进你掌心：「灯谜是我出的，下联是你解的，这局算我输。明日枫桥东市有场小宴，这顿酒，该我请你。」",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_枫桥诗剑",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "legacy-baicao",
+    "title": "百草·谷口识药",
+    "分类": "门派",
+    "标题": "百草·谷口识药",
+    "时间": "仲春·清晨",
+    "地点": "益州·南郑",
+    "地点选择": "益州·南郑",
+    "引子": "你在益州南郑的山里采了三日菌子，下山时路过药王谷口，药庐前排着长队。你见药僮搬不动药材，放下篓子搭了把手。坐堂女医却先不看病人，从你篓里拣出一株紫叶小草：「断肠草混在菌子里，你这三日的辛苦差点要了你的命。」她把草递还给你：「记住它的样子——谷里采药，正缺你这样的眼睛。」",
+    "开场指令": "你在益州南郑的山里采了三日菌子，下山时路过药王谷口，药庐前排着长队。你见药僮搬不动药材，放下篓子搭了把手。坐堂女医却先不看病人，从你篓里拣出一株紫叶小草：「断肠草混在菌子里，你这三日的辛苦差点要了你的命。」她把草递还给你：「记住它的样子——谷里采药，正缺你这样的眼睛。」",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_药王谷眼力",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "legacy-tingfeng",
+    "title": "听风·城南疑信",
+    "分类": "江湖",
+    "标题": "听风·城南疑信",
+    "时间": "仲春·傍晚",
+    "地点": "中州·洛阳",
+    "地点选择": "中州·洛阳",
+    "引子": "你在洛阳城南代写书信，三年来替人写过家书、状纸、情信。这日傍晚，一个满脸横肉的刀客把你的信摊拍在案上：「半月前这封信，是不是你写的？」信上只有四个字：今夜三更。你认得那笔迹——是你的，可你从没写过这封信。刀客冷笑：「城南杜老爷昨夜死在自己房里，死前攥着的就是这封信。跟我走一趟。」话音未落，巷口两名捕快已围上来。千钧一发之际，茶楼二层探出个青袍人，不紧不慢开口：「都住手。那封信是我写的，用的是他的笔迹——杜老爷不是他杀的，信上的字也根本不是'今夜三更'。二位捕快，要不要看看我手里这份真迹？」",
+    "开场指令": "你在洛阳城南代写书信，三年来替人写过家书、状纸、情信。这日傍晚，一个满脸横肉的刀客把你的信摊拍在案上：「半月前这封信，是不是你写的？」信上只有四个字：今夜三更。你认得那笔迹——是你的，可你从没写过这封信。刀客冷笑：「城南杜老爷昨夜死在自己房里，死前攥着的就是这封信。跟我走一趟。」话音未落，巷口两名捕快已围上来。千钧一发之际，茶楼二层探出个青袍人，不紧不慢开口：「都住手。那封信是我写的，用的是他的笔迹——杜老爷不是他杀的，信上的字也根本不是'今夜三更'。二位捕快，要不要看看我手里这份真迹？」",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_城南真迹",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "legacy-shenwu",
+    "title": "神武·城门弩机",
+    "分类": "朝廷",
+    "标题": "神武·城门弩机",
+    "时间": "仲春·白昼",
+    "地点": "幽州·渔阳",
+    "地点选择": "幽州·渔阳",
+    "引子": "你是替镖局押货的趟子手，赶着一车皮货来渔阳交货，排在城门口入城的长队里。前头商队有个伙计挑着两口木箱，走路的架势却不对——鞋底没茧、落脚极轻，挑箱子的肩是虚搭着的，箱里装的分明不是寻常货物。你不动声色跟上去，在他擦着守城校尉身侧进城的一瞬，一把攥住他手腕。那人猛地甩手，袖中滑出一柄短刀，反手就朝你咽喉抹来。你偏头避开，一记肩撞把他顶在城墙根上，两人当场扭作一团，木箱摔在地上，箱盖掀开——里面是一排崭新的军中弩机。校尉拔刀断喝：「拿下！」他看了看地上的弩，又看了看你：「你押的是皮货，管的是闲事，看得倒是准。」",
+    "开场指令": "你是替镖局押货的趟子手，赶着一车皮货来渔阳交货，排在城门口入城的长队里。前头商队有个伙计挑着两口木箱，走路的架势却不对——鞋底没茧、落脚极轻，挑箱子的肩是虚搭着的，箱里装的分明不是寻常货物。你不动声色跟上去，在他擦着守城校尉身侧进城的一瞬，一把攥住他手腕。那人猛地甩手，袖中滑出一柄短刀，反手就朝你咽喉抹来。你偏头避开，一记肩撞把他顶在城墙根上，两人当场扭作一团，木箱摔在地上，箱盖掀开——里面是一排崭新的军中弩机。校尉拔刀断喝：「拿下！」他看了看地上的弩，又看了看你：「你押的是皮货，管的是闲事，看得倒是准。」",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_渔阳弩案",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-luosui",
+    "title": "洛水沉箱",
+    "分类": "悬疑·凶险",
+    "标题": "洛水沉箱",
+    "时间": "仲春·雨后",
+    "地点": "中州·洛阳",
+    "地点选择": "中州·洛阳",
+    "引子": "暴雨后，一口铁链缠身的木箱漂至洛水码头，箱中竟有一名持六扇门铜牌的重伤人。捕头赶来后却称此人三日前已经死亡，并要求你交出他昏迷前塞给你的半页密信。",
+    "开场指令": "暴雨后，一口铁链缠身的木箱漂至洛水码头，箱中竟有一名持六扇门铜牌的重伤人。捕头赶来后却称此人三日前已经死亡，并要求你交出他昏迷前塞给你的半页密信。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_洛水沉箱",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-yumen",
+    "title": "玉门烽烟",
+    "分类": "悬疑·凶险",
+    "标题": "玉门烽烟",
+    "时间": "仲春·黄昏",
+    "地点": "凉州·玉门",
+    "地点选择": "凉州·玉门",
+    "引子": "商队刚入玉门，烽火骤起，城门封锁。守军在货箱中查出兵符残片，神武卫校尉怀疑城内有内应，临时征召所有能拿兵器的人登城守夜。",
+    "开场指令": "商队刚入玉门，烽火骤起，城门封锁。守军在货箱中查出兵符残片，神武卫校尉怀疑城内有内应，临时征召所有能拿兵器的人登城守夜。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_玉门烽烟",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-blackbell",
+    "title": "黑铃寨雨",
+    "分类": "悬疑·凶险",
+    "标题": "黑铃寨雨",
+    "时间": "仲春·雨夜",
+    "地点": "云州·苗岭",
+    "地点选择": "云州·苗岭",
+    "引子": "山雨夜借宿寨中，檐下黑铃无风自响，寨民全部闭门。黑纱女子说禁山里的东西已经记住你的气息，留在寨中会连累所有人，必须在天亮前进山斩断铃线。",
+    "开场指令": "山雨夜借宿寨中，檐下黑铃无风自响，寨民全部闭门。黑纱女子说禁山里的东西已经记住你的气息，留在寨中会连累所有人，必须在天亮前进山斩断铃线。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_黑铃禁山",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-donglai-night",
+    "title": "东莱夜潮",
+    "分类": "悬疑·凶险",
+    "标题": "东莱夜潮",
+    "时间": "仲春·深夜",
+    "地点": "青州·东莱",
+    "地点选择": "青州·东莱",
+    "引子": "退潮后，一艘古沉船从礁石间露出船舱。你在舱内找到一张写有自己名字的海图，港口老人却说那艘船已沉没百年；今夜涨潮后，海图所指的位置会再次开启。",
+    "开场指令": "退潮后，一艘古沉船从礁石间露出船舱。你在舱内找到一张写有自己名字的海图，港口老人却说那艘船已沉没百年；今夜涨潮后，海图所指的位置会再次开启。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_夜潮海图",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-snow-bridge",
+    "title": "断桥雪信",
+    "分类": "悬疑·凶险",
+    "标题": "断桥雪信",
+    "时间": "暮春·大雪",
+    "地点": "凉州·陇西",
+    "地点选择": "凉州·陇西",
+    "引子": "断桥下，一名濒死镖师将军报与指环交给你，称队伍里有叛徒。追兵很快赶到，口称奉命接应，却说错了密令。暴雪封路，你必须在天亮前决定相信谁。",
+    "开场指令": "断桥下，一名濒死镖师将军报与指环交给你，称队伍里有叛徒。追兵很快赶到，口称奉命接应，却说错了密令。暴雪封路，你必须在天亮前决定相信谁。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_断桥密令",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-guangling-tea",
+    "title": "广陵春茶",
+    "分类": "市井",
+    "标题": "广陵春茶",
+    "时间": "仲春·午后",
+    "地点": "扬州·广陵",
+    "地点选择": "扬州·广陵",
+    "引子": "你在春茶会替摊主看火，不小心把两家名铺的茶叶混在一起，竟煮出一壶意外绝佳的新茶。两位掌柜一边争着要配方，一边都怀疑是对方故意使坏，整条茶街热闹得不可开交。",
+    "开场指令": "你在春茶会替摊主看火，不小心把两家名铺的茶叶混在一起，竟煮出一壶意外绝佳的新茶。两位掌柜一边争着要配方，一边都怀疑是对方故意使坏，整条茶街热闹得不可开交。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_春茶新方",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-qixi",
+    "title": "七夕鹊桥",
+    "分类": "节庆",
+    "标题": "七夕鹊桥",
+    "时间": "仲夏·夜晚",
+    "地点": "扬州·广陵",
+    "地点选择": "扬州·广陵",
+    "引子": "七夕夜全城搭桥祈愿，孩子们拉你凑齐“九桥同行”。走到最后一座桥时，你捡到一封没人敢送的情书，收信人恰好就在桥头，而写信的人早已离开广陵多年。",
+    "开场指令": "七夕夜全城搭桥祈愿，孩子们拉你凑齐“九桥同行”。走到最后一座桥时，你捡到一封没人敢送的情书，收信人恰好就在桥头，而写信的人早已离开广陵多年。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_九桥情书",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-herb-valley",
+    "title": "药王谷采药",
+    "分类": "游历",
+    "标题": "药王谷采药",
+    "时间": "仲春·清晨",
+    "地点": "益州·南郑",
+    "地点选择": "益州·南郑",
+    "引子": "百草堂药童误将一株罕见灵草画错图样，害得全谷上下忙成一团。你恰好识得它的生长地，被女医请去带路；沿途要分辨药草、避开猴群，还得应付总想偷吃药材的小兽。",
+    "开场指令": "百草堂药童误将一株罕见灵草画错图样，害得全谷上下忙成一团。你恰好识得它的生长地，被女医请去带路；沿途要分辨药草、避开猴群，还得应付总想偷吃药材的小兽。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_灵草寻踪",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-suzhou-umbrella",
+    "title": "姑苏雨伞",
+    "分类": "市井",
+    "标题": "姑苏雨伞",
+    "时间": "仲春·雨日",
+    "地点": "扬州·姑苏",
+    "地点选择": "扬州·姑苏",
+    "引子": "细雨连绵，你在桥边替人修伞，遇见一名衣着讲究却没有铜钱的姑娘。她以一枚精巧玉扣作抵，约好三日后来取伞；结果第二天，半座城都在找那枚玉扣的主人。",
+    "开场指令": "细雨连绵，你在桥边替人修伞，遇见一名衣着讲究却没有铜钱的姑娘。她以一枚精巧玉扣作抵，约好三日后来取伞；结果第二天，半座城都在找那枚玉扣的主人。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_雨伞玉扣",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-lingshan",
+    "title": "灵山晒经",
+    "分类": "师门",
+    "标题": "灵山晒经",
+    "时间": "仲春·雨后",
+    "地点": "中州·荥阳",
+    "地点选择": "中州·荥阳",
+    "引子": "菩提禅院藏经阁因连日阴雨，数百卷经书都需搬到山顶晒晾。你本是帮忙，却被分到最难相处的年轻僧人一组；两人一路斗嘴，最后发现少了一卷记载寺中旧事的孤本。",
+    "开场指令": "菩提禅院藏经阁因连日阴雨，数百卷经书都需搬到山顶晒晾。你本是帮忙，却被分到最难相处的年轻僧人一组；两人一路斗嘴，最后发现少了一卷记载寺中旧事的孤本。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_晒经孤本",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-wood-sword",
+    "title": "剑阁木剑",
+    "分类": "师门",
+    "标题": "剑阁木剑",
+    "时间": "仲春·午后",
+    "地点": "益州·剑阁",
+    "地点选择": "益州·剑阁",
+    "引子": "天机剑宗山脚正在办木剑试会，任何人都能上场比三招。你只是替孩子修了一把木剑，却被误认为报名者；守擂剑侍并不为难人，只说若能接住一招，便送你一套入门剑谱。",
+    "开场指令": "天机剑宗山脚正在办木剑试会，任何人都能上场比三招。你只是替孩子修了一把木剑，却被误认为报名者；守擂剑侍并不为难人，只说若能接住一招，便送你一套入门剑谱。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_木剑试会",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-pengcheng-feast",
+    "title": "彭城百家宴",
+    "分类": "市井",
+    "标题": "彭城百家宴",
+    "时间": "仲春·傍晚",
+    "地点": "中州·彭城",
+    "地点选择": "中州·彭城",
+    "引子": "丐帮分舵筹办百家宴，偏偏掌勺的老师傅扭了腰，食材也被一群野狗叼得到处都是。你被临时推到灶台前，得在天黑前凑出一桌像样饭菜，不然全城乞者都会把这笔账算到分舵头上。",
+    "开场指令": "丐帮分舵筹办百家宴，偏偏掌勺的老师傅扭了腰，食材也被一群野狗叼得到处都是。你被临时推到灶台前，得在天黑前凑出一桌像样饭菜，不然全城乞者都会把这笔账算到分舵头上。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_百家宴",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-qinhuai-boat",
+    "title": "金陵画舫",
+    "分类": "江湖",
+    "标题": "金陵画舫",
+    "时间": "仲春·夜晚",
+    "地点": "扬州·金陵",
+    "地点选择": "扬州·金陵",
+    "引子": "画舫上办即兴诗会，赢家可得一幅名家新作。你原本只想看热闹，却因替邻座补了半句诗被推上台；不同客人各有心思，有人求诗，有人求画，还有人只想借此结识你。",
+    "开场指令": "画舫上办即兴诗会，赢家可得一幅名家新作。你原本只想看热闹，却因替邻座补了半句诗被推上台；不同客人各有心思，有人求诗，有人求画，还有人只想借此结识你。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_画舫诗会",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-luoyang-lantern",
+    "title": "洛阳灯市",
+    "分类": "节庆",
+    "标题": "洛阳灯市",
+    "时间": "仲春·元宵夜",
+    "地点": "中州·洛阳",
+    "地点选择": "中州·洛阳",
+    "引子": "元宵灯市上，一盏机关花灯突然失控，满街乱窜。制灯匠急得直跺脚，说花灯腹中藏着给女儿的生辰礼。你与几个陌生人一路追灯，穿过戏台、酒楼和人潮，最后却来到一处意外安静的小院。",
+    "开场指令": "元宵灯市上，一盏机关花灯突然失控，满街乱窜。制灯匠急得直跺脚，说花灯腹中藏着给女儿的生辰礼。你与几个陌生人一路追灯，穿过戏台、酒楼和人潮，最后却来到一处意外安静的小院。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_机关花灯",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-tide-market",
+    "title": "东莱潮汐市",
+    "分类": "游历",
+    "标题": "东莱潮汐市",
+    "时间": "仲春·清晨",
+    "地点": "青州·东莱",
+    "地点选择": "青州·东莱",
+    "引子": "东莱的潮汐市只在退潮两个时辰内开张，海货、异石和外邦小玩意堆满滩头。你买下一枚会在月下发亮的贝壳，商贩却追来称卖错了货，愿拿三件稀罕物换回。",
+    "开场指令": "东莱的潮汐市只在退潮两个时辰内开张，海货、异石和外邦小玩意堆满滩头。你买下一枚会在月下发亮的贝壳，商贩却追来称卖错了货，愿拿三件稀罕物换回。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_月光贝壳",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-wuling-bamboo",
+    "title": "云州竹马",
+    "分类": "节庆",
+    "标题": "云州竹马",
+    "时间": "仲春·白昼",
+    "地点": "云州·武陵",
+    "地点选择": "云州·武陵",
+    "引子": "山寨举行春社赛竹马，外乡人也能报名。你被热情的寨民拉去凑队，却发现队伍少了最会跳的一人；为了不让全村输掉今年的彩头，你得在半日内学会当地的步法与鼓点。",
+    "开场指令": "山寨举行春社赛竹马，外乡人也能报名。你被热情的寨民拉去凑队，却发现队伍少了最会跳的一人；为了不让全村输掉今年的彩头，你得在半日内学会当地的步法与鼓点。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_春社彩头",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-imperial-list",
+    "title": "皇城放榜",
+    "分类": "朝廷",
+    "标题": "皇城放榜",
+    "时间": "仲春·白昼",
+    "地点": "中州·洛阳",
+    "地点选择": "中州·洛阳",
+    "引子": "放榜日人潮挤满长街，你替一名紧张得不敢靠近榜墙的书生看名字，结果先看见了自己的名字被人写在旁边。随后一名宫中小内侍匆匆赶来，说有人请你去一趟翰林院解释此事。",
+    "开场指令": "放榜日人潮挤满长街，你替一名紧张得不敢靠近榜墙的书生看名字，结果先看见了自己的名字被人写在旁边。随后一名宫中小内侍匆匆赶来，说有人请你去一趟翰林院解释此事。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_放榜异名",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-suzhou-banquet",
+    "title": "姑苏家宴",
+    "分类": "江湖",
+    "标题": "姑苏家宴",
+    "时间": "仲春·傍晚",
+    "地点": "扬州·姑苏",
+    "地点选择": "扬州·姑苏",
+    "引子": "慕容家办家宴，席间为了争一幅旧山水画闹得不可开交。你被请来辨认画上题字，才发现它其实是一位老仆留给失散亲人的线索。家宴因此变成一场温和却热闹的寻人之行。",
+    "开场指令": "慕容家办家宴，席间为了争一幅旧山水画闹得不可开交。你被请来辨认画上题字，才发现它其实是一位老仆留给失散亲人的线索。家宴因此变成一场温和却热闹的寻人之行。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_旧画寻亲",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-shenwu-trial",
+    "title": "神武营新兵试",
+    "分类": "朝廷",
+    "标题": "神武营新兵试",
+    "时间": "仲春·白昼",
+    "地点": "幽州·渔阳",
+    "地点选择": "幽州·渔阳",
+    "引子": "神武卫营地开放一日体验，新兵要比骑射、负重和军阵。你只是路过，却被朋友拉去凑数；比试并无生死压力，但营中校尉对你的临场应变很感兴趣，想让你替他完成一项小差事。",
+    "开场指令": "神武卫营地开放一日体验，新兵要比骑射、负重和军阵。你只是路过，却被朋友拉去凑数；比试并无生死压力，但营中校尉对你的临场应变很感兴趣，想让你替他完成一项小差事。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_营中新试",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  },
+  {
+    "id": "new-tingfeng-cat",
+    "title": "听风楼寻猫",
+    "分类": "市井",
+    "标题": "听风楼寻猫",
+    "时间": "仲春·午后",
+    "地点": "中州·洛阳",
+    "地点选择": "中州·洛阳",
+    "引子": "听风楼掌柜悬赏寻找一只走失的白猫，说它偷走的不是鱼干，而是一封价值千金的情报。你循着猫爪印跑遍半条街，最后发现白猫正蜷在一位蒙面客怀里，而那封情报竟是给你的邀请函。",
+    "开场指令": "听风楼掌柜悬赏寻找一只走失的白猫，说它偷走的不是鱼干，而是一封价值千金的情报。你循着猫爪印跑遍半条街，最后发现白猫正蜷在一位蒙面客怀里，而那封情报竟是给你的邀请函。",
+    "在场人物": [
+      "待剧情生成"
+    ],
+    "羁绊人物": [
+      "由玩家创建"
+    ],
+    "主线任务": "MQ.Ⅰ_白猫情报",
+    "已知情报": "开局仅提供场景线索，人物关系由后续剧情自然展开。"
+  }
+];
+        const OPENING_CATEGORIES = ["全部","朝廷","门派","江湖","边地","悬疑·凶险","市井","节庆","游历","师门"];
+        let activeOpeningPackageId = '';
+        let openingPackageDraftId = '';
+        const openingPackageModal = document.getElementById('opening-package-modal');
+        const openingPackageSummary = document.getElementById('opening-package-summary');
+        const openingPackageDetail = document.getElementById('opening-package-detail');
+        const openingPackageList = document.getElementById('opening-package-list');
+        const openingPackageCategories = document.getElementById('opening-package-categories');
+        const openingPackageConfirm = document.getElementById('opening-package-confirm');
+        let activeOpeningCategory = '全部';
+        function getOpeningPackage(id) { return OPENING_PACKAGES.find(item => item.id === id) || null; }
+        function updateOpeningPackageSummary() { const item = getOpeningPackage(activeOpeningPackageId); openingPackageSummary.textContent = item ? ('已选：' + item.title + ' · ' + item.地点) : '尚未选择开局预设包；确认后将同时绑定剧情与地点。'; }
+        function renderOpeningPackagePicker() {
+            openingPackageCategories.innerHTML = OPENING_CATEGORIES.map(name => '<button type="button" data-opening-category="' + name + '" class="' + (name === activeOpeningCategory ? 'is-active' : '') + '">' + name + '</button>').join('');
+            const visible = OPENING_PACKAGES.filter(item => activeOpeningCategory === '全部' || item.分类 === activeOpeningCategory);
+            openingPackageList.innerHTML = visible.length ? visible.map(item => '<button type="button" class="opening-package-item" data-opening-package="' + item.id + '">' + item.title + '</button>').join('') : '<p class="jz-opening-empty">尚未配置开局预设包。<br>剧情内容将在你审核后加入此处。</p>';
+            openingPackageCategories.querySelectorAll('[data-opening-category]').forEach(button => button.addEventListener('click', () => { activeOpeningCategory = button.dataset.openingCategory; openingPackageDraftId = ''; renderOpeningPackagePicker(); renderOpeningPackageDetail(); }));
+            openingPackageList.querySelectorAll('[data-opening-package]').forEach(button => button.addEventListener('click', () => { openingPackageDraftId = button.dataset.openingPackage; renderOpeningPackageDetail(); }));
+        }
+        function renderOpeningPackageDetail() {
+            const item = getOpeningPackage(openingPackageDraftId); openingPackageConfirm.disabled = !item;
+            if (!item) { openingPackageDetail.innerHTML = '<h4>待选开局</h4><p>此处将展示你确认后的开局剧情、固定地点、时间、初始人物与主线任务。当前没有写入任何新剧情。</p>'; return; }
+            openingPackageDetail.innerHTML = '<h4>' + item.title + '</h4><p>' + item.引子 + '</p><dl><dt>时间</dt><dd>' + item.时间 + '</dd><dt>地点</dt><dd>' + item.地点 + '</dd><dt>在场</dt><dd>' + item.在场人物.join('、') + '</dd><dt>羁绊</dt><dd>' + item.羁绊人物.join('、') + '</dd><dt>主线</dt><dd>' + item.主线任务 + '</dd></dl>';
+        }
+        function openOpeningPackagePicker() { openingPackageDraftId = activeOpeningPackageId; renderOpeningPackagePicker(); renderOpeningPackageDetail(); openingPackageModal.classList.add('is-open'); openingPackageModal.setAttribute('aria-hidden', 'false'); }
+        function closeOpeningPackagePicker() { openingPackageModal.classList.remove('is-open'); openingPackageModal.setAttribute('aria-hidden', 'true'); }
+        document.getElementById('opening-package-trigger').addEventListener('click', openOpeningPackagePicker);
+        document.getElementById('opening-package-close').addEventListener('click', closeOpeningPackagePicker);
+        document.getElementById('opening-package-cancel').addEventListener('click', closeOpeningPackagePicker);
+        openingPackageModal.addEventListener('click', event => { if (event.target === openingPackageModal) closeOpeningPackagePicker(); });
+        openingPackageConfirm.addEventListener('click', () => { const item = getOpeningPackage(openingPackageDraftId); if (!item) return; activeOpeningPackageId = item.id; if (item.地点选择 || item.地点) setFieldValue('start-location', item.地点选择 || item.地点); updateOpeningPackageSummary(); updatePreview(); closeOpeningPackagePicker(); });
+        updateOpeningPackageSummary();
+        // 预制角色开局只持有玩家与世界起点。人物关系一律留给正式剧情生成。
         const PRESET_OPENINGS = {
             jinzun: {
                 title: '金尊夜宴', name: '萧锦仪', age: '19', gender: '女',
@@ -1382,18 +2018,8 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
              const cultivation = document.getElementById('char-cultivation').value || "未填写";
              const other = document.getElementById('char-other').value || "未填写";
              const startLocation = document.getElementById('start-location').value;
-            let plot;
-            const activePlotOption = document.querySelector('.plot-option.active');
-            if (activePlotOption) {
-                const plotType = activePlotOption.getAttribute('data-plot');
-                if (plotType === 'custom') {
-                    plot = document.getElementById('custom-plot').value || "未填写自定义剧情";
-                } else {
-                    plot = document.getElementById(`${plotType}-plot`).innerText;
-                }
-            } else {
-                plot = "未选择剧情";
-            }
+            const openingPackage = getOpeningPackage(activeOpeningPackageId);
+            const plot = openingPackage ? (openingPackage.开场指令 || openingPackage.引子 || openingPackage.标题) : '尚未选择开局卷轴';
             let talentsText = "未选择天赋";
             if (selectedTalents.length > 0) {
                 talentsText = selectedTalents.map(t => `${t.name}（${t.desc}）`).join("；");
@@ -1558,16 +2184,16 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
             return ctx;
         }
         function getActivePlotContext(appearance, startLocation, startSpot) {
-            const activePlotOption = document.querySelector('.plot-option.active');
-            let ctx;
-            if (!activePlotOption) {
-                ctx = Object.assign({}, genericPlotContext);
-            } else {
-                const plotType = activePlotOption.getAttribute('data-plot');
-                ctx = plotContexts[plotType]
-                    ? Object.assign({}, plotContexts[plotType])
-                    : parseCustomContext(plotType === 'custom' ? (document.getElementById('custom-plot').value || '') : '', appearance);
+            const openingPackage = getOpeningPackage(activeOpeningPackageId);
+            if (openingPackage) {
+                return {
+                    时间: openingPackage.时间 || genericPlotContext.时间,
+                    地点: openingPackage.地点 || startSpot || genericPlotContext.地点,
+                    衣服: extractClothing(appearance, openingPackage.开场指令 || openingPackage.引子 || ''),
+                    身材: '', 势力: ''
+                };
             }
+            let ctx = Object.assign({}, genericPlotContext);
             if (startLocation && startSpot) ctx.地点 = startSpot;
             return ctx;
         }
@@ -1819,13 +2445,13 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
             const figure = document.getElementById('char-figure').value.trim();
             const startLocation = document.getElementById('start-location').value;
             const preset = activePresetId ? PRESET_OPENINGS[activePresetId] : null;
-            const startSpot = preset ? preset.context.地点 : getStartSpot(startLocation);
+            const openingPackage = getOpeningPackage(activeOpeningPackageId);
+            const startSpot = openingPackage ? openingPackage.地点 : (preset ? preset.context.地点 : getStartSpot(startLocation));
             const context = preset
                 ? Object.assign({}, preset.context, (startLocation && startLocation !== preset.location && getStartSpot(startLocation)) ? { 地点: getStartSpot(startLocation) } : {})
                 : getActivePlotContext(appearance, startLocation, startSpot);
-            const activePlotOption = document.querySelector('.plot-option.active');
-            const customMode = !activePlotOption || !plotContexts[activePlotOption.getAttribute('data-plot')];
-            const customPlot = document.getElementById('custom-plot').value.trim();
+            const customMode = !preset && !openingPackage;
+            const customPlot = openingPackage ? String(openingPackage.开场指令 || openingPackage.引子 || '') : '';
             let bond = null;
             try {
                 const shouldUseBond = !skipBond && (includeBond || !!collectBondSnapshot());
@@ -1850,9 +2476,10 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                 clothes: extractClothing(appearance, customPlot),
                 startLocation: startLocation,
                 startSpot: startSpot,
+                openingPackage: openingPackage,
                 bond: bond,
                 skills: preset ? preset.skills : null,
-                clearPeople: !!preset
+                clearPeople: !!preset || !!openingPackage
             };
             const btn = document.getElementById(includeBond ? 'bond-start-game-button' : 'start-game-button');
             const status = document.getElementById(includeBond ? 'bond-game-status' : 'start-game-status');
