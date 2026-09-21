@@ -423,6 +423,15 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
 .jz-opening-list .opening-package-item:hover,.jz-opening-list .opening-package-item:focus{border-color:#2a9d8f;background:#eef8f5;outline:0;}
 .jz-opening-list .opening-package-item:last-child{margin-bottom:0;}
 </style>
+<style id="jz-mobile-entry-dedupe">
+/* 手机端入口页只有一个绘制层：立绘不再以负层跨越入口区，并裁切入口区之外的像素。 */
+@media (max-width:640px){
+  .jz-entry-screen{isolation:isolate;contain:layout paint;}
+  .jz-entry-screen .entry-content{isolation:isolate;}
+  .jz-entry-screen .entry-portrait{z-index:0!important;}
+  .jz-entry-screen .entry-title,.jz-entry-screen .entry-action{position:relative;z-index:1;}
+}
+</style>
 </head>
 <body>
 <section class="jz-entry-screen" id="jz-entry-screen" aria-label="九州大世界进入页面">
@@ -3226,11 +3235,13 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
     const enter = document.getElementById('jz-enter-create');
     const page = document.querySelector('.jz-page');
     if (!screen || !enter || !page) return;
+    // 部分手机 WebView 在重载消息楼层时可能残留一份入口节点；只保留当前入口页。
+    document.querySelectorAll('#jz-entry-screen').forEach((node, index) => { if (index > 0) node.remove(); });
     page.setAttribute('aria-hidden', 'true');
     enter.addEventListener('click', function () {
       enter.disabled = true;
       enter.textContent = '江湖已开';
-      screen.classList.add('is-hidden');
+      screen.remove();
       document.body.classList.add('jz-entered');
       page.removeAttribute('aria-hidden');
       window.dispatchEvent(new Event('resize'));
