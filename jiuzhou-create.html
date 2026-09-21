@@ -414,14 +414,22 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
 .jz-page .opening-package-bar{display:flex;align-items:center;gap:10px;margin:0 0 18px;padding:9px 11px;border:1px solid #b08d4f;border-left:4px solid #2a9d8f;border-radius:8px;background:rgba(255,253,246,.76);box-shadow:inset 0 1px rgba(255,255,255,.72);}
 .jz-page .plot-block{display:none!important;} /* 旧“九州江湖·开场剧情”仅保留后台兼容字段，不再参与页面呈现。 */
 .jz-page .opening-package-copy{min-width:0;flex:1;}.jz-page .opening-package-label{display:block;font-family:'Ma Shan Zheng',cursive;font-size:1.22rem;color:#2a2a4a;letter-spacing:.05em;}.jz-page .opening-package-summary{display:block;overflow:hidden;color:#6d5635;font-size:.78rem;line-height:1.45;text-overflow:ellipsis;white-space:nowrap;}.jz-page .opening-package-trigger{flex:0 0 auto;min-height:38px;padding:7px 11px;border:1px solid #1a1a2e;border-radius:5px;background:#2a2a4a;color:#fff;font-family:'Ma Shan Zheng',cursive;font-size:1.05rem;}
+.jz-page .opening-package-display{margin:-7px 0 14px;padding:12px;border:1px solid #c9aa72;border-radius:8px;background:rgba(255,253,246,.72);box-shadow:inset 0 1px rgba(255,255,255,.75);}.jz-page .opening-package-display-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:0 0 8px;}.jz-page .opening-package-display h4{margin:0;font-family:'Ma Shan Zheng',cursive;font-size:1.28rem;color:#2a2a4a;}.jz-page .opening-package-display-tip{font-size:.76rem;color:#786344;}.jz-page .opening-package-display textarea{display:block;width:100%;min-height:170px;box-sizing:border-box;resize:vertical;padding:10px;border:1px solid #bd9c66;border-radius:6px;background:#fffdf7;color:#3f3020;font:inherit;font-size:.9rem;line-height:1.75;}.jz-page .opening-package-location{margin-top:0!important;}
 .jz-opening-modal{position:fixed;z-index:9999;inset:0;display:none;place-items:center;padding:18px;background:rgba(18,18,31,.54);backdrop-filter:blur(2px);}.jz-opening-modal.is-open{display:grid;}.jz-opening-dialog{width:min(840px,100%);max-height:min(680px,calc(100vh - 36px));overflow:hidden;border:1px solid #b08d4f;border-radius:12px;background:#f7f0df;box-shadow:0 20px 60px rgba(10,10,18,.42);display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;}
 .jz-opening-modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 15px;border-bottom:1px solid #c9aa72;background:linear-gradient(90deg,#ead5a8,#f7efd9);}.jz-opening-modal-title{margin:0;font-family:'Ma Shan Zheng',cursive;font-size:1.55rem;color:#2a2a4a;}.jz-opening-close{width:34px;height:34px;border:0;background:transparent;color:#8d3629;font-size:1.45rem;cursor:pointer;}.jz-opening-category{display:flex;gap:7px;overflow-x:auto;padding:10px 14px;border-bottom:1px solid #dfc99d;scrollbar-width:thin;}.jz-opening-category button{flex:0 0 auto;min-height:33px;padding:5px 10px;border:1px solid #bb9658;border-radius:999px;background:#fffaf0;color:#654b2d;font-size:.8rem;}.jz-opening-category button.is-active{background:#2a9d8f;border-color:#237f74;color:#fff;}.jz-opening-body{min-height:0;display:grid;grid-template-columns:minmax(210px,.9fr) minmax(290px,1.1fr);}.jz-opening-list{min-height:0;overflow:auto;padding:12px;border-right:1px solid #dfc99d;}.jz-opening-empty{margin:0;padding:16px 12px;border:1px dashed #c9aa72;border-radius:7px;color:#786344;font-size:.85rem;line-height:1.7;text-align:center;}.jz-opening-detail{min-height:0;overflow:auto;padding:18px;background:rgba(255,253,246,.54);}.jz-opening-detail h4{margin:0 0 8px;font-family:'Ma Shan Zheng',cursive;font-size:1.5rem;color:#2a2a4a;}.jz-opening-detail p{margin:0;color:#6d5635;font-size:.85rem;line-height:1.75;}.jz-opening-detail dl{display:grid;grid-template-columns:74px 1fr;gap:7px 9px;margin:14px 0 0;font-size:.82rem;line-height:1.5;}.jz-opening-detail dt{color:#a33b2e;font-weight:700;}.jz-opening-detail dd{margin:0;color:#493a29;}.jz-opening-modal-foot{display:flex;justify-content:flex-end;gap:8px;padding:11px 14px;border-top:1px solid #dfc99d;background:#f3e7cc;}.jz-opening-modal-foot button{min-height:38px;padding:7px 14px;border:1px solid #1a1a2e;border-radius:5px;background:#fffaf0;color:#1a1a2e;}.jz-opening-confirm{background:#a33b2e!important;border-color:#87382b!important;color:#fff!important;}.jz-opening-confirm:disabled{opacity:.45;cursor:not-allowed;}
-@media (max-width:640px){.jz-page .opening-package-bar{align-items:flex-start;}.jz-page .opening-package-trigger{min-height:44px;}.jz-opening-modal{align-items:end;padding:0;}.jz-opening-dialog{width:100%;max-height:86vh;border-radius:14px 14px 0 0;}.jz-opening-body{grid-template-columns:1fr;grid-template-rows:minmax(150px,.75fr) minmax(180px,1fr);}.jz-opening-list{border-right:0;border-bottom:1px solid #dfc99d;}.jz-opening-detail{padding:14px;}}
+@media (max-width:640px){.jz-page .opening-package-bar{align-items:flex-start;}.jz-page .opening-package-trigger{min-height:44px;}.jz-page .opening-package-display{padding:10px;}.jz-page .opening-package-display textarea{min-height:190px;font-size:.92rem;}.jz-opening-modal{align-items:end;padding:0;}.jz-opening-dialog{width:100%;max-height:86vh;border-radius:14px 14px 0 0;}.jz-opening-body{grid-template-columns:1fr;grid-template-rows:minmax(150px,.75fr) minmax(180px,1fr);}.jz-opening-list{border-right:0;border-bottom:1px solid #dfc99d;}.jz-opening-detail{padding:14px;}}
 </style>
 <style id="jz-opening-package-list-styles">
 .jz-opening-list .opening-package-item{display:block;width:100%;margin:0 0 8px;padding:10px 11px;border:1px solid #c9aa72;border-radius:6px;background:#fffaf0;color:#3d3023;font-family:inherit;font-size:.9rem;font-weight:700;text-align:left;cursor:pointer;}
 .jz-opening-list .opening-package-item:hover,.jz-opening-list .opening-package-item:focus{border-color:#2a9d8f;background:#eef8f5;outline:0;}
 .jz-opening-list .opening-package-item:last-child{margin-bottom:0;}
+.jz-opening-list .opening-package-item.is-selected{border-color:#2a9d8f;background:#e7f5f1;box-shadow:inset 3px 0 #2a9d8f;}
+.jz-opening-list .opening-package-custom{border-style:dashed;color:#2a6f67;background:#f2fbf8;}
+.jz-opening-detail .opening-plot-label{display:block;margin:14px 0 6px;color:#a33b2e;font-weight:700;font-size:.86rem;}
+.jz-opening-detail .opening-plot-editor{display:block;width:100%;min-height:180px;resize:vertical;box-sizing:border-box;padding:10px;border:1px solid #bd9c66;border-radius:6px;background:#fffdf7;color:#3f3020;font:inherit;font-size:.88rem;line-height:1.7;}
+.jz-opening-detail .opening-title-editor{display:block;width:100%;box-sizing:border-box;padding:8px 9px;border:1px solid #bd9c66;border-radius:6px;background:#fffdf7;color:#3f3020;font:inherit;font-size:.92rem;}
+.jz-opening-detail .opening-edit-note{margin-top:7px;color:#7a6343;font-size:.76rem;line-height:1.55;}
+.jz-opening-detail .opening-detail-confirm{display:block;width:100%;min-height:42px;margin:16px 0 0;padding:8px 14px;border:1px solid #87382b;border-radius:5px;background:#a33b2e;color:#fff;font:700 1rem inherit;cursor:pointer;}.jz-opening-detail .opening-detail-confirm:disabled{opacity:.45;cursor:not-allowed;}
 </style>
 <style id="jz-mobile-entry-dedupe">
 /* 手机端入口页只有一个绘制层：立绘不再以负层跨越入口区，并裁切入口区之外的像素。 */
@@ -676,6 +684,11 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                             </div>
                             <button type="button" class="opening-package-trigger" id="opening-package-trigger" aria-haspopup="dialog" aria-controls="opening-package-modal">选择开局 ›</button>
                         </section>
+                        <section class="opening-package-display" aria-labelledby="opening-package-display-title">
+                            <div class="opening-package-display-head"><h4 id="opening-package-display-title">开场剧情</h4><span class="opening-package-display-tip">可直接填写，也可由开局卷轴带回</span></div>
+                            <textarea id="opening-package-display-text" placeholder="在此直接写下自定义开场剧情；不选择开局卷轴也可以开始。"></textarea>
+                        </section>
+                        <div id="opening-package-location-anchor"></div>
                         <div class="plot-block" aria-hidden="true">
                             <h3>九州江湖 · 开场剧情</h3>
                             <div class="plot-options">
@@ -873,7 +886,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                 <header class="jz-opening-modal-head"><h3 class="jz-opening-modal-title" id="opening-package-modal-title">开局卷轴</h3><button type="button" class="jz-opening-close" id="opening-package-close" aria-label="关闭开局卷轴">×</button></header>
                 <nav class="jz-opening-category" id="opening-package-categories" aria-label="开局分类"></nav>
                 <div class="jz-opening-body"><div class="jz-opening-list" id="opening-package-list"></div><aside class="jz-opening-detail" id="opening-package-detail"><h4>待选开局</h4><p>此处将展示你确认后的开局剧情、固定地点、时间、初始人物与主线任务。当前没有写入任何新剧情。</p></aside></div>
-                <footer class="jz-opening-modal-foot"><button type="button" id="opening-package-cancel">取消</button><button type="button" class="jz-opening-confirm" id="opening-package-confirm" disabled>确认此开局</button></footer>
+                <footer class="jz-opening-modal-foot"><button type="button" id="opening-package-cancel">取消</button><button type="button" class="jz-opening-confirm" id="opening-package-confirm" disabled>确定并返回</button></footer>
             </section>
         </div>
         <!-- ===== 角色管理弹窗 ===== -->
@@ -1763,28 +1776,75 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
   }
 ];
         const OPENING_CATEGORIES = ["全部","朝廷","门派","江湖","边地","悬疑·凶险","市井","节庆","游历","师门"];
+        const CUSTOM_OPENING_ID = '__custom__';
         let activeOpeningPackageId = '';
         let openingPackageDraftId = '';
+        let customOpeningPackage = null;
         const openingPackageModal = document.getElementById('opening-package-modal');
         const openingPackageSummary = document.getElementById('opening-package-summary');
         const openingPackageDetail = document.getElementById('opening-package-detail');
         const openingPackageList = document.getElementById('opening-package-list');
         const openingPackageCategories = document.getElementById('opening-package-categories');
         const openingPackageConfirm = document.getElementById('opening-package-confirm');
+        const openingPackageDisplay = document.getElementById('opening-package-display-text');
+        const openingPackageLocationAnchor = document.getElementById('opening-package-location-anchor');
+        const startLocationField = document.getElementById('start-location');
+        if (startLocationField && openingPackageLocationAnchor) {
+            const locationGroup = startLocationField.closest('.form-group');
+            if (locationGroup) { locationGroup.classList.add('opening-package-location'); openingPackageLocationAnchor.replaceWith(locationGroup); }
+        }
         let activeOpeningCategory = '全部';
-        function getOpeningPackage(id) { return OPENING_PACKAGES.find(item => item.id === id) || null; }
-        function updateOpeningPackageSummary() { const item = getOpeningPackage(activeOpeningPackageId); openingPackageSummary.textContent = item ? ('已选：' + item.title + ' · ' + item.地点) : '尚未选择开局预设包；确认后将同时绑定剧情与地点。'; }
+        function escapeOpeningHtml(value) { return String(value == null ? '' : value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+        function currentStartLocation() { return String(document.getElementById('start-location')?.value || '').trim(); }
+        function makeCustomOpeningPackage() {
+            const oldPlot = document.getElementById('custom-plot');
+            return {
+                id: CUSTOM_OPENING_ID, 分类: '自定义', title: '自定义开局',
+                引子: '由玩家亲自编写的开场剧情。',
+                开场指令: String(oldPlot?.value || ''),
+                时间: '由剧情自行决定', 地点: getStartSpot(currentStartLocation()) || currentStartLocation() || '未指定地点', 地点选择: currentStartLocation(),
+                在场人物: [], 羁绊人物: [], 主线任务: '由剧情推进后生成', 已知情报: '由玩家自定义。'
+            };
+        }
+        function getOpeningPackage(id) { return id === CUSTOM_OPENING_ID ? customOpeningPackage : (OPENING_PACKAGES.find(item => item.id === id) || null); }
+        function updateOpeningPackageSummary() { const item = getOpeningPackage(activeOpeningPackageId); openingPackageSummary.textContent = item ? ('已选：' + item.title + ' · ' + item.地点) : '可直接填写剧情，或选择开局卷轴后确认。'; }
+        function setOpeningPackageDisplay(text) { if (openingPackageDisplay) openingPackageDisplay.value = String(text || ''); }
+        function syncDirectCustomOpening() {
+            const text = String(openingPackageDisplay?.value || '');
+            if (!text.trim()) return;
+            if (!customOpeningPackage || activeOpeningPackageId !== CUSTOM_OPENING_ID) customOpeningPackage = makeCustomOpeningPackage();
+            customOpeningPackage.开场指令 = text;
+            customOpeningPackage.地点选择 = currentStartLocation();
+            customOpeningPackage.地点 = getStartSpot(currentStartLocation()) || currentStartLocation() || '未指定地点';
+            activeOpeningPackageId = CUSTOM_OPENING_ID;
+            const oldPlot = document.getElementById('custom-plot'); if (oldPlot) oldPlot.value = text;
+            updateOpeningPackageSummary(); updatePreview();
+        }
+        if (openingPackageDisplay) openingPackageDisplay.addEventListener('input', syncDirectCustomOpening);
         function renderOpeningPackagePicker() {
             openingPackageCategories.innerHTML = OPENING_CATEGORIES.map(name => '<button type="button" data-opening-category="' + name + '" class="' + (name === activeOpeningCategory ? 'is-active' : '') + '">' + name + '</button>').join('');
             const visible = OPENING_PACKAGES.filter(item => activeOpeningCategory === '全部' || item.分类 === activeOpeningCategory);
-            openingPackageList.innerHTML = visible.length ? visible.map(item => '<button type="button" class="opening-package-item" data-opening-package="' + item.id + '">' + item.title + '</button>').join('') : '<p class="jz-opening-empty">尚未配置开局预设包。<br>剧情内容将在你审核后加入此处。</p>';
+            const presetButtons = visible.length ? visible.map(item => '<button type="button" class="opening-package-item ' + (item.id === openingPackageDraftId ? 'is-selected' : '') + '" data-opening-package="' + item.id + '">' + escapeOpeningHtml(item.title) + '</button>').join('') : '<p class="jz-opening-empty">此分类暂未配置预设开局。</p>';
+            const customButton = '<button type="button" class="opening-package-item opening-package-custom ' + (openingPackageDraftId === CUSTOM_OPENING_ID ? 'is-selected' : '') + '" data-opening-custom>＋ 自定义剧情</button>';
+            openingPackageList.innerHTML = presetButtons + customButton;
             openingPackageCategories.querySelectorAll('[data-opening-category]').forEach(button => button.addEventListener('click', () => { activeOpeningCategory = button.dataset.openingCategory; openingPackageDraftId = ''; renderOpeningPackagePicker(); renderOpeningPackageDetail(); }));
             openingPackageList.querySelectorAll('[data-opening-package]').forEach(button => button.addEventListener('click', () => { openingPackageDraftId = button.dataset.openingPackage; renderOpeningPackageDetail(); }));
+            const customButtonElement = openingPackageList.querySelector('[data-opening-custom]');
+            if (customButtonElement) customButtonElement.addEventListener('click', () => { customOpeningPackage = customOpeningPackage || makeCustomOpeningPackage(); openingPackageDraftId = CUSTOM_OPENING_ID; renderOpeningPackagePicker(); renderOpeningPackageDetail(); });
         }
         function renderOpeningPackageDetail() {
             const item = getOpeningPackage(openingPackageDraftId); openingPackageConfirm.disabled = !item;
             if (!item) { openingPackageDetail.innerHTML = '<h4>待选开局</h4><p>此处将展示你确认后的开局剧情、固定地点、时间、初始人物与主线任务。当前没有写入任何新剧情。</p>'; return; }
-            openingPackageDetail.innerHTML = '<h4>' + item.title + '</h4><p>' + item.引子 + '</p><dl><dt>时间</dt><dd>' + item.时间 + '</dd><dt>地点</dt><dd>' + item.地点 + '</dd><dt>在场</dt><dd>' + item.在场人物.join('、') + '</dd><dt>羁绊</dt><dd>' + item.羁绊人物.join('、') + '</dd><dt>主线</dt><dd>' + item.主线任务 + '</dd></dl>';
+            if (item.id === CUSTOM_OPENING_ID) {
+                openingPackageDetail.innerHTML = '<h4>自定义剧情</h4><p>输入你自己的开场。地点会在确认时读取页面下方的“开局地点”选择；也可先留空。</p><label class="opening-plot-label" for="opening-custom-title">卷轴标题</label><input id="opening-custom-title" class="opening-title-editor" value="' + escapeOpeningHtml(item.title) + '" maxlength="40" placeholder="例如：雨夜入城"><label class="opening-plot-label" for="opening-custom-plot">剧情正文</label><textarea id="opening-custom-plot" class="opening-plot-editor" placeholder="写下你的自定义开场剧情…">' + escapeOpeningHtml(item.开场指令) + '</textarea><p class="opening-edit-note">正文可随时改写；点击“确定并返回”后才会写入当前开局卷轴。</p><button type="button" class="opening-detail-confirm" data-opening-package-confirm-inline>确定并返回</button>';
+                const titleInput = document.getElementById('opening-custom-title'); const plotInput = document.getElementById('opening-custom-plot');
+                const syncCustom = () => { item.title = String(titleInput.value || '').trim() || '自定义开局'; item.开场指令 = String(plotInput.value || ''); item.地点 = getStartSpot(currentStartLocation()) || currentStartLocation() || '未指定地点'; const disabled = !item.开场指令.trim(); openingPackageConfirm.disabled = disabled; const inlineConfirm = openingPackageDetail.querySelector('[data-opening-package-confirm-inline]'); if (inlineConfirm) inlineConfirm.disabled = disabled; };
+                titleInput.addEventListener('input', syncCustom); plotInput.addEventListener('input', syncCustom); syncCustom();
+                return;
+            }
+            openingPackageDetail.innerHTML = '<h4>' + escapeOpeningHtml(item.title) + '</h4><p>' + escapeOpeningHtml(item.引子) + '</p><label class="opening-plot-label" for="opening-package-plot">剧情正文（可修改）</label><textarea id="opening-package-plot" class="opening-plot-editor">' + escapeOpeningHtml(item.开场指令 || item.引子 || '') + '</textarea><p class="opening-edit-note">可以修改本次页面选择的正文；刷新页面后会恢复原预设。</p><dl><dt>时间</dt><dd>' + escapeOpeningHtml(item.时间) + '</dd><dt>地点</dt><dd>' + escapeOpeningHtml(item.地点) + '</dd><dt>在场</dt><dd>' + escapeOpeningHtml((item.在场人物 || []).join('、') || '暂无') + '</dd><dt>羁绊</dt><dd>' + escapeOpeningHtml((item.羁绊人物 || []).join('、') || '暂无') + '</dd><dt>主线</dt><dd>' + escapeOpeningHtml(item.主线任务) + '</dd></dl><button type="button" class="opening-detail-confirm" data-opening-package-confirm-inline>确定并返回</button>';
+            const plotInput = document.getElementById('opening-package-plot');
+            if (plotInput) plotInput.addEventListener('input', () => { item.开场指令 = String(plotInput.value || ''); openingPackageConfirm.disabled = !item.开场指令.trim(); });
         }
         function openOpeningPackagePicker() { openingPackageDraftId = activeOpeningPackageId; renderOpeningPackagePicker(); renderOpeningPackageDetail(); openingPackageModal.classList.add('is-open'); openingPackageModal.setAttribute('aria-hidden', 'false'); }
         function closeOpeningPackagePicker() { openingPackageModal.classList.remove('is-open'); openingPackageModal.setAttribute('aria-hidden', 'true'); }
@@ -1792,7 +1852,9 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
         document.getElementById('opening-package-close').addEventListener('click', closeOpeningPackagePicker);
         document.getElementById('opening-package-cancel').addEventListener('click', closeOpeningPackagePicker);
         openingPackageModal.addEventListener('click', event => { if (event.target === openingPackageModal) closeOpeningPackagePicker(); });
-        openingPackageConfirm.addEventListener('click', () => { const item = getOpeningPackage(openingPackageDraftId); if (!item) return; activeOpeningPackageId = item.id; if (item.地点选择 || item.地点) setFieldValue('start-location', item.地点选择 || item.地点); updateOpeningPackageSummary(); updatePreview(); closeOpeningPackagePicker(); });
+        function confirmOpeningPackage() { const item = getOpeningPackage(openingPackageDraftId); if (!item || !String(item.开场指令 || item.引子 || '').trim()) return; if (item.id === CUSTOM_OPENING_ID) { item.地点选择 = currentStartLocation(); item.地点 = getStartSpot(currentStartLocation()) || currentStartLocation() || '未指定地点'; const oldPlot = document.getElementById('custom-plot'); if (oldPlot) oldPlot.value = item.开场指令; } activeOpeningPackageId = item.id; if (item.id !== CUSTOM_OPENING_ID && (item.地点选择 || item.地点)) setFieldValue('start-location', item.地点选择 || item.地点); setOpeningPackageDisplay(item.开场指令 || item.引子 || ''); updateOpeningPackageSummary(); updatePreview(); closeOpeningPackagePicker(); }
+        openingPackageConfirm.addEventListener('click', confirmOpeningPackage);
+        openingPackageDetail.addEventListener('click', event => { if (event.target.closest('[data-opening-package-confirm-inline]')) confirmOpeningPackage(); });
         updateOpeningPackageSummary();
         // 预制角色开局只持有玩家与世界起点。人物关系一律留给正式剧情生成。
         const PRESET_OPENINGS = {
