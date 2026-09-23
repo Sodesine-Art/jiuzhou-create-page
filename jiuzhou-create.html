@@ -171,6 +171,10 @@
         .jz-page .talent-name { font-weight: 600; margin-bottom: 3px; font-size: 0.95rem; }
         .jz-page .talent-desc { font-size: 0.8rem; color: #555; line-height: 1.5; }
         .jz-page .talent-controls { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .jz-page .custom-talent-form { display: grid; grid-template-columns: 130px minmax(130px, .8fr) minmax(200px, 1.7fr) auto; gap: 8px; align-items: end; margin: 0 0 12px; padding: 10px; border: 1px solid rgba(42,157,143,.62); border-radius: 7px; background: rgba(42,157,143,.07); }
+        .jz-page .custom-talent-form label { display: block; margin: 0 0 4px; color: #1a1a2e; font-size: .78rem; font-weight: 600; }
+        .jz-page .custom-talent-form input, .jz-page .custom-talent-form select { box-sizing: border-box; width: 100%; min-height: 36px; }
+        .jz-page .custom-talent-form button { min-height: 36px; white-space: nowrap; }
         .jz-page button { background-color: #1a1a2e; color: #e8dcc4; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: 600; font-family: inherit; font-size: 0.9rem; }
         .jz-page button:hover { background-color: #2a2a4a; }
         .jz-page .selected-talents { margin-top: 8px; }
@@ -340,6 +344,9 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
   .jz-page .bond-grid .bond-json{min-height:96px;}
   .jz-page .character-form,.jz-page .form-section{grid-template-columns:minmax(0,1fr)!important;}
   .jz-page .talent-roll-area{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px;}
+  .jz-page .custom-talent-form{grid-template-columns:1fr 1fr;}
+  .jz-page .custom-talent-form .custom-talent-effect{grid-column:1 / -1;}
+  .jz-page .custom-talent-form button{grid-column:1 / -1;}
   .jz-page .talent-card{min-width:0;padding:6px 5px;font-size:.76rem;line-height:1.35;}
   .jz-page .talent-name{margin-bottom:2px;font-size:.88rem;line-height:1.25;word-break:break-word;}
   .jz-page .talent-desc{font-size:.7rem;line-height:1.35;word-break:break-word;}
@@ -797,15 +804,32 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                         </div><!-- /.plot-block：旧开场剧情与旧地点选择仅作兼容保留，不得包裹后续创建流程 -->
 <div class="talent-system">
                             <h3>天赋抽取系统</h3>
-                            <p>点击下方按钮抽取天赋，您可以选择并保留最多3个天赋</p>
+                            <p>点击下方按钮抽取天赋，您可以选择并保留最多4个天赋；也可在下方自定义一项。</p>
                             <div class="talent-controls">
                                 <button id="roll-talents">抽取天赋 (剩余次数: <span id="roll-count">无限</span>)</button>
                                 <button id="reset-talents">重置已选天赋</button>
                             </div>
+                            <div class="custom-talent-form" aria-label="自定义天赋">
+                                <div>
+                                    <label for="custom-talent-quality">天赋品阶</label>
+                                    <select id="custom-talent-quality">
+                                        <option value="1">劣质</option><option value="2">普通</option><option value="3" selected>良品</option><option value="4">上乘</option><option value="5">传说</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="custom-talent-name">天赋名称</label>
+                                    <input id="custom-talent-name" type="text" maxlength="24" placeholder="例如：过目不忘">
+                                </div>
+                                <div class="custom-talent-effect">
+                                    <label for="custom-talent-effect">天赋效果</label>
+                                    <input id="custom-talent-effect" type="text" maxlength="120" placeholder="例如：可清晰记住看过的文字、图像与路径。">
+                                </div>
+                                <button type="button" id="add-custom-talent">加入自定义天赋</button>
+                            </div>
                             <div class="talent-roll-area" id="talent-display">
                             </div>
                             <div class="selected-talents">
-                                <h4>已选择的天赋 (最多3个):</h4>
+                                <h4>已选择的天赋 (最多4个):</h4>
                                 <div class="selected-talent-list" id="selected-talents">
                                 </div>
                             </div>
@@ -1200,6 +1224,10 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
         const selectedTalentsContainer = document.getElementById('selected-talents');
         const rollButton = document.getElementById('roll-talents');
         const resetButton = document.getElementById('reset-talents');
+        const addCustomTalentButton = document.getElementById('add-custom-talent');
+        const customTalentQuality = document.getElementById('custom-talent-quality');
+        const customTalentName = document.getElementById('custom-talent-name');
+        const customTalentEffect = document.getElementById('custom-talent-effect');
         const rollCountElement = document.getElementById('roll-count');
         // 开局预设包只定义结构，不在测试页预置剧情；待内容审核后再填入数组。
         // 每一项字段：id、分类、标题、引子、时间、地点、地点选择、在场人物、羁绊人物、主线任务、已知情报、开场指令。
@@ -1976,8 +2004,8 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
             });
         });
         rollButton.addEventListener('click', () => {
-            if (selectedTalents.length >= 3) {
-                alert('您已经选择了3个天赋，无法继续抽取。');
+            if (selectedTalents.length >= 4) {
+                alert('您已经选择了4个天赋，无法继续抽取。');
                 return;
             }
             talentDisplay.innerHTML = '';
@@ -2002,18 +2030,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                     <div class="talent-desc">${talent.desc}</div>
                 `;
                 talentCard.addEventListener('click', () => {
-                    if (selectedTalents.length >= 3) {
-                        alert('您已经选择了3个天赋，无法选择更多。');
-                        return;
-                    }
-                    if (selectedTalents.some(t => t.name === talent.name)) {
-                        alert('您已经选择了这个天赋。');
-                        return;
-                    }
-                    selectedTalents.push(talent);
-                    talentCard.classList.add('selected');
-                    updateSelectedTalents();
-                    updatePreview();
+                    if (addTalent(talent)) talentCard.classList.add('selected');
                 });
                 talentDisplay.appendChild(talentCard);
             });
@@ -2026,15 +2043,35 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                 card.classList.remove('selected');
             });
         });
+        function addTalent(talent) {
+            const name = String(talent && talent.name || '').trim();
+            const desc = String(talent && talent.desc || '').trim();
+            if (!name || !desc) { alert('请填写天赋名称和效果。'); return false; }
+            if (selectedTalents.length >= 4) { alert('您已经选择了4个天赋，无法选择更多。'); return false; }
+            if (selectedTalents.some(t => t.name === name)) { alert('已存在同名天赋，请换一个名称。'); return false; }
+            selectedTalents.push({ name, desc, quality: toTierNum(talent.quality) });
+            updateSelectedTalents();
+            updatePreview();
+            return true;
+        }
+        addCustomTalentButton.addEventListener('click', () => {
+            const added = addTalent({ name: customTalentName.value, desc: customTalentEffect.value, quality: customTalentQuality.value });
+            if (!added) return;
+            customTalentName.value = '';
+            customTalentEffect.value = '';
+            customTalentName.focus();
+        });
         function updateSelectedTalents() {
             selectedTalentsContainer.innerHTML = '';
             selectedTalents.forEach((talent, index) => {
                 const talentElement = document.createElement('div');
                 talentElement.className = `selected-talent talent-quality-${talent.quality}`;
-                talentElement.innerHTML = `
-                    ${talent.name}
-                    <span class="remove-talent" data-index="${index}">×</span>
-                `;
+                talentElement.append(document.createTextNode(talent.name));
+                const remove = document.createElement('span');
+                remove.className = 'remove-talent';
+                remove.dataset.index = String(index);
+                remove.textContent = '×';
+                talentElement.appendChild(remove);
                 selectedTalentsContainer.appendChild(talentElement);
             });
             document.querySelectorAll('.remove-talent').forEach(button => {
@@ -2837,7 +2874,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                     name: String(t && t.name != null ? t.name : ''),
                     desc: String(t && t.desc != null ? t.desc : ''),
                     quality: t && t.quality != null ? toTierNum(t.quality) : 3
-                })).filter(t => t.name)
+                })).filter(t => t.name).slice(0, 4)
                 : [];
             updateSelectedTalents();
             const plotType = c.plotType || '';
