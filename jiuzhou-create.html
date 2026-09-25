@@ -2885,15 +2885,24 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                 const customOption = document.querySelector('.plot-option[data-plot="custom"]');
                 if (customOption) customOption.click();
             }
-            if (c.customPlot != null) {
-                const customPlotEl = document.getElementById('custom-plot');
-                if (customPlotEl) customPlotEl.value = String(c.customPlot);
-            }
+            const importedCustomPlot = c.customPlot == null ? '' : String(c.customPlot);
+            const customPlotEl = document.getElementById('custom-plot');
+            if (customPlotEl) customPlotEl.value = importedCustomPlot;
+            activeOpeningPackageId = '';
+            openingPackageDraftId = '';
+            customOpeningPackage = null;
+            setOpeningPackageDisplay('');
             const locSel = document.getElementById('start-location');
             if (locSel && c.startLocation != null && c.startLocation !== '') {
                 const target = String(c.startLocation);
                 const exists = Array.from(locSel.options).some(o => o.value === target);
                 if (exists) locSel.value = target;
+            }
+            if (plotType === 'custom' && importedCustomPlot.trim()) {
+                setOpeningPackageDisplay(importedCustomPlot);
+                syncDirectCustomOpening();
+            } else {
+                updateOpeningPackageSummary();
             }
             applyBondSnapshot(bond);
             updatePreview();
