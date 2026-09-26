@@ -182,6 +182,8 @@
         .jz-page .custom-skill-group h4 { margin: 0 0 8px; color: #9d3e32; }
         .jz-page .custom-skill-form { display: grid; grid-template-columns: minmax(0,.8fr) minmax(100px,.55fr); gap: 7px; align-items: end; }
         .jz-page .custom-skill-form .skill-effect-field { grid-column: 1 / -1; }
+        .jz-page .custom-skill-form .skill-preset-field { grid-column: 1 / -1; }
+        .jz-page .skill-preset-hint { display: block; margin-top: 3px; color: #75664f; font-size: .74rem; line-height: 1.45; }
         .jz-page .custom-skill-form label { font-size: .78rem; }
         .jz-page .custom-skill-form input, .jz-page .custom-skill-form select, .jz-page .custom-skill-form textarea { box-sizing: border-box; width: 100%; min-height: 36px; }
         .jz-page .custom-skill-form textarea { min-height: 62px; }
@@ -865,6 +867,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                                 <section class="custom-skill-group" aria-labelledby="cultivation-skills-title">
                                     <h4 id="cultivation-skills-title">修炼功法</h4>
                                     <form class="custom-skill-form" id="cultivation-skill-form">
+                                        <div class="skill-preset-field"><label for="cultivation-skill-preset">从功法总览选取（可选）</label><select id="cultivation-skill-preset"><option value="">手动填写，或选择总览功法</option></select><small class="skill-preset-hint">选取后自动填入名称、品阶和效果，仍可继续修改。</small></div>
                                         <div><label for="cultivation-skill-name">功法名称</label><input id="cultivation-skill-name" type="text" maxlength="40" placeholder="例如：听潮养息诀" required></div>
                                         <div><label for="cultivation-skill-tier">功法品阶</label><select id="cultivation-skill-tier"><option>凡品</option><option>精要</option><option>上乘</option><option>绝学</option><option>镇派</option></select></div>
                                         <div class="skill-effect-field"><label for="cultivation-skill-effect">功法效果</label><textarea id="cultivation-skill-effect" maxlength="500" placeholder="填写功法的修炼方式与效果" required></textarea></div>
@@ -875,6 +878,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                                 <section class="custom-skill-group" aria-labelledby="combat-skills-title">
                                     <h4 id="combat-skills-title">战斗功法</h4>
                                     <form class="custom-skill-form" id="combat-skill-form">
+                                        <div class="skill-preset-field"><label for="combat-skill-preset">从功法总览选取（可选）</label><select id="combat-skill-preset"><option value="">手动填写，或选择总览功法</option></select><small class="skill-preset-hint">选取后自动填入名称、品阶和效果，仍可继续修改。</small></div>
                                         <div><label for="combat-skill-name">功法名称</label><input id="combat-skill-name" type="text" maxlength="40" placeholder="例如：折浪刀诀" required></div>
                                         <div><label for="combat-skill-tier">功法品阶</label><select id="combat-skill-tier"><option>凡品</option><option>精要</option><option>上乘</option><option>绝学</option><option>镇派</option></select></div>
                                         <div class="skill-effect-field"><label for="combat-skill-effect">功法效果</label><textarea id="combat-skill-effect" maxlength="500" placeholder="填写招式特点、适用场景与效果" required></textarea></div>
@@ -1271,6 +1275,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
             ]
         };
         let selectedTalents = [];
+        const MARTIAL_ART_CATALOG = [{"type":"cultivation","group":"真武阁","name":"太乙混元功","tier":"镇派","effect":"内息绵长、沉稳根基，擅化解外力。"},{"type":"combat","group":"真武阁","name":"玄元化劲掌","tier":"上乘","effect":"近身卸开一名对手的来力并转偏其重心，普通交手者会因此露出空门；本质是单点卸劲与反制，不能同时挡住多人进攻。"},{"type":"combat","group":"真武阁","name":"两仪封门手","tier":"绝学","effect":"以连续拿筋、错骨和封关节拆解高手的发力链；得手后可将同境强敌擒制在原地，直接解除其单体战力，而非只制造一瞬空门。"},{"type":"combat","group":"真武阁","name":"镇天印","tier":"镇派","effect":"施展者结印运掌，以磅礴内力铺开一方镇压之势。范围内敌人的身形、步法与提气运劲皆会受到压制：境界较低者难以站稳，同境高手行动与攻势明显迟滞，高境强者也会受到牵制，难以从容施展全力。此印可镇住多人、稳固战线，为己方创造反击与推进的机会。"},{"type":"combat","group":"真武阁","name":"真武七截剑","tier":"绝学","effect":"保留为少数弟子修习的剑术旁支，不作为真武阁主干武学，以区别天机剑宗。"},{"type":"cultivation","group":"菩提禅院","name":"菩提心经","tier":"镇派","effect":"调息定念、循序积累。"},{"type":"combat","group":"菩提禅院","name":"伏魔罗汉拳","tier":"上乘","effect":"架肘护中、格挡还拳，能在一对一中稳住阵脚，也可遮护身侧一人；制敌以逼退和打乱节奏为主。"},{"type":"combat","group":"菩提禅院","name":"大金刚掌","tier":"绝学","effect":"掌势沉厚而能隔劲透甲，专破高手硬功与重兵器防守；正面命中可震散对方架势，使其失去继续压迫的能力，威力集中于一名强敌。"},{"type":"combat","group":"菩提禅院","name":"不动明王身","tier":"镇派","effect":"施展者将全身内力外放为金色光晕，在周身三尺内结成无形壁障。壁障随心意流转，迈步则随行，抬手则随势，转身则旋护周身；施展者可移动、出招、护人。常态范围以施展者为圆心，半径三尺，覆盖周身要害与近身同伴；刻意扩大时可延展至五尺，内力消耗加倍。同境及以下的刀剑、拳掌、暗器与毒烟会被弹开或阻滞，无法直接触及施展者肉身；高境强敌的全力一击可令壁障出现裂痕，但不会当场破碎，连续承受三次以上同境强敌的全力攻击后壁障才会崩散。面对内力攻击、音波、蛊术与巫咒，壁障可削弱其穿透力，但无法完全隔绝；对纯粹的精神攻击、幻术与摄魂术无效。"},{"type":"cultivation","group":"天机剑宗","name":"周天观星诀","tier":"镇派","effect":"观势调息，精控内力与出剑时机；骤逢乱局时较难从容运转。"},{"type":"combat","group":"天机剑宗","name":"七星步","tier":"上乘","effect":"短步变位避开单次正面攻势，快速取得出剑角度；解决的是个人闪避和抢位，不负责压制敌人。"},{"type":"combat","group":"天机剑宗","name":"天机剑诀","tier":"绝学","effect":"从肩、腕、腰胯的细微征兆判断来招，在招式成形前以剑锋截断发力线；能破同境高手的成名杀招、迫使其重新组织攻势，核心是一对一的先机压制。"},{"type":"combat","group":"天机剑宗","name":"星陨","tier":"镇派","effect":"施展者将自身内力化为剑气挥洒，剑气升至头顶汇聚成漫天星辰虚影。剑势一引，星影中的剑气便如雨点般倾落，覆盖周遭战场。剑雨可持续压制多人、截断进退路线，也能集中落向强敌，逼其全力应对；其威势如群星坠地，既能压制阵线，也能攻破高手的护身劲。"},{"type":"cultivation","group":"幽冥教","name":"幽冥藏息经","tier":"绝学","effect":"敛息蓄劲、隐匿气机。"},{"type":"combat","group":"幽冥教","name":"鬼影搜魂手","tier":"上乘","effect":"用假动作诱使对手先出招，再贴近打断其节奏；对沉稳不追击者效果有限。"},{"type":"combat","group":"幽冥教","name":"幽冥鬼爪","tier":"绝学","effect":"专扣兵器与肢体的发力枢纽，可在近身一招间夺械、断招或扭转强敌关节；只针对命中者，是精确拆解高手的单体绝学。"},{"type":"combat","group":"幽冥教","name":"万鬼哭","tier":"镇派","effect":"以内力激发层层诡异音波，哭嚎声忽远忽近、仿佛从四面同时传来。声浪能穿过阵列间隙直震敌人耳目与胸腹，使多人方向感错乱、气息紊乱，难以协同出招；持续笼罩一片战场时，可压制敌阵行动，并震伤其中的强敌。"},{"type":"cultivation","group":"七情谷","name":"七情魅心诀","tier":"绝学","effect":"以情绪感知调节内息。"},{"type":"combat","group":"七情谷","name":"百花柔骨掌","tier":"上乘","effect":"借柔劲改偏对手攻势、脱离擒抱，主脱身与护人；缺少一击制敌能力。"},{"type":"combat","group":"七情谷","name":"回鸾摄心舞","tier":"绝学","effect":"身法、衣袖与节奏交替设下真假进路，诱使一名高手连续误判攻防距离；不靠单个破绽取胜，而是让对手整套进攻失去连贯，为同伴合击创造稳定窗口。对不观察身形、心志坚定者仍可用步法周旋，但迷惑效果减弱。"},{"type":"combat","group":"七情谷","name":"七情幻界","tier":"镇派","effect":"施展后将一片区域笼罩于幻境之中，使其中敌人各自陷入与其情绪相应的幻象：道路与距离错乱，人影与招式真假难辨，听觉、方位和危险感知也会被误导。幻境能令多人失去协同、误判攻防，在虚实交错中暴露破绽；它不直接改变现实，也不能替目标行动，意志坚定、以内息守神者仍有机会辨破幻象。"},{"type":"cultivation","group":"丐帮","name":"伏龙养气诀","tier":"镇派","effect":"重耐力、长息与持久作战。"},{"type":"combat","group":"丐帮","name":"滚打拳","tier":"上乘","effect":"翻滚、撞肘、绊腿与地面借力连成市井近战，专破普通对手的站姿与围堵；让一人脱困或在乱地反击，不擅正面对抗护体高手。"},{"type":"combat","group":"丐帮","name":"打狗棒法","tier":"绝学","effect":"以棒头点穴、棒身缠兵、步法封路，能拆掉数名持械者的攻势并缴下兵器；对高手也可控制其兵刃和落脚位置，重点是技巧与控场。"},{"type":"combat","group":"丐帮","name":"降龙掌","tier":"镇派","effect":"以开阔大势连续推动刚猛掌力，掌风、落掌与震地劲彼此衔接，可正面压过强敌、震散成形阵列并扫开一条推进通路；不是押注单掌的孤注一掷，长于持续压阵与大范围破势。"},{"type":"cultivation","group":"四大世家·慕容世家","name":"明镜养元诀","tier":"上乘","effect":"调匀气息，重观察与借力。"},{"type":"combat","group":"四大世家·慕容世家","name":"回风穿柳剑","tier":"上乘","effect":"轻灵游走、以小幅变线试探一名对手的空门，重在取得先手，不追求一招制敌。"},{"type":"combat","group":"四大世家·慕容世家","name":"镜水回澜剑","tier":"绝学","effect":"以整套卸转剑路接住刚猛攻势、借其劲道反送回去；能让强敌连续攻势偏离目标、夺其兵刃控制权并反击，足以反制同境以力见长的高手；对暗器、无刃拳脚或多角度围攻难用。"},{"type":"cultivation","group":"四大世家·南宫世家","name":"烈阳锻脉功","tier":"上乘","effect":"锤炼经脉、增强短时爆发。"},{"type":"combat","group":"四大世家·南宫世家","name":"流火剑","tier":"上乘","effect":"以迅疾剑锋抢一线先机，迫使单个对手应接，适合正面对决开局。"},{"type":"combat","group":"四大世家·南宫世家","name":"破云连环剑","tier":"绝学","effect":"先以横向剑路封锁对方兵器，再借身位切入防线后侧；可单人突破高手守护的目标或队形缺口，是能改变阵地攻守的破阵突入剑法，与上乘的抢先对攻不同。"},{"type":"cultivation","group":"四大世家·西门世家","name":"寒锋吐纳诀","tier":"上乘","effect":"沉息蓄劲，重一击制敌。"},{"type":"combat","group":"四大世家·西门世家","name":"飞雪刀","tier":"上乘","effect":"侧步避开单次攻击后迅速回刀，反制追击者、逼退普通敌手。"},{"type":"combat","group":"四大世家·西门世家","name":"断雪刀法","tier":"绝学","effect":"刀背压刃、刀锋切线，专门拆毁持械高手的攻击结构；能连续卸去数件兵器或封住一片近身刀路，使一组持械敌人难以组织进攻，是针对兵刃的破招专技，而非更快的回刀反击。"},{"type":"cultivation","group":"四大世家·东方世家","name":"流光养息篇","tier":"上乘","effect":"调节呼吸与发力节奏。"},{"type":"combat","group":"四大世家·东方世家","name":"落英回风剑","tier":"上乘","effect":"错步回身、诱一名敌手落空后反击，长于一对一防守与小范围周旋，胜在稳健。"},{"type":"combat","group":"四大世家·东方世家","name":"照影双剑","tier":"绝学","effect":"双剑一守一攻，以交叉剑路同时封住退路、压入近身；可迫同境高手持续陷于守势，并兼顾身侧多个来向，在近战中形成持续的双线压迫，攻防覆盖和压迫力都高于单剑周旋。失去一剑后无法施展完整架势。"},{"type":"cultivation","group":"百草堂","name":"青囊养元篇","tier":"绝学","effect":"养息识脉，重内力精细控制。"},{"type":"combat","group":"百草堂","name":"青囊封脉手","tier":"上乘","effect":"近身制住单处关节与穴位，以止斗为先，可迅速制服普通伤人者。"},{"type":"combat","group":"百草堂","name":"青囊破脉针","tier":"绝学","effect":"以指劲催送银针，专攻护体劲薄弱处与经络节点。中针后，针劲沿经脉冲击，使目标局部麻痹、运劲受阻，足以打断高手招式并迫其转入守势；连续命中可压制同境强敌。此法以精准攻脉为核心，不是普通飞针的远程连射。"},{"type":"combat","group":"百草堂","name":"回春渡厄针","tier":"镇派","effect":"以针法、按脉和内息导引同时稳住多名重伤者的生机，让一支队伍在战斗中仍能行动、撤离或完成护送；这是改变整队续战与救援能力的战场医武，不是单体止血术。"},{"type":"cultivation","group":"蜀中唐门","name":"千机纳息诀","tier":"绝学","effect":"细控内息与发劲，配合暗器机关修习。"},{"type":"combat","group":"蜀中唐门","name":"飞星穿叶手","tier":"上乘","effect":"徒手投出飞针、铁蒺藜或袖箭，打断单个目标的视线和动作，为自己或同伴抢得先机；以快和准取胜。"},{"type":"combat","group":"蜀中唐门","name":"七星连珠针","tier":"绝学","effect":"针、钉、袖箭与细索组合封住目标的视线、握力和步点；命中关键节点可令一名高手失去完整攻防能力，主打精确拆解，不是以数量取胜。"},{"type":"combat","group":"蜀中唐门","name":"万器归宗","tier":"镇派","effect":"将手法、身法、机关、暗器、毒药与烟幕融为一体，可在一轮交锋中施展近万道暗器。暗器从不同方位、以不同轨迹交错袭来，烟幕遮蔽视线，机关封住退路，毒器迫使敌人改变防守方式；施展者则借身法穿行其间，持续变换攻势。此法能够覆盖整片战场、压制大批敌手，使其难以靠单一招式或阵形应对。"},{"type":"cultivation","group":"落日刀门","name":"赤霞养刀诀","tier":"绝学","effect":"蓄劲养锋，重腰胯与爆发。"},{"type":"combat","group":"落日刀门","name":"回风穿沙步","tier":"上乘","effect":"借风沙与步法绕开正面兵刃，抢占侧后方或脱离围攻；在狭窄室内效果有限。"},{"type":"combat","group":"落日刀门","name":"断霞十三刀","tier":"绝学","effect":"刀背压刃、刀锋切线，专拆持械高手的攻击结构；能连续卸械、截断兵刃线路，在近身范围内瓦解一组敌人的武器优势。"},{"type":"combat","group":"落日刀门","name":"落日焚锋刀","tier":"镇派","effect":"以大开大合的刀势持续铺开灼热锋压，横斩可截断冲锋，纵劈能破开重甲与坚固障碍；在一段战线形成无人能轻易穿越的刀域，不再是只能蓄力一次的孤斩。"},{"type":"cultivation","group":"广陵琴院","name":"清商养气谱","tier":"绝学","effect":"以呼吸与节奏调匀内息。"},{"type":"combat","group":"广陵琴院","name":"清商指","tier":"上乘","effect":"近身点打指节、腕脉与肘弯，令一名持械者短暂失去握力，属于快速制敌的近身指法。"},{"type":"combat","group":"广陵琴院","name":"逆息弦音法","tier":"绝学","effect":"以曲音牵乱数名听者的内力节奏，使其运劲错位、招式彼此脱节；可令一支小队难以合击，却不直接造成强烈物理杀伤。受距离、遮蔽与环境噪声影响。"},{"type":"combat","group":"广陵琴院","name":"广陵止息","tier":"镇派","effect":"将琴音化为强劲声浪，正面震碎兵刃、掀翻多人并冲开一条战线，可在局部战场强行打开缺口。"},{"type":"cultivation","group":"银月峒","name":"月蛊归息经","tier":"绝学","effect":"以内息温养蛊虫，依赖本命蛊状态。"},{"type":"combat","group":"银月峒","name":"月蛊缚身术","tier":"上乘","effect":"以少量蛊虫缠住一名目标手脚或兵器，让普通敌手短暂失去行动能力；是单点控人术。"},{"type":"combat","group":"银月峒","name":"游蛊听风术","tier":"绝学","effect":"驱使侦察蛊探路、追踪并回传方位，可提前揭出伏兵、找到隐匿目标，使一支队伍免于误入埋伏；以情报改变整场遭遇战的先手权，不是直接攻杀，受虫种、距离与环境限制。"},{"type":"combat","group":"银月峒","name":"蛊母御百虫诀","tier":"镇派","effect":"与蛊母共感，分使成熟蛊虫执行追击、护身、封路与破敌；可同时扰乱一片近战区域、掩护同伴并压制多名对手，形成持续的局部虫潮控制，改变混战走向；不依赖阵法，也不操纵心智。"},{"type":"cultivation","group":"神武卫与六扇门","name":"玄武定息功","tier":"绝学","effect":"稳定气息、耐战抗扰，为缉捕与攻杀提供根基。"},{"type":"combat","group":"神武卫与六扇门","name":"捕风擒拿手","tier":"上乘","effect":"近身锁腕、夺械、擒拿，能稳定活捉普通犯人或制住一名寻常持械者；定位是单体缉捕。"},{"type":"combat","group":"神武卫与六扇门","name":"踏影追凶步","tier":"绝学","effect":"以骤进、折返、踏墙越障在交锋中迅速改换战位，可追上同境轻功高手、从包围中带一名同伴脱身，或绕至敌阵侧后迫使整队分兵回防；虽不主攻杀，却能直接决定追逃、救援与小队机动的成败。"},{"type":"combat","group":"神武卫与六扇门","name":"玄武破军刀","tier":"镇派","effect":"将磅礴内力附着于刀锋，挥刀斩出延伸刀罡。刀势刚猛凌厉，可劈开重甲、厚盾与强敌护体劲；连续斩击足以破开一段正面防线，形成强大的攻伐破坏力。"},{"type":"cultivation","group":"西域赤沙刀门","name":"赤炉淬息诀","tier":"绝学","effect":"蓄热运劲。"},{"type":"combat","group":"西域赤沙刀门","name":"黄沙转锋步","tier":"上乘","effect":"借沙地与侧步避开正面兵刃，寻找近身角度；离开松软地面后效果下降。"},{"type":"combat","group":"西域赤沙刀门","name":"大日焚野刀","tier":"绝学","effect":"蓄热后挥出灼热刀浪，可压住一段正面、逼迫数名敌人改换位置并毁坏木制器械；暴雨寒湿会削弱刀势，适用条件是干燥开阔地带。"},{"type":"cultivation","group":"天狼骑门与北辰汗庭军伍","name":"苍狼吐纳诀","tier":"绝学","effect":"适应寒地、长途骑行与持续运劲。"},{"type":"combat","group":"天狼骑门与北辰汗庭军伍","name":"逐风连珠箭","tier":"上乘","effect":"骑射追击，以精准箭路逼迫一名目标变向或减速，为同伴争取追近时间；依赖坐骑和开阔射界，作用集中于单体追击。"},{"type":"combat","group":"天狼骑门与北辰汗庭军伍","name":"白狼穿阵骑刀","tier":"绝学","effect":"骑者收弓拔刀，借完整冲锋线掠过敌阵，斩断指挥衔接或冲散前排；一次突击即可让一支小队失去组织，是改变局部阵势的骑战绝学；须有坐骑与冲锋距离。"},{"type":"cultivation","group":"东瀛神乐御剑院","name":"雷纹导气诀","tier":"绝学","effect":"控息导劲，令兵刃能承接雷劲。"},{"type":"combat","group":"东瀛神乐御剑院","name":"八方雷纹斩","tier":"上乘","effect":"以短刀格挡、反切与贴身换位建立防守节奏，适合狭窄地形。"},{"type":"combat","group":"东瀛神乐御剑院","name":"八雷引剑式","tier":"绝学","effect":"雷雨中借刀纹导引雷劲，沿兵刃与导电路径发动迅疾强攻；可重创单名高手，也能借相连金属或积水路径威胁一线多人；需要雷雨或稳定导电路径。"}];
         const MARTIAL_ART_TIERS = ['凡品', '精要', '上乘', '绝学', '镇派'];
         let customCultivationSkills = [];
         let customCombatSkills = [];
@@ -1339,6 +1344,42 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
             const button = document.getElementById(isCombat ? 'combat-skill-submit' : 'cultivation-skill-submit');
             if (button) button.textContent = isCombat ? '添加战斗功法' : '添加修炼功法';
         }
+        function bindSkillPreset(type) {
+            const isCombat = type === 'combat';
+            const select = document.getElementById(isCombat ? 'combat-skill-preset' : 'cultivation-skill-preset');
+            const nameInput = document.getElementById(isCombat ? 'combat-skill-name' : 'cultivation-skill-name');
+            const tierInput = document.getElementById(isCombat ? 'combat-skill-tier' : 'cultivation-skill-tier');
+            const effectInput = document.getElementById(isCombat ? 'combat-skill-effect' : 'cultivation-skill-effect');
+            if (!select || !nameInput || !tierInput || !effectInput) return;
+            const groups = new Map();
+            MARTIAL_ART_CATALOG.forEach((skill, index) => {
+                if (skill.type !== type) return;
+                if (!groups.has(skill.group)) groups.set(skill.group, []);
+                groups.get(skill.group).push({ skill, index });
+            });
+            for (const [groupName, items] of groups) {
+                const group = document.createElement('optgroup');
+                group.label = groupName;
+                items.forEach(({ skill, index }) => {
+                    const option = document.createElement('option');
+                    option.value = String(index);
+                    option.textContent = skill.name + ' · ' + skill.tier;
+                    group.appendChild(option);
+                });
+                select.appendChild(group);
+            }
+            select.addEventListener('change', () => {
+                if (select.value === '') return;
+                const skill = MARTIAL_ART_CATALOG[Number(select.value)];
+                if (!skill || skill.type !== type) return;
+                nameInput.value = skill.name;
+                tierInput.value = skill.tier;
+                effectInput.value = skill.effect;
+                const status = document.getElementById('custom-skill-status');
+                if (status) status.textContent = '已载入「' + skill.group + ' · ' + skill.name + '」；名称、品阶和效果均可继续自定义。';
+                updatePreview();
+            });
+        }
         function bindSkillEditor(type) {
             const isCombat = type === 'combat';
             const form = document.getElementById(isCombat ? 'combat-skill-form' : 'cultivation-skill-form');
@@ -1379,6 +1420,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
             });
         }
         bindSkillEditor('cultivation'); bindSkillEditor('combat');
+        bindSkillPreset('cultivation'); bindSkillPreset('combat');
         renderCustomSkills();
         // 开局预设包只定义结构，不在测试页预置剧情；待内容审核后再填入数组。
         // 每一项字段：id、分类、标题、引子、时间、地点、地点选择、在场人物、羁绊人物、主线任务、已知情报、开场指令。
