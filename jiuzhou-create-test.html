@@ -351,7 +351,8 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
   .jz-entry-screen .entry-action{width:min(100%,320px);gap:8px;}
   .jz-entry-screen .entry-button{width:100%;min-height:48px;padding:14px 18px;}
   .jz-page{width:100%;max-width:none;min-height:0!important;height:auto!important;overflow:visible!important;background-image:none;}
-  .jz-page .container{width:100%;min-height:0;max-height:none;overflow:visible!important;border-width:3px;border-radius:0;box-shadow:none;}
+  .jz-page .container{width:100%;flex:0 0 auto!important;height:var(--jz-mobile-scroll-height,min(760px,calc(100vh - 160px)))!important;min-height:min(320px,var(--jz-mobile-scroll-height,calc(100vh - 160px)))!important;max-height:var(--jz-mobile-scroll-height,min(760px,calc(100vh - 160px)))!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;border-width:3px;border-radius:0;box-shadow:none;}
+  @supports (height:100dvh){.jz-page .container{height:var(--jz-mobile-scroll-height,min(760px,calc(100dvh - 160px)))!important;min-height:min(320px,var(--jz-mobile-scroll-height,calc(100dvh - 160px)))!important;max-height:var(--jz-mobile-scroll-height,min(760px,calc(100dvh - 160px)))!important;}}
   .jz-page .first-page-scroll{max-height:none!important;overflow:visible!important;padding-right:0;scrollbar-gutter:auto;}
   .jz-page .accordion-container{padding:8px;}
   .jz-page .accordion-content-inner{padding:14px 10px 20px;}
@@ -3532,7 +3533,8 @@ ${martialArtsText}
       page.style.height = 'auto';
       if (compact) {
         page.style.setProperty('--jz-min-height', '0px');
-        height = Math.ceil(Math.max(1, content.scrollHeight, page.scrollHeight));
+        content.style.setProperty('--jz-mobile-scroll-height', Math.max(240, Math.min(760, viewport - 160)) + 'px');
+        height = Math.ceil(Math.max(1, document.documentElement.scrollHeight, document.body.scrollHeight, page.getBoundingClientRect().height));
       } else {
         page.style.setProperty('--jz-min-height', viewport + 'px');
         height = Math.max(viewport, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight);
