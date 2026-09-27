@@ -3617,5 +3617,68 @@ ${martialArtsText}
     }, { once: true });
   }());
 </script>
+<script id="jz-mobile-debug-statusbar-isolation">
+  (function () {
+    // 仅用于创建页调试消息：手机窄屏中隔离由宿主占位符额外生成的状态栏。
+    // 不修改卡片/正则，也不触碰其他消息或普通聊天中的状态栏。
+    if (!window.matchMedia || !window.matchMedia('(max-width: 700px)').matches) return;
+
+    var ownFrame;
+    var messageRoot;
+    var observer;
+
+    function findDebugMessage() {
+      try {
+        ownFrame = window.frameElement;
+        if (!ownFrame) return false;
+        messageRoot = ownFrame.closest('.mes_text, [class*="mes_text"]');
+        if (!messageRoot) return false;
+        // 防止误碰同一消息容器中的其他 iframe：只处理带创建页专属提示的调试消息。
+        return messageRoot.textContent.indexOf('请在下方测试创建页完成角色与羁绊人物设置') !== -1;
+      } catch (_) {
+        // WebView / sandbox 若不允许跨文档访问，保持宿主原状并安全退出。
+        return false;
+      }
+    }
+
+    function cleanDebugMessage() {
+      if (!findDebugMessage()) return false;
+      try {
+        var walker = messageRoot.ownerDocument.createTreeWalker(messageRoot, NodeFilter.SHOW_TEXT);
+        var textNode;
+        while ((textNode = walker.nextNode())) {
+          if (/<StatusPlaceHolderImpl\s*\/>/i.test(textNode.nodeValue)) {
+            textNode.nodeValue = textNode.nodeValue.replace(/<StatusPlaceHolderImpl\s*\/>/gi, '');
+          }
+        }
+        // 占位符若已被酒馆渲染成独立 iframe，只移除本条测试消息中的其他 iframe；保留创建页自身。
+        messageRoot.querySelectorAll('iframe').forEach(function (frame) {
+          if (frame !== ownFrame) frame.remove();
+        });
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    function startGuard() {
+      if (!cleanDebugMessage() || observer) return;
+      try {
+        observer = new MutationObserver(cleanDebugMessage);
+        observer.observe(messageRoot, { childList: true, characterData: true, subtree: true });
+      } catch (_) {
+        observer = null;
+      }
+    }
+
+    startGuard();
+    // 某些手机 WebView 会晚一拍完成消息/正则挂载；短暂重试，不做常驻轮询。
+    var retries = 0;
+    var retry = window.setInterval(function () {
+      startGuard();
+      if (observer || ++retries >= 20) window.clearInterval(retry);
+    }, 150);
+  }());
+</script>
 </body>
 </html>
