@@ -69,7 +69,7 @@
             position: absolute; border: 2px solid #1a1a2e; border-radius: 8px;
             background-color: rgba(240, 230, 210, 0.85);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 4px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            padding: 4px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); font: inherit; color: inherit; text-align: center;
             cursor: pointer; transition: all 0.2s;
         }
         .jz-page .province:hover { transform: scale(1.06); z-index: 5; box-shadow: 3px 3px 10px rgba(0,0,0,0.3); border-color: #a33b2e; }
@@ -280,7 +280,7 @@
 </style>
 <style>
 html,body{width:100%;margin:0;overflow:visible;}
-body{overscroll-behavior:none;}
+body{overscroll-behavior:auto;touch-action:pan-y pinch-zoom;}
 .jz-page{width:100%;height:auto!important;min-height:var(--jz-min-height, 0)!important;overflow:visible!important;}
 /* Beat every original scroll declaration, including browser scrollbar pseudo-elements. */
 .jz-page .container,.jz-page .first-page-scroll{flex:0 0 auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;overflow-y:visible!important;overflow-x:visible!important;padding-right:0!important;scrollbar-width:none!important;}
@@ -351,8 +351,8 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
   .jz-entry-screen .entry-action{width:min(100%,320px);gap:8px;}
   .jz-entry-screen .entry-button{width:100%;min-height:48px;padding:14px 18px;}
   .jz-page{width:100%;max-width:none;min-height:0!important;height:auto!important;overflow:visible!important;background-image:none;}
-  .jz-page .container{width:100%;flex:0 0 auto!important;height:var(--jz-mobile-scroll-height,min(760px,calc(100vh - 160px)))!important;min-height:min(320px,var(--jz-mobile-scroll-height,calc(100vh - 160px)))!important;max-height:var(--jz-mobile-scroll-height,min(760px,calc(100vh - 160px)))!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;border-width:3px;border-radius:0;box-shadow:none;}
-  @supports (height:100dvh){.jz-page .container{height:var(--jz-mobile-scroll-height,min(760px,calc(100dvh - 160px)))!important;min-height:min(320px,var(--jz-mobile-scroll-height,calc(100dvh - 160px)))!important;max-height:var(--jz-mobile-scroll-height,min(760px,calc(100dvh - 160px)))!important;}}
+  /* 手机端只让外层聊天页面拥有纵向滚动，iframe 内容自然撑高，避免内外两层争抢触摸手势。 */
+  .jz-page .container{width:100%;flex:0 0 auto!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;overflow-y:visible!important;overflow-x:hidden!important;border-width:3px;border-radius:0;box-shadow:none;}
   .jz-page .first-page-scroll{max-height:none!important;overflow:visible!important;padding-right:0;scrollbar-gutter:auto;}
   .jz-page .accordion-container{padding:8px;}
   .jz-page .accordion-content-inner{padding:14px 10px 20px;}
@@ -391,7 +391,11 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
   .jz-page .outer-region .province-name{font-size:1.05rem;}
   .jz-page .outer-region .province-desc{font-size:.72rem;}
   .jz-page .province-factions{display:none;}
-  .jz-page .map-popover{position:fixed!important;z-index:99999;left:8px!important;right:8px!important;top:auto!important;bottom:max(8px,env(safe-area-inset-bottom))!important;width:auto!important;max-width:none;max-height:min(72dvh,520px);padding:14px;}
+  .jz-page .map-popover{position:absolute!important;z-index:30;left:8px!important;right:8px!important;top:auto!important;bottom:8px!important;width:auto!important;max-width:none;max-height:70vh;padding:14px;}
+  .jz-page .province-detail{margin:10px 0 16px;padding:12px;border:1px solid #8a6d33;border-left:4px solid #a33b2e;border-radius:8px;background:rgba(255,250,239,.98);color:#2b2118;box-shadow:0 4px 12px rgba(43,33,24,.14);font-size:.9rem;line-height:1.6;}
+  .jz-page .province-detail h3{margin:0 0 7px;color:#7e2f25;font-size:1.12rem;}
+  .jz-page .province-detail-head{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .jz-page .province-detail-close{width:40px;height:40px;border:1px solid #b08d4f;border-radius:6px;background:#f3e7cc;color:#7e2f25;font:inherit;font-size:1.2rem;font-weight:700;}
   .jz-page .map-popover h3{font-size:1.1rem;}
   .jz-page .faction-map,.jz-page .realm-list{grid-template-columns:repeat(2,minmax(0,1fr));}
   .jz-page .detail-line{align-items:flex-start;gap:6px;}
@@ -500,57 +504,58 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                             <p class="step-hint">点击任意州或外域地区查看详情；点击空白处或 × 关闭</p>
                             <div class="map-container">
                                 <div class="map">
-                                <div class="province" id="yangzhou" data-name="扬州">
+                                <button type="button" class="province" id="yangzhou" data-name="扬州">
                                     <div class="province-name">扬州</div>
                                     <div class="province-desc">江南水乡<br>温柔富贵</div>
-                                </div>
-                                <div class="province" id="qingzhou" data-name="青州">
+                                </button>
+                                <button type="button" class="province" id="qingzhou" data-name="青州">
                                     <div class="province-name">青州</div>
                                     <div class="province-desc">齐鲁故地<br>武林泰斗</div>
-                                </div>
-                                <div class="province" id="jingzhou" data-name="荆州">
+                                </button>
+                                <button type="button" class="province" id="jingzhou" data-name="荆州">
                                     <div class="province-name">荆州</div>
                                     <div class="province-desc">鱼米之乡<br>九省通衢</div>
-                                </div>
-                                <div class="province" id="yongzhou" data-name="雍州">
+                                </button>
+                                <button type="button" class="province" id="yongzhou" data-name="雍州">
                                     <div class="province-name">雍州</div>
                                     <div class="province-desc">关中沃土<br>帝王之基</div>
-                                </div>
-                                <div class="province" id="liangzhou" data-name="凉州">
+                                </button>
+                                <button type="button" class="province" id="liangzhou" data-name="凉州">
                                     <div class="province-name">凉州</div>
                                     <div class="province-desc">大漠孤烟<br>边塞豪情</div>
-                                </div>
-                                <div class="province" id="yizhou" data-name="益州">
+                                </button>
+                                <button type="button" class="province" id="yizhou" data-name="益州">
                                     <div class="province-name">益州</div>
                                     <div class="province-desc">天府之国<br>奇门遁甲</div>
-                                </div>
-                                <div class="province" id="yunzhou" data-name="云州">
+                                </button>
+                                <button type="button" class="province" id="yunzhou" data-name="云州">
                                     <div class="province-name">云州</div>
                                     <div class="province-desc">十万大山<br>苗疆秘域</div>
-                                </div>
-                                <div class="province" id="youzhou" data-name="幽州">
+                                </button>
+                                <button type="button" class="province" id="youzhou" data-name="幽州">
                                     <div class="province-name">幽州</div>
                                     <div class="province-desc">北境边关<br>苦寒之地</div>
-                                </div>
-                                <div class="province" id="zhongzhou" data-name="中州">
+                                </button>
+                                <button type="button" class="province" id="zhongzhou" data-name="中州">
                                     <div class="province-name">中州</div>
                                     <div class="province-desc">中原腹地<br>四战之地</div>
-                                </div>
-                                <div class="province outer-region" id="xiyu" data-name="西域">
+                                </button>
+                                <button type="button" class="province outer-region" id="xiyu" data-name="西域">
                                     <div class="province-name">西域</div>
                                     <div class="province-desc">绿洲诸国<br>丝路商旅</div>
-                                </div>
-                                <div class="province outer-region" id="beifang" data-name="北方诸部">
+                                </button>
+                                <button type="button" class="province outer-region" id="beifang" data-name="北方诸部">
                                     <div class="province-name">北方</div>
                                     <div class="province-desc">草原林海<br>汗庭部盟</div>
-                                </div>
-                                <div class="province outer-region" id="dongying" data-name="东瀛">
+                                </button>
+                                <button type="button" class="province outer-region" id="dongying" data-name="东瀛">
                                     <div class="province-name">东瀛</div>
                                     <div class="province-desc">统一朝廷<br>三大武门</div>
-                                </div>
+                                </button>
                                 <aside id="map-popover" class="map-popover" role="dialog" aria-modal="false" aria-live="polite"></aside>
                                 </div>
                             </div>
+                            <section id="province-detail" class="province-detail" hidden aria-live="polite"></section>
                         </div>
                         <div class="faction-sec">
                             <h3>江湖势力 · 疆域分布</h3>
@@ -3419,10 +3424,41 @@ ${martialArtsText}
         function showProvince(name, event) {
             var d = PROVINCES[name];
             if (!d) return;
+            var panel = document.getElementById('province-detail');
+            if (!panel) return;
             var fields = d['国家']
                 ? [['主要国家', d['国家']], ['相关地区', d['地区']], ['地理', d['地理']], ['利益格局', d['利益格局']], ['切入点', d['切入点']]]
                 : [['首府', d['首府']], ['区县', d['区县']], ['地理', d['地理']], ['利益格局', d['利益格局']], ['切入点', d['切入点']]];
-            showMapPopover(name, fields, event, 'province');
+            if (panel.getAttribute('data-active-key') === name && !panel.hidden) {
+                panel.hidden = true;
+                panel.replaceChildren();
+                panel.removeAttribute('data-active-key');
+                return;
+            }
+            var head = document.createElement('div');
+            head.className = 'province-detail-head';
+            var title = document.createElement('h3');
+            title.textContent = name;
+            var close = document.createElement('button');
+            close.type = 'button';
+            close.className = 'province-detail-close';
+            close.setAttribute('aria-label', '关闭疆域介绍');
+            close.textContent = '×';
+            head.append(title, close);
+            panel.replaceChildren(head);
+            fields.forEach(function (field) {
+                var row = document.createElement('div');
+                row.className = 'detail-line';
+                var label = document.createElement('span');
+                label.className = 'dl-lbl';
+                label.textContent = field[0];
+                var value = document.createElement('span');
+                value.textContent = field[1] == null ? '' : String(field[1]);
+                row.append(label, value);
+                panel.appendChild(row);
+            });
+            panel.setAttribute('data-active-key', name);
+            panel.hidden = false;
         }
 
         function showFaction(key, event) {
@@ -3437,6 +3473,10 @@ ${martialArtsText}
         }
 
         document.addEventListener('click', function (event) {
+            if (event.target.closest && event.target.closest('.province-detail-close')) {
+                var detail = document.getElementById('province-detail');
+                if (detail) { detail.hidden = true; detail.replaceChildren(); detail.removeAttribute('data-active-key'); }
+            }
             var popover = document.getElementById('map-popover');
             if (!popover || popover.style.display !== 'block') return;
             if (popover.contains(event.target) || event.target.closest('.province, .ftag')) return;
@@ -3533,8 +3573,7 @@ ${martialArtsText}
       page.style.height = 'auto';
       if (compact) {
         page.style.setProperty('--jz-min-height', '0px');
-        content.style.setProperty('--jz-mobile-scroll-height', Math.max(240, Math.min(760, viewport - 160)) + 'px');
-        height = Math.ceil(Math.max(1, document.documentElement.scrollHeight, document.body.scrollHeight, page.getBoundingClientRect().height));
+        height = Math.ceil(Math.max(1, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight));
       } else {
         page.style.setProperty('--jz-min-height', viewport + 'px');
         height = Math.max(viewport, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight);
