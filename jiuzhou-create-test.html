@@ -658,7 +658,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                             <h3 id="preset-opening-title">一键预制开局</h3>
                             <p class="preset-opening-note">选择后会填入完整主角资料、世界起点、天赋与功法；仍可继续修改。羁绊人物和在场人物不会预设，开始游戏时也会保持为空。</p>
                             <div class="preset-grid">
-                                <article class="preset-card" data-preset="jinzun"><div class="preset-title"><strong>金尊夜宴</strong><span>朝局 · 权贵</span></div><p class="preset-meta">萧锦仪 · 19岁 · 女 · 大晟长公主</p><p class="preset-hook">洛阳顶层雅间，一封密信打破本该奢靡安稳的夜宴。</p><div class="preset-actions"><button type="button" data-preset-apply="jinzun">填入并编辑</button><button type="button" class="preset-start" data-preset-start="jinzun">以此开始</button></div></article>
+                                <article class="preset-card" data-preset="jinzun"><div class="preset-title"><strong>金尊夜宴</strong><span>朝局 · 权贵</span></div><p class="preset-meta">萧锦仪 · 22岁 · 女 · 大晟长公主</p><p class="preset-hook">清丽公主于洛阳夜宴献舞，一封密信揭开席间暗流。</p><div class="preset-actions"><button type="button" data-preset-apply="jinzun">填入并编辑</button><button type="button" class="preset-start" data-preset-start="jinzun">以此开始</button></div></article>
                                 <article class="preset-card" data-preset="tingfeng"><div class="preset-title"><strong>听风楼风波</strong><span>悬案 · 江湖</span></div><p class="preset-meta">沈照川 · 22岁 · 男 · 听风楼外执事</p><p class="preset-hook">一封伪造密信、一桩旧案，令洛阳长街骤起杀机。</p><div class="preset-actions"><button type="button" data-preset-apply="tingfeng">填入并编辑</button><button type="button" class="preset-start" data-preset-start="tingfeng">以此开始</button></div></article>
                                 <article class="preset-card" data-preset="tianji"><div class="preset-title"><strong>天机问剑</strong><span>宗门 · 剑修</span></div><p class="preset-meta">陆清衡 · 18岁 · 女 · 天机剑宗外门</p><p class="preset-hook">入门试剑当日，问剑阵被人篡改，剑光直指同门。</p><div class="preset-actions"><button type="button" data-preset-apply="tianji">填入并编辑</button><button type="button" class="preset-start" data-preset-start="tianji">以此开始</button></div></article>
                                 <article class="preset-card" data-preset="yantie"><div class="preset-title"><strong>盐铁商路</strong><span>商道 · 官商</span></div><p class="preset-meta">谢蘅 · 24岁 · 女 · 谢氏商会少东家</p><p class="preset-hook">三船铁料与账簿同时失踪，漕运码头暗流翻涌。</p><div class="preset-actions"><button type="button" data-preset-apply="yantie">填入并编辑</button><button type="button" class="preset-start" data-preset-start="yantie">以此开始</button></div></article>
@@ -2086,14 +2086,14 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
         // 预制角色开局只持有玩家与世界起点。人物关系一律留给正式剧情生成。
         const PRESET_OPENINGS = {
             jinzun: {
-                title: '金尊夜宴', name: '萧锦仪', age: '19', gender: '女',
-                appearance: '银色长发垂至腰际，冰蓝色眼眸，眉眼明艳而带疏离感；常以红金舞衣与轻纱披帛示人。',
-                figure: '身量高挑丰润，骨架舒展，舞者体态轻盈而有力量。',
-                personality: '骄矜、敏锐，善于掩饰真实心绪；面对局势时不轻易失态。',
-                identity: '大晟萧氏皇族长公主', cultivation: '未入流',
-                other: '所属势力：大晟皇室。天赋使她能洞察虚实、以言语影响局部局势。主线任务：MQ.Ⅰ_金尊夜宴疑云。',
-                location: '中州·洛阳', context: { 时间: '仲春·夜晚（华灯初上）', 地点: '中州·洛阳·醉琼林顶层雅间', 衣服: '红金舞衣、轻纱披帛与银铃足饰', 身材: '身量高挑丰润，舞者体态轻盈而有力量', 势力: '大晟皇室' },
-                plot: '仲春夜，洛阳醉琼林顶层雅间。你本在夜宴中周旋，一封未署名的密信却被送至席前：它既点出朝中一桩旧案，也提醒你今夜的宾客中有人不该出现在这里。',
+                title: '金尊夜宴', name: '萧锦仪', age: '22', gender: '女',
+                appearance: '乌黑长发以玉簪松松挽起，余发垂落腰际；眉眼清丽，常着素雅衣裙，举止安静克制，刻意营造不染尘俗的出尘气质。',
+                figure: '身高185cm，身段高挑丰润，胸臀饱满、腰肢柔韧；K罩杯的成熟曲线被宽袖与衣带妥帖收敛，舞动时才显出惊人的舒展与张力。',
+                personality: '外在清丽自持，待人温雅有礼；内里闷骚而艳媚，享受以舞姿、眼神和恰到好处的言语试探他人反应。她擅长掌控分寸，不轻易让旁人看穿真实心思。',
+                identity: '大晟皇帝最宠爱的妹妹、萧氏皇族长公主', cultivation: '第一境·淬皮',
+                other: '所属势力：大晟皇室。精通九州各地及域外舞蹈，能依乐曲与场合变换舞风；私下起舞时会流露比平日更妩媚的一面。天赋使她能洞察虚实、以言语影响局部局势。主线任务：MQ.Ⅰ_金尊夜宴疑云。',
+                location: '中州·洛阳', context: { 时间: '仲春·夜晚（华灯初上）', 地点: '中州·洛阳·醉琼林顶层雅间', 衣服: '素色广袖舞衣与轻薄披帛，配玉簪和银铃足饰', 身材: '身高185cm，身段高挑丰润，K罩杯，胸臀饱满、腰肢柔韧', 势力: '大晟皇室' },
+                plot: '仲春夜，洛阳醉琼林顶层雅间。你以一支清雅的九州舞开场，宽袖与披帛收住身段，旋步间却泄出几分不肯明说的妩媚。席间众人尚在猜测你今晚的心情，一封未署名的密信便被送至席前：它点出朝中一桩旧案，也提醒你今夜的宾客中有人不该出现在这里。',
                 talents: [{ name: '天眼通', quality: 5, desc: '能洞察事物本质，看破虚妄与伪饰。' }, { name: '言灵（武侠版）', quality: 5, desc: '语言带有规则之力，可短暂影响局部现实。' }],
                 skills: { 修炼功法: { 皇室吐纳法: { 品阶: '上乘', 描述: '大晟内廷传承的养气之法。' } }, 战斗功法: {} }
             },
