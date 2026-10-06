@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>九州长歌 - 角色与羁绊创建</title>
+    <title>九州长歌 · 五卷江湖命盘</title>
     <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -293,12 +293,12 @@ body{overscroll-behavior:auto;touch-action:pan-y pinch-zoom;}
 .jz-page .wizard-nav{order:2;margin-top:18px!important;padding:14px 2px 4px!important;border-top:1px solid #b08d4f;}
 
 /* ===== 九州入口页：水榭人物卷 ===== */
-.jz-entry-screen{position:relative;z-index:9999;display:grid;place-items:center;min-height:640px;overflow:hidden;background:#d9c7a7;color:#3a2c1a;font-family:"Noto Serif SC","Songti SC",STSong,serif;}
+.jz-entry-screen{position:relative;z-index:9999;display:grid;place-items:center;min-height:640px;overflow:hidden;background:#0b2631;color:#dfcfaa;font-family:"Noto Serif SC","Songti SC",STSong,serif;}
 .jz-entry-screen.is-hidden{display:none;}
 body:not(.jz-entered) .jz-page{display:none!important;}
 body:not(.jz-entered) #jz-completion-note{display:none!important;}
-.jz-entry-screen::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 14%,rgba(255,250,235,.88),transparent 42%),linear-gradient(180deg,#efe5cf,#d9c7a7 64%,#bda06d);}
-.jz-entry-screen .entry-frame{position:absolute;inset:16px;border:1px solid rgba(246,227,168,.75);box-shadow:0 0 0 5px rgba(50,34,22,.82),0 0 0 8px rgba(174,135,76,.8),0 0 0 12px rgba(35,27,19,.88),inset 0 0 26px rgba(15,22,18,.5);pointer-events:none;}
+.jz-entry-screen::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 14%,rgba(49,112,116,.32),transparent 45%),linear-gradient(180deg,#12343e,#0b202c 64%,#07141d);}
+.jz-entry-screen .entry-frame{position:absolute;inset:16px;border:1px solid rgba(214,184,124,.55);box-shadow:0 0 0 5px rgba(4,16,23,.82),0 0 0 8px rgba(174,135,76,.7),0 0 0 12px rgba(4,16,23,.88),inset 0 0 26px rgba(4,16,23,.5);pointer-events:none;}
 .jz-entry-screen .entry-scene{position:absolute;inset:0;overflow:hidden;opacity:.88;}
 .jz-entry-screen .entry-scene::before{content:"";position:absolute;left:-10%;right:-10%;bottom:-8%;height:40%;background:linear-gradient(180deg,rgba(163,188,183,.1),rgba(42,42,74,.24));border-top:1px solid rgba(42,42,74,.25);clip-path:ellipse(72% 72% at 50% 100%);}
 .jz-entry-screen .entry-scene::after{content:"";position:absolute;left:6%;right:6%;bottom:12%;height:18%;opacity:.52;background:repeating-radial-gradient(ellipse at 50% 100%,transparent 0 21px,rgba(238,224,181,.3) 22px 23px,transparent 24px 46px);transform:perspective(380px) rotateX(62deg);animation:jz-entry-ripple 8s ease-in-out infinite alternate;}
@@ -326,13 +326,13 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
 .jz-entry-screen .entry-sword{position:absolute;right:15%;bottom:19%;width:5px;height:136px;background:linear-gradient(90deg,#20283a,#d6c18a,#20283a);transform:rotate(31deg);opacity:.6;box-shadow:0 0 0 2px rgba(37,39,49,.08);}
 .jz-entry-screen .entry-sword::before{content:"";position:absolute;left:-17px;top:15px;width:39px;height:6px;background:#a33b2e;border:2px solid #283146;border-radius:4px;}.jz-entry-screen .entry-sword::after{content:"";position:absolute;left:-2px;bottom:-29px;width:9px;height:35px;border-radius:0 0 8px 8px;background:#a33b2e;box-shadow:12px 13px 0 -3px rgba(163,59,46,.75);}
 .jz-entry-screen .entry-content{position:relative;z-index:2;display:grid;justify-items:center;width:min(94vw,690px);height:620px;padding:24px 22px 18px;text-align:center;}
-.jz-entry-screen .entry-content::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(247,240,222,.64),rgba(247,240,222,.08) 60%,transparent);z-index:-1;}
-.jz-entry-screen .entry-poem{position:absolute;top:14%;bottom:14%;z-index:3;width:17%;margin:0;color:rgba(30,31,43,.92);font-size:clamp(.88rem,1.6vw,1.12rem);font-weight:600;line-height:1.9;letter-spacing:.24em;text-align:start;text-shadow:0 1px rgba(255,255,255,.65),0 0 10px rgba(247,240,222,.7);writing-mode:vertical-rl;text-orientation:mixed;overflow:hidden;opacity:0;animation:jz-entry-copy .9s 1.25s ease forwards;}
-.jz-entry-screen .entry-poem-left{left:2%;}.jz-entry-screen .entry-poem-right{right:2%;}.jz-entry-screen .entry-poem::before{content:"贺铸 · 六州歌头";display:block;margin-bottom:1em;color:#a33b2e;font-size:.72em;letter-spacing:.32em;}
-.jz-entry-screen .entry-title{margin:0;align-self:start;color:#1a1a2e;letter-spacing:.22em;text-shadow:0 1px rgba(255,255,255,.55);opacity:0;animation:jz-entry-copy .8s 1s ease forwards;}
-.jz-entry-screen .entry-title small{display:block;margin-bottom:7px;color:#a33b2e;font-size:.72rem;letter-spacing:.48em;}.jz-entry-screen .entry-title strong{display:block;font-size:clamp(1.5rem,4vw,2.6rem);font-weight:600;}
+.jz-entry-screen .entry-content::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,27,36,.16),rgba(8,27,36,.06) 60%,transparent);z-index:-1;}
+.jz-entry-screen .entry-poem{position:absolute;top:14%;bottom:14%;z-index:3;width:17%;margin:0;color:rgba(239,222,185,.94);font-size:clamp(.88rem,1.6vw,1.12rem);font-weight:600;line-height:1.9;letter-spacing:.24em;text-align:start;text-shadow:0 1px rgba(4,16,23,.85),0 0 10px rgba(4,16,23,.8);writing-mode:vertical-rl;text-orientation:mixed;overflow:hidden;opacity:0;animation:jz-entry-copy .9s 1.25s ease forwards;}
+.jz-entry-screen .entry-poem-left{left:2%;}.jz-entry-screen .entry-poem-right{right:2%;}.jz-entry-screen .entry-poem::before{content:"贺铸 · 六州歌头";display:block;margin-bottom:1em;color:#d3ad6d;font-size:.72em;letter-spacing:.32em;}
+.jz-entry-screen .entry-title{margin:0;align-self:start;color:#f0d9aa;letter-spacing:.22em;text-shadow:0 2px 8px rgba(4,16,23,.8);opacity:0;animation:jz-entry-copy .8s 1s ease forwards;}
+.jz-entry-screen .entry-title small{display:block;margin-bottom:7px;color:#d3ad6d;font-size:.72rem;letter-spacing:.48em;}.jz-entry-screen .entry-title strong{display:block;font-size:clamp(1.5rem,4vw,2.6rem);font-weight:600;}
 .jz-entry-screen .entry-portrait{position:absolute;z-index:-1;bottom:18%;left:50%;max-width:min(68vw,510px);max-height:68%;width:auto;height:auto;transform:translate(-50%,18px) scale(1.025);object-fit:contain;filter:brightness(.9) saturate(.88) contrast(1.03);opacity:0;animation:jz-entry-reveal 3.6s .35s cubic-bezier(.22,.72,.2,1) forwards;}
-.jz-entry-screen .entry-action{align-self:end;display:grid;justify-items:center;gap:10px;opacity:0;animation:jz-entry-copy .75s 2.55s ease forwards;}.jz-entry-screen .entry-action p{margin:0;color:#7a5a31;font-size:.81rem;letter-spacing:.16em;}.jz-entry-screen .entry-button{min-width:184px;min-height:50px;border:2px solid #1a1a2e;border-radius:6px;padding:12px 26px;color:#f7f0de;background:#a33b2e;box-shadow:0 6px 16px rgba(58,44,26,.3),inset 0 0 0 1px rgba(255,255,255,.15);font:600 1.05rem/1 "Noto Serif SC","Songti SC",STSong,serif;letter-spacing:.28em;cursor:pointer;}
+.jz-entry-screen .entry-action{align-self:end;display:grid;justify-items:center;gap:10px;opacity:0;animation:jz-entry-copy .75s 2.55s ease forwards;}.jz-entry-screen .entry-action p{margin:0;color:#d1bd94;font-size:.81rem;letter-spacing:.16em;}.jz-entry-screen .entry-button{min-width:184px;min-height:50px;border:2px solid #d3ad6d;border-radius:6px;padding:12px 26px;color:#f7f0de;background:#a33b2e;box-shadow:0 6px 16px rgba(2,12,18,.42),inset 0 0 0 1px rgba(255,255,255,.15);font:600 1.05rem/1 "Noto Serif SC","Songti SC",STSong,serif;letter-spacing:.28em;cursor:pointer;}
 .jz-entry-screen .entry-button:hover,.jz-entry-screen .entry-button:focus-visible{background:linear-gradient(135deg,#87382b,#bb6544);transform:translateY(-2px);outline:none;}
 @keyframes jz-entry-reveal{0%{opacity:0;filter:blur(7px) brightness(.62) saturate(.45);transform:translate(-50%,24px) scale(1.04)}58%{opacity:.82}100%{opacity:1;filter:blur(0) brightness(.88) saturate(.82) contrast(1.03);transform:translate(-50%,0) scale(1)}}
 @keyframes jz-entry-copy{to{opacity:1}} @keyframes jz-entry-ripple{from{transform:perspective(380px) rotateX(62deg) translateX(-2%)}to{transform:perspective(380px) rotateX(62deg) translateX(2%)}} @keyframes jz-entry-float{from{transform:translateY(2px)}to{transform:translateY(-5px)}} @keyframes jz-entry-moon{from{transform:translateY(3px);opacity:.58}to{transform:translateY(-4px);opacity:.82}} @keyframes jz-entry-lotus{from{transform:translateY(2px) rotate(-2deg)}to{transform:translateY(-4px) rotate(3deg)}} @keyframes jz-entry-bamboo{from{transform:rotate(6deg) translateY(2px)}to{transform:rotate(10deg) translateY(-4px)}} @keyframes jz-entry-swallows{from{transform:translateX(-8px) rotate(-8deg)}to{transform:translateX(12px) rotate(-5deg)}} @keyframes jz-entry-water{from{transform:translateX(-1%) scaleY(.98)}to{transform:translateX(2%) scaleY(1.03)}} @keyframes jz-entry-stream{from{margin-top:0;opacity:.5}to{margin-top:9px;opacity:.82}}
@@ -397,7 +397,6 @@ body:not(.jz-entered) #jz-completion-note{display:none!important;}
   .jz-page .province-detail{margin:10px 0 16px;padding:12px;border:1px solid #8a6d33;border-left:4px solid #a33b2e;border-radius:8px;background:rgba(255,250,239,.98);color:#2b2118;box-shadow:0 4px 12px rgba(43,33,24,.14);font-size:.9rem;line-height:1.6;}
   .jz-page .province-detail h3{margin:0 0 7px;color:#7e2f25;font-size:1.12rem;}
   .jz-page .province-detail-head{display:flex;align-items:center;justify-content:space-between;gap:8px;}
-  .jz-page .province-detail-close{width:40px;height:40px;border:1px solid #b08d4f;border-radius:6px;background:#f3e7cc;color:#7e2f25;font:inherit;font-size:1.2rem;font-weight:700;}
   .jz-page .map-popover h3{font-size:1.1rem;}
   .jz-page .faction-map,.jz-page .realm-list{grid-template-columns:repeat(2,minmax(0,1fr));}
   .jz-page .detail-line{align-items:flex-start;gap:6px;}
@@ -480,13 +479,405 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
   .jz-entry-screen .entry-title,.jz-entry-screen .entry-action{position:relative;z-index:1;}
 }
 </style>
+
+<style id="jz-five-realm-style">
+html,body{margin:0;min-height:100%;background:#0b2631;color:#dfcfaa}
+:root{--jz-host-vh:100vh}
+body{overflow-x:hidden}
+.jz-entry-screen{display:none!important}
+body:not(.jz-entered) .jz-entry-screen{position:fixed;inset:0;z-index:10000;display:grid!important;min-height:100dvh}
+body:not(.jz-entered) .jz-page{display:none!important}
+.jz-page{width:100%!important;max-width:none!important;min-height:100dvh!important;height:auto!important;margin:0!important;display:block!important;background:#0b2631!important;background-image:none!important;overflow:visible!important}
+.jz-page{min-height:var(--jz-host-vh,100vh)!important;overflow-anchor:none}
+body:not(.jz-entered) .jz-entry-screen{height:var(--jz-host-vh,100vh);min-height:var(--jz-host-vh,100vh)}
+.jz-page .container{width:100%!important;max-width:none!important;min-height:var(--jz-host-vh,100vh)!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important}
+.jz-page .accordion-container{display:none!important}
+.jz-page .jz-view[hidden],.jz-page .jz-content-view[hidden],.jz-page #jz-section-bar[hidden]{display:none!important}
+.jz-shell{font-family:'Noto Serif SC','Songti SC',serif}
+.jz-home{position:relative;min-height:var(--jz-host-vh,100vh);overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 82% 0%,rgba(51,132,135,.24),transparent 48%),linear-gradient(150deg,#12343e,#0b202c 68%,#101b29)}
+.jz-home:before{content:"";position:absolute;inset:-30%;z-index:-2;background:radial-gradient(ellipse at 25% 30%,rgba(42,157,143,.13),transparent 35%),radial-gradient(ellipse at 77% 72%,rgba(163,59,46,.17),transparent 36%);filter:blur(20px);animation:jz-aurora 16s ease-in-out infinite alternate}
+.jz-home:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:repeating-linear-gradient(115deg,transparent 0 98px,rgba(211,183,123,.026) 99px 100px);mask-image:linear-gradient(to bottom,transparent,#000 30%,#000 80%,transparent)}
+.jz-starfield{position:absolute;inset:0;pointer-events:none;overflow:hidden}.jz-starfield span{position:absolute;width:var(--s);height:var(--s);left:var(--x);top:var(--y);border-radius:50%;background:#fae5b3;box-shadow:0 0 10px 2px rgba(237,199,124,.55);opacity:var(--a);animation:jz-twinkle var(--d) ease-in-out infinite alternate}
+.jz-home-mast{position:absolute;z-index:3;top:clamp(18px,3vw,36px);left:clamp(18px,4vw,60px);display:flex;gap:13px;align-items:center;color:#dcc79e;letter-spacing:.26em;font-size:.78rem}.jz-home-mast:before{content:"九";display:grid;place-items:center;width:46px;height:46px;border:1px solid #af8755;color:#eacb8a;font:1.55rem 'Ma Shan Zheng',serif;transform:rotate(-8deg);box-shadow:0 0 18px rgba(216,164,77,.22),inset 0 0 12px rgba(216,164,77,.14)}
+.jz-home-meta{position:absolute;z-index:2;top:clamp(28px,3vw,42px);right:clamp(20px,4vw,62px);font-size:.7rem;letter-spacing:.2em;color:#a18d70;text-align:right}.jz-home-meta b{display:block;margin-top:6px;color:#cfb683;font-weight:400}
+.jz-orbit-stage{position:relative;display:grid;place-items:center;min-height:var(--jz-host-vh,100vh);padding:94px 20px 92px;box-sizing:border-box;perspective:1200px}
+.jz-wheel-wrap{position:relative;width:min(68vmin,680px);min-width:300px;aspect-ratio:1;transform-style:preserve-3d;filter:drop-shadow(0 30px 34px rgba(0,0,0,.58))}
+.jz-wheel-wrap:before{content:"";position:absolute;inset:-12%;border-radius:50%;background:radial-gradient(circle,rgba(209,168,91,.12),transparent 60%);filter:blur(8px);animation:jz-halo 7s ease-in-out infinite alternate;pointer-events:none}
+.jz-compass{position:relative;width:100%;height:100%;border-radius:50%;transform-style:preserve-3d;transition:transform .2s cubic-bezier(.2,.75,.2,1);will-change:transform}
+.jz-compass-base{position:absolute;inset:0;border-radius:50%;border:4px solid #9a774d;outline:7px solid rgba(136,105,61,.22);outline-offset:3px;background:radial-gradient(circle at 33% 27%,#3c5157,#22323a 40%,#101824 72%,#0a1019 100%);box-shadow:inset 0 0 0 12px #17242b,inset 0 0 0 14px #a18457,inset 0 0 0 19px #111c25,inset 0 0 70px #03080d,0 0 80px rgba(180,140,80,.22)}
+.jz-compass-base:before{content:"";position:absolute;inset:3%;border-radius:50%;border:2px dashed rgba(218,181,109,.5);animation:jz-spin 90s linear infinite}.jz-compass-base:after{content:"";position:absolute;inset:10%;border-radius:50%;border:1px solid rgba(197,161,95,.42);box-shadow:0 0 0 16px rgba(5,12,19,.26),0 0 0 18px rgba(199,158,92,.22),inset 0 0 28px rgba(0,0,0,.45)}
+.jz-compass-ring{position:absolute;inset:18%;border:1px solid rgba(213,176,104,.48);border-radius:50%;box-shadow:0 0 0 5px rgba(188,145,81,.08),inset 0 0 0 9px rgba(17,27,34,.33)}.jz-compass-ring:before{content:"";position:absolute;inset:12%;border:2px double rgba(225,194,129,.55);border-radius:50%}.jz-compass-ring:after{content:"✧　✦　✧　✦　✧　✦　✧　✦";position:absolute;top:6%;left:7%;right:7%;text-align:center;font-size:clamp(.55rem,1.5vmin,.8rem);letter-spacing:.16em;color:rgba(226,199,143,.6)}
+.jz-compass-axis{position:absolute;inset:9%;border-radius:50%;background:linear-gradient(90deg,transparent 49.85%,rgba(216,179,108,.36) 50%,transparent 50.15%),linear-gradient(0deg,transparent 49.85%,rgba(216,179,108,.36) 50%,transparent 50.15%);pointer-events:none}
+.jz-compass-runes{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;color:rgba(216,179,108,.38);font-size:clamp(1.3rem,3vmin,2rem);font-family:'Ma Shan Zheng',serif;letter-spacing:.6em;transform:translateZ(4px)}
+.jz-compass-runes span{position:absolute}.jz-compass-runes span:nth-child(1){top:10%;left:25%}.jz-compass-runes span:nth-child(2){top:17%;right:10%}.jz-compass-runes span:nth-child(3){bottom:23%;right:10%}.jz-compass-runes span:nth-child(4){bottom:9%;left:29%}.jz-compass-runes span:nth-child(5){top:30%;left:7%}
+.jz-groove{position:absolute;z-index:5;top:var(--y);left:var(--x);display:grid;place-items:center;width:clamp(62px,11vmin,82px);height:clamp(62px,11vmin,82px);padding:0;border:2px solid #a88958;border-radius:50%;background:radial-gradient(circle,#070e15 0 39%,#1b2026 47%,#695436 63%,#151e27 76%);box-shadow:inset 0 8px 12px #01070b,0 0 0 5px #2b302c,0 0 0 7px rgba(218,179,106,.55),0 0 20px rgba(204,160,88,.36);transform:translate(-50%,-50%) translateZ(20px);cursor:pointer;color:#f5dfab;transition:filter .25s,box-shadow .25s}.jz-groove:focus-visible,.jz-groove:hover{outline:2px solid #fff1bd;outline-offset:8px;box-shadow:inset 0 8px 12px #01070b,0 0 0 5px #2b302c,0 0 0 7px #e4bc74,0 0 35px 10px rgba(230,183,100,.62)}
+.jz-groove .jz-pearl{display:grid;place-items:center;width:48%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 26%,#fff9de,#f8dc9d 26%,#b3864a 65%,#432d20 100%);box-shadow:inset -4px -5px 7px rgba(29,18,11,.48),0 0 13px #eed091,0 0 35px rgba(250,196,94,.33);font-size:clamp(.8rem,2vmin,1.1rem);text-shadow:0 1px 4px #fff5c8;transition:transform .25s}.jz-groove:hover .jz-pearl{transform:scale(1.18)}
+.jz-groove .jz-groove-label{position:absolute;top:calc(100% + 11px);left:50%;width:max-content;max-width:125px;transform:translateX(-50%);font:600 clamp(.72rem,1.5vmin,.93rem)/1.35 'Noto Serif SC',serif;letter-spacing:.14em;text-shadow:0 2px 6px #05080d,0 0 16px #070b11;color:#ecd7ab;white-space:nowrap}.jz-groove .jz-groove-label small{display:block;color:#b99c68;font-size:.66em;letter-spacing:.25em}
+.jz-wheel-core{position:absolute;z-index:4;top:50%;left:50%;display:grid;place-items:center;align-content:center;width:31%;aspect-ratio:1;border:2px solid #e2bf7d;border-radius:50%;background:radial-gradient(circle at 30% 20%,#65543b,#322d2b 50%,#141a22);box-shadow:0 0 0 5px #1b2229,0 0 0 7px rgba(214,173,98,.55),inset 0 0 30px rgba(0,0,0,.6),0 0 42px rgba(222,180,97,.25);transform:translate(-50%,-50%) translateZ(36px);text-align:center}.jz-wheel-core b{display:block;color:#f7dda2;font:clamp(1.8rem,5vmin,3.5rem)/1.1 'Ma Shan Zheng',serif;letter-spacing:.15em;text-shadow:0 0 20px rgba(247,214,143,.52)}.jz-wheel-core em{display:block;margin-top:6px;color:#d9bf8e;font-size:clamp(.48rem,1.3vmin,.69rem);font-style:normal;letter-spacing:.28em}.jz-wheel-core i{width:44%;height:1px;margin:10px 0;background:linear-gradient(90deg,transparent,#d0ae71,transparent)}
+.jz-home-caption{position:absolute;z-index:3;left:50%;bottom:clamp(22px,4vh,44px);width:min(92%,680px);transform:translateX(-50%);text-align:center;color:#c3ad87;font-size:.82rem;letter-spacing:.16em}.jz-home-caption strong{display:block;margin-bottom:8px;color:#efd7a7;font-family:'Ma Shan Zheng',serif;font-size:1.35rem;font-weight:400;letter-spacing:.24em}.jz-home-caption:before,.jz-home-caption:after{content:"✦";color:#ba9062;margin:0 12px}
+.jz-page-nav{position:absolute;z-index:4;right:clamp(18px,4vw,58px);bottom:clamp(16px,3vw,36px);display:flex;gap:8px;color:#99866e}.jz-page-nav span{font-size:.72rem;letter-spacing:.12em}
+.jz-section-bar{position:sticky;top:0;z-index:60;display:flex!important;align-items:center;justify-content:space-between;gap:12px;min-height:70px;padding:11px clamp(14px,3vw,46px);background:rgba(12,18,29,.94);border-bottom:1px solid #846741;box-shadow:0 10px 24px rgba(0,0,0,.28);backdrop-filter:blur(12px)}
+.jz-section-bar .jz-bar-left{display:flex;align-items:center;gap:14px}.jz-back{min-height:42px;padding:7px 13px;border:1px solid #a98651;border-radius:5px;background:#1f2a33;color:#f5d8a2;font:600 .88rem 'Noto Serif SC',serif;cursor:pointer}.jz-back:hover{background:#8f3c32;color:#fff3db}.jz-section-bar strong{color:#f2dbad;font:1.34rem 'Ma Shan Zheng',serif;letter-spacing:.13em}.jz-section-bar small{display:block;color:#b49870;font-size:.65rem;letter-spacing:.19em}.jz-section-links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px}.jz-section-links button{min-height:38px;padding:7px 9px;border:1px solid transparent;border-radius:4px;background:transparent;color:#b9a98a;font:600 .73rem 'Noto Serif SC',serif;cursor:pointer}.jz-section-links button:hover,.jz-section-links button[aria-current=page]{border-color:#b58b50;background:rgba(190,141,69,.14);color:#f0d6a5}
+.jz-content-view{min-height:calc(var(--jz-host-vh,100vh) - 70px);padding:clamp(18px,3vw,42px);background:radial-gradient(ellipse at 82% 0%,rgba(50,84,91,.26),transparent 48%),linear-gradient(150deg,#101824,#0a1019 68%,#1b1418);animation:jz-reveal .44s both}
+.jz-content-wrap{max-width:1280px;margin:0 auto}.jz-content-intro{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;margin-bottom:20px;color:#e7d6b1}.jz-content-crest{display:grid;place-items:center;width:70px;height:70px;border:1px solid #b58a4d;transform:rotate(45deg);background:linear-gradient(135deg,#46392d,#191f28);box-shadow:0 0 23px rgba(199,149,73,.17)}.jz-content-crest span{font:1.9rem 'Ma Shan Zheng',serif;transform:rotate(-45deg)}.jz-content-intro small{display:block;color:#bca276;font-size:.7rem;letter-spacing:.24em}.jz-page .jz-content-intro h1{margin:3px 0;color:#f0d9aa;font:clamp(1.7rem,3vw,2.5rem) 'Ma Shan Zheng',serif;letter-spacing:.12em}.jz-content-intro p{margin:0!important;color:#b9a98f;font-size:.9rem!important}
+.jz-content-card{position:relative;min-height:300px;padding:clamp(16px,2.6vw,36px);border:1px solid #bd9a64;border-radius:12px;background:linear-gradient(135deg,#fbf5e6,#ebdfc6 62%,#e1cfaa);box-shadow:0 0 0 5px rgba(30,26,29,.9),0 16px 40px rgba(0,0,0,.4),inset 0 1px #fffdf3;color:#3a2c1a}.jz-content-card:before,.jz-content-card:after{content:"✦";position:absolute;color:#a33b2e;font-size:.72rem}.jz-content-card:before{top:9px;left:12px}.jz-content-card:after{bottom:8px;right:12px}.jz-content-card>*+*{margin-top:18px}.jz-content-card .faction-sec{margin-top:0;border-top:0;padding-top:0}.jz-content-card .summary-section{margin-bottom:4px}.jz-content-card #bond-creator-step{display:block!important;max-width:none!important;margin:0!important;padding:0!important;background:transparent!important}.jz-content-card #bond-creator-step>.accordion-content-inner{padding:0}.jz-content-card #bond-back-button{display:none!important}.jz-content-card .realm-below-first{margin-top:0}.jz-content-card .map-container{overflow:auto}
+.jz-page .jz-opening-modal{z-index:10020!important}.jz-page .cm-overlay{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;z-index:10030!important}
+.jz-page .jz-groove,.jz-page .jz-groove:hover,.jz-page .jz-groove:focus-visible{padding:0;border:2px solid #a88958;border-radius:50%;background:radial-gradient(circle,#070e15 0 39%,#1b2026 47%,#695436 63%,#151e27 76%);color:#f5dfab}
+.jz-page .jz-groove,.jz-page .jz-groove:hover,.jz-page .jz-groove:focus-visible{width:clamp(62px,11vmin,82px);height:clamp(62px,11vmin,82px);overflow:visible;border:0;border-radius:50%;background:transparent;box-shadow:none;transform:translate(-50%,-50%) translateZ(20px);touch-action:manipulation}
+.jz-page .jz-groove:before{content:"";position:absolute;top:50%;left:50%;width:clamp(62px,11vmin,82px);height:clamp(62px,11vmin,82px);border:2px solid #a88958;border-radius:50%;background:radial-gradient(circle,#070e15 0 39%,#1b252b 47%,#294047 63%,#131d26 76%);box-shadow:inset 0 8px 12px #01070b,0 0 0 5px #26343a,0 0 0 7px rgba(218,179,106,.55),0 0 20px rgba(204,160,88,.36);transform:translate(-50%,-50%);pointer-events:none}
+.jz-page .jz-groove:hover,.jz-page .jz-groove:focus-visible{outline:0;box-shadow:none;transform:translate(-50%,-50%) translateZ(20px)}.jz-page .jz-groove:hover:before,.jz-page .jz-groove:focus-visible:before{box-shadow:inset 0 8px 12px #01070b,0 0 0 5px #26343a,0 0 0 7px #e4bc74,0 0 35px 10px rgba(230,183,100,.62)}
+.jz-page .jz-groove .jz-pearl{position:absolute;top:50%;left:50%;width:clamp(32px,5.4vmin,44px);height:clamp(32px,5.4vmin,44px);transform:translate(-50%,-50%);pointer-events:none}.jz-page .jz-groove:hover .jz-pearl,.jz-page .jz-groove:focus-visible .jz-pearl{transform:translate(-50%,-50%) scale(1.16)}
+.jz-page .jz-groove .jz-groove-label{top:calc(100% + 8px);bottom:auto;left:50%;transform:translateX(-50%);pointer-events:none;text-align:center}
+.jz-page .jz-groove.is-nearest:before{box-shadow:inset 0 8px 12px #01070b,0 0 0 5px #26343a,0 0 0 7px #e4bc74,0 0 35px 10px rgba(230,183,100,.62)}
+.jz-page .jz-groove.is-nearest .jz-pearl{transform:translate(-50%,-50%) scale(1.16)}
+.jz-page .jz-back,.jz-page .jz-back:hover{padding:7px 13px;border:1px solid #a98651;border-radius:5px;background:#1f2a33;color:#f5d8a2}
+@keyframes jz-twinkle{to{opacity:.15;transform:scale(.65)}}@keyframes jz-halo{to{opacity:.45;transform:scale(1.1)}}@keyframes jz-aurora{to{transform:translate(3%,-2%) rotate(5deg)}}@keyframes jz-spin{to{transform:rotate(360deg)}}@keyframes jz-reveal{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:820px){.jz-section-bar{align-items:flex-start;flex-direction:column}.jz-section-links{justify-content:flex-start}.jz-orbit-stage{padding-top:90px;padding-bottom:112px}.jz-home-meta{display:none}.jz-wheel-wrap{width:min(80vmin,620px)}}
+@media(max-width:560px){.jz-home-mast{top:16px;left:16px;font-size:.65rem}.jz-home-mast:before{width:34px;height:34px;font-size:1.2rem}.jz-orbit-stage{padding:78px 10px 106px}.jz-wheel-wrap{width:min(91vw,420px);min-width:0}.jz-page .jz-groove,.jz-page .jz-groove:hover,.jz-page .jz-groove:focus-visible{width:58px;height:58px;transform:translate(-50%,-50%) translateZ(20px)}.jz-page .jz-groove:before{width:58px;height:58px}.jz-page .jz-groove .jz-pearl{width:34px;height:34px}.jz-page .jz-groove .jz-groove-label{top:calc(100% + 8px);bottom:auto;font-size:.67rem;letter-spacing:.02em}.jz-page .jz-groove .jz-groove-label small{font-size:.58em}.jz-wheel-core{width:32%}.jz-wheel-core i{margin:4px 0}.jz-wheel-core em{letter-spacing:.1em}.jz-home-caption{bottom:20px;font-size:.7rem;line-height:1.7}.jz-home-caption strong{font-size:1.15rem}.jz-page-nav{display:none}.jz-content-view{padding:18px 10px 30px}.jz-content-card{padding:18px 12px}.jz-content-intro{gap:12px}.jz-content-crest{width:50px;height:50px}.jz-content-crest span{font-size:1.45rem}.jz-section-links{overflow-x:auto;max-width:100%;flex-wrap:nowrap;padding-bottom:2px}.jz-section-links button{flex:none}.jz-content-card .map{min-width:430px}}
+@media(prefers-reduced-motion:reduce){.jz-home:before,.jz-starfield span,.jz-wheel-wrap:before,.jz-compass-base:before,.jz-content-view{animation:none!important}.jz-compass,.jz-groove{transition:none!important}}
+</style>
+
+
+<style id="jz-realm-scroll-layout">
+.jz-page #realm-list{display:block;margin:0;padding:0;border:0;background:transparent}
+.realm-overview{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:2px 0 20px;padding:0 6px}
+.realm-overview:before{content:"";position:absolute;z-index:0;top:16px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,#b9955f,#328d83 50%,#b9955f)}
+.realm-overview-step{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.realm-overview-node{display:grid;place-items:center;width:33px;height:33px;border:1px solid #2b8179;border-radius:50%;background:#f8f0df;color:#174e4e;font:600 .84rem 'Noto Serif SC',serif;box-shadow:0 0 0 5px #f4ead4}
+.realm-overview-step:nth-child(5) .realm-overview-node{border-color:#a33b2e;color:#8c382d}
+.realm-overview-label b,.realm-overview-label small{display:block}.realm-overview-label b{color:#174b50;font-size:.82rem}.realm-overview-label small{margin-top:2px;color:#90784f;font-size:.7rem}
+.realm-bands{display:grid;gap:14px}
+.realm-band{display:grid;grid-template-columns:minmax(205px,.84fr) minmax(0,3fr);gap:18px;padding:17px;border:1px solid rgba(166,132,78,.55);border-left:3px solid #328d83;border-radius:10px;background:linear-gradient(110deg,rgba(255,251,240,.86),rgba(244,235,215,.66));box-shadow:0 5px 15px rgba(74,53,25,.07);scroll-margin-top:90px}
+.realm-band:nth-child(5){border-left-color:#a33b2e}
+.jz-page .realm-band-head{display:flex!important;align-items:flex-start;gap:13px;padding:8px 12px 8px 2px;border-right:1px solid rgba(166,132,78,.42)}
+.realm-band-index{flex:none;display:grid;place-items:center;width:48px;height:48px;border:1px solid #328d83;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fdf8e9,#dce9dc);color:#174e4e;font:1.35rem 'Ma Shan Zheng',serif;box-shadow:0 3px 10px rgba(35,91,84,.12)}
+.realm-band:nth-child(5) .realm-band-index{border-color:#a33b2e;background:radial-gradient(circle at 35% 30%,#fff4df,#ecd5bd);color:#8c382d}
+.realm-band-index i{margin-left:1px;font-size:.58rem;font-style:normal}
+.realm-band-head h3{margin:1px 0 4px;color:#173f49;font:1.2rem 'Ma Shan Zheng','Noto Serif SC',serif;letter-spacing:.06em}
+.realm-band-title{margin:0;color:#987849;font-size:.78rem;line-height:1.5}
+.realm-band-arc{margin:12px 0 0;color:#62543e;font-size:.82rem;line-height:1.7}
+.realm-path{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 78px minmax(0,1fr);align-items:stretch;gap:10px}
+.realm-step-card{position:relative;min-width:0;padding:12px 13px;border:1px solid #d0b783;border-radius:8px;background:rgba(255,253,247,.9);box-shadow:0 3px 10px rgba(62,47,27,.06)}
+.realm-step-card:before{content:"";position:absolute;top:-1px;left:12px;right:12px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#328d83,transparent)}
+.realm-step-card.is-breakthrough{border-color:#b88c4f;background:linear-gradient(145deg,#fff9e9,#f1e3c6)}
+.realm-step-card.is-breakthrough:before{background:linear-gradient(90deg,transparent,#a33b2e,transparent)}
+.realm-step-top{display:flex;justify-content:space-between;align-items:center;gap:5px;color:#9a835c;font-size:.64rem;letter-spacing:.1em}
+.realm-step-top em{padding:2px 6px;border-radius:999px;background:#a33b2e;color:#fff6e9;font-size:.61rem;font-style:normal;letter-spacing:0}
+.realm-step-card h4{margin:7px 0 6px;color:#183f49;font:1.08rem 'Ma Shan Zheng','Noto Serif SC',serif}
+.realm-step-card p{margin:0;color:#554935;font-size:.81rem;line-height:1.72}
+.realm-breakthrough{align-self:center;display:flex;flex-direction:column;align-items:center;gap:4px;color:#9a6b35;text-align:center}
+.realm-breakthrough:before,.realm-breakthrough:after{content:"";width:1px;height:17px;background:linear-gradient(#cba96d,rgba(203,169,109,.08))}
+.realm-breakthrough:after{transform:rotate(180deg)}
+.realm-breakthrough span{color:#a33b2e;font-size:.95rem}.realm-breakthrough b{font-size:.7rem;white-space:nowrap}.realm-breakthrough small{color:#9a835c;font-size:.58rem;white-space:nowrap}
+.realm-turning{grid-column:1/-1;display:flex;align-items:flex-start;gap:9px;margin:0;padding:9px 11px;border-top:1px dashed #c8ae7c;color:#5e503a;font-size:.77rem;line-height:1.65}
+.realm-turning span{flex:none;padding:2px 7px;border-radius:999px;background:#e2eee3;color:#28665e;font-size:.67rem}
+.realm-band:nth-child(5) .realm-turning span{background:#f3e1d2;color:#8e3d30}
+@media(max-width:980px){.realm-band{grid-template-columns:1fr;gap:12px}.realm-band-head{align-items:center;border-right:0;border-bottom:1px solid rgba(166,132,78,.42);padding:0 0 12px}.realm-band-arc{margin-top:5px}.realm-path{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 74px minmax(0,1fr)}}
+@media(max-width:620px){.realm-overview{gap:2px;margin-bottom:14px;padding:0}.realm-overview:before{top:14px;left:9%;right:9%}.realm-overview-node{width:29px;height:29px;font-size:.72rem;box-shadow:0 0 0 3px #f4ead4}.realm-overview-label b{font-size:.68rem}.realm-overview-label small{font-size:.59rem}.realm-band{padding:12px;gap:10px}.realm-band-index{width:40px;height:40px;font-size:1.15rem}.realm-band-head{gap:10px}.realm-band-head h3{font-size:1.08rem}.realm-band-title{font-size:.72rem}.realm-band-arc{font-size:.77rem;line-height:1.55}.realm-path{grid-template-columns:1fr;gap:8px}.realm-step-card{padding:11px 12px}.realm-step-card p{font-size:.79rem}.realm-breakthrough{flex-direction:row;justify-content:center;min-height:24px;gap:7px}.realm-breakthrough:before,.realm-breakthrough:after{width:auto;height:1px;flex:1}.realm-breakthrough:after{transform:none}.realm-breakthrough small{font-size:.61rem}.realm-turning{font-size:.74rem}}
+</style>
+
+<style id="jz-faction-directory-style">
+.jz-page .faction-sec{margin:0!important;padding:0!important;border:0!important}
+.jz-page .faction-directory-head{display:flex!important;align-items:center;justify-content:space-between;gap:22px;margin:0 0 18px;padding:2px 4px 17px;border-bottom:1px solid #2b8c82}
+.faction-kicker{color:#a33b2e;font-size:.72rem;letter-spacing:.2em}
+.jz-page .faction-directory-head h2{margin:4px 0 5px;color:#173f49;font:clamp(1.55rem,2.7vw,2rem) 'Ma Shan Zheng','Noto Serif SC',serif;letter-spacing:.08em}
+.jz-page .faction-directory-head p{margin:0;color:#6f6048;font-size:.88rem;line-height:1.7}
+.faction-total{display:flex;align-items:center;gap:10px;padding:8px 13px;border:1px solid #c9ad78;border-radius:8px;background:rgba(255,250,236,.75);color:#806744}
+.faction-total strong{color:#1d7771;font:2rem 'Ma Shan Zheng',serif}.faction-total span{font-size:.72rem;line-height:1.5}
+.faction-nav{position:sticky;top:80px;z-index:10;display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px;padding:9px;border:1px solid rgba(183,151,94,.55);border-radius:9px;background:rgba(249,242,224,.94);box-shadow:0 5px 14px rgba(43,36,24,.08);backdrop-filter:blur(9px)}
+.jz-page .faction-nav-chip{display:flex;align-items:center;gap:7px;min-height:38px;padding:6px 10px;border:1px solid #c5a66d;border-radius:999px;background:#fffaf0;color:#425347;font:600 .78rem 'Noto Serif SC',serif;cursor:pointer;transition:background .18s,border-color .18s,color .18s}
+.jz-page .faction-nav-chip>span{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#e2eee3;color:#28665e;font-family:'Ma Shan Zheng',serif}
+.jz-page .faction-nav-chip small{display:grid;place-items:center;min-width:19px;height:19px;padding:0 4px;border-radius:999px;background:#eee2ca;color:#8f7044;font-size:.63rem}
+.jz-page .faction-nav-chip:hover,.jz-page .faction-nav-chip:focus-visible{border-color:#287f78;background:#e3eee3;color:#1c6059;outline:0}
+.faction-directory{display:grid;gap:22px}
+.faction-chapter{scroll-margin-top:145px}
+.jz-page .faction-chapter-head{display:flex!important;align-items:center;gap:13px;margin:0 0 11px;padding:0 2px 10px;border-bottom:1px solid rgba(169,137,83,.45)}
+.faction-chapter-mark{flex:none;display:grid;place-items:center;width:39px;height:39px;border:1px solid #bd965d;border-radius:50% 50% 50% 8px;background:linear-gradient(145deg,#f9f1df,#e8d7b6);color:#8b422f;font:1.14rem 'Ma Shan Zheng',serif;box-shadow:0 3px 8px rgba(77,53,28,.1)}
+.faction-chapter-no{color:#a33b2e;font-size:.63rem;letter-spacing:.17em}
+.jz-page .faction-chapter-head h3{margin:2px 0;color:#1b5658;font:1.23rem 'Ma Shan Zheng','Noto Serif SC',serif;letter-spacing:.06em}
+.jz-page .faction-chapter-head p{margin:0;color:#74654d;font-size:.78rem;line-height:1.6}
+.faction-chapter-count{margin-left:auto;color:#98784a;font:1.5rem 'Ma Shan Zheng',serif}.faction-chapter-count small{margin-left:3px;font-size:.7rem}
+.faction-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.faction-card{position:relative;display:flex;flex-direction:column;min-width:0;padding:14px 15px 12px;border:1px solid #cbb17f;border-radius:9px;background:linear-gradient(145deg,rgba(255,253,247,.97),rgba(245,237,219,.91));box-shadow:0 4px 12px rgba(56,43,26,.06);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.faction-card:before{content:"";position:absolute;top:0;left:15px;right:15px;height:2px;background:linear-gradient(90deg,transparent,#348c82,transparent)}
+.faction-card:hover{transform:translateY(-2px);border-color:#5b9b8d;box-shadow:0 8px 19px rgba(40,77,69,.13)}
+.jz-page .faction-card-head{display:flex!important;align-items:center;gap:10px;margin:0 0 8px}
+.faction-card-seal{flex:none;display:grid;place-items:center;width:33px;height:33px;border:1px solid #d0b47e;border-radius:50%;background:#f5ecd8;color:#986c39;font: .77rem 'Noto Serif SC',serif}
+.faction-type{color:#a33b2e;font-size:.63rem;letter-spacing:.1em}
+.jz-page .faction-card-head h4{margin:2px 0 0;color:#183f49;font:1.08rem 'Ma Shan Zheng','Noto Serif SC',serif;letter-spacing:.04em}
+.faction-position{margin:0 0 10px;color:#514632;font-size:.82rem;line-height:1.7}
+.faction-reach{display:grid;grid-template-columns:auto 1fr;align-items:start;gap:7px;margin-top:auto;padding:8px 0;border-top:1px dashed #d2bd91}
+.faction-reach>span{padding:2px 6px;border-radius:999px;background:#e4eee3;color:#28665e;font-size:.62rem;white-space:nowrap}
+.faction-reach p{margin:0;color:#82704f;font-size:.7rem;line-height:1.55;overflow-wrap:anywhere}
+.faction-dossier{margin-top:2px;border-top:1px solid rgba(197,166,109,.36)}
+.faction-dossier summary{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 1px 1px;color:#276c65;font-size:.72rem;cursor:pointer;list-style:none}
+.faction-dossier summary::-webkit-details-marker{display:none}.faction-dossier summary:after{content:"＋";color:#9b7846;font-size:.85rem}.faction-dossier[open] summary:after{content:"－"}
+.faction-dossier summary small{margin-left:auto;color:#9a8663;font-size:.62rem}
+.faction-dossier-body{display:grid;gap:6px;padding:9px 0 2px}.faction-dossier-body .detail-line{display:grid;grid-template-columns:4.2em 1fr;align-items:start;gap:7px;margin:0;color:#554a37;font-size:.72rem;line-height:1.65}.faction-dossier-body .dl-lbl{min-width:0;color:#9b5b38;font-weight:700}
+@media(max-width:900px){.faction-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.faction-nav{top:112px}}
+@media(max-width:600px){.jz-page .faction-directory-head{align-items:flex-start;gap:10px;margin-bottom:12px;padding-bottom:12px}.faction-total{gap:6px;padding:6px 8px}.faction-total strong{font-size:1.55rem}.faction-total span{font-size:.62rem}.faction-nav{top:119px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -2px 14px;padding:7px}.faction-nav::-webkit-scrollbar{display:none}.jz-page .faction-nav-chip{flex:none;min-height:36px;font-size:.72rem}.faction-directory{gap:17px}.jz-page .faction-chapter-head{gap:9px}.faction-chapter-mark{width:34px;height:34px}.jz-page .faction-chapter-head h3{font-size:1.08rem}.jz-page .faction-chapter-head p{font-size:.72rem}.faction-card-grid{grid-template-columns:1fr;gap:8px}.faction-card{padding:12px 13px 10px}.faction-position{font-size:.8rem}.faction-chapter{scroll-margin-top:170px}}
+@media(prefers-reduced-motion:reduce){.faction-card,.jz-page .faction-nav-chip{transition:none}}
+</style>
+
+<style id="jz-faction-mobile-count-fix">
+@media(max-width:600px){.faction-total span{display:none}.faction-total strong:after{content:" 方";font:600 .68rem 'Noto Serif SC',serif;color:#806744}}
+</style>
+
+<style id="jz-star-calibration-transition">
+.jz-calibration-chart{position:absolute;inset:0;z-index:3;width:100%;height:100%;overflow:visible;pointer-events:none;opacity:0;transition:opacity .12s ease}
+.jz-calibration-chart.is-drawing{opacity:.9}
+.jz-calibration-chart .chart-lines{fill:none;stroke:rgba(231,199,135,.84);stroke-width:2.2;stroke-dasharray:5000;stroke-dashoffset:5000;filter:drop-shadow(0 0 5px rgba(231,199,135,.72));vector-effect:non-scaling-stroke}
+.jz-calibration-chart.is-drawing .chart-lines{animation:jz-chart-draw .9s ease-out forwards}
+.jz-calibration-chart .chart-star{fill:#f5dfab;stroke:#d4ad6f;stroke-width:2;opacity:0;filter:drop-shadow(0 0 7px rgba(245,223,171,.9));vector-effect:non-scaling-stroke;transform-box:fill-box;transform-origin:center}
+.jz-calibration-chart.is-drawing .chart-star{animation:jz-chart-star .24s ease-out forwards}
+.jz-calibration-chart.is-drawing .chart-star:nth-of-type(2){animation-delay:.14s}.jz-calibration-chart.is-drawing .chart-star:nth-of-type(3){animation-delay:.28s}.jz-calibration-chart.is-drawing .chart-star:nth-of-type(4){animation-delay:.42s}.jz-calibration-chart.is-drawing .chart-star:nth-of-type(5){animation-delay:.56s}.jz-calibration-chart.is-drawing .chart-star:nth-of-type(6){animation-delay:.7s}
+.jz-orbiting-buttons{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.18,.72,.18,1);will-change:transform}
+.jz-star-orbit-track{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 50%;animation:jz-star-orbit 60s linear infinite;pointer-events:none}
+.jz-star-orbit-track .jz-groove{pointer-events:auto;animation:jz-star-counter-orbit 60s linear infinite}
+#jz-orbiting-buttons:has(.jz-groove:hover) .jz-star-orbit-track,#jz-orbiting-buttons:has(.jz-groove:focus-visible) .jz-star-orbit-track,.jz-home.jz-is-calibrating .jz-star-orbit-track{animation-play-state:paused}
+#jz-orbiting-buttons:has(.jz-groove:hover) .jz-star-orbit-track .jz-groove,#jz-orbiting-buttons:has(.jz-groove:focus-visible) .jz-star-orbit-track .jz-groove,.jz-home.jz-is-calibrating .jz-star-orbit-track .jz-groove{animation-play-state:paused}
+@keyframes jz-star-orbit{to{transform:rotate(360deg)}}@keyframes jz-star-counter-orbit{from{transform:translate(-50%,-50%) translateZ(20px) rotate(0deg)}to{transform:translate(-50%,-50%) translateZ(20px) rotate(-360deg)}}
+.jz-home.jz-is-calibrating .jz-orbiting-buttons{transform:rotateZ(var(--jz-orbit-turn,0deg))}
+.jz-home.jz-is-calibrating .jz-groove:not(.is-calibration-target){opacity:.52;transition:opacity .18s ease}
+.jz-home.jz-is-calibrating .jz-calibration-chart{opacity:.9}
+.jz-home.jz-is-calibrating .jz-groove-label{transform-origin:top center;transform:translateX(-50%) translate(var(--jz-label-dx,0px),var(--jz-label-dy,0px)) rotate(var(--jz-orbit-counter,0deg))}
+@media(prefers-reduced-motion:reduce){.jz-star-orbit-track,.jz-star-orbit-track .jz-groove{animation:none!important}}
+.jz-page .jz-groove.is-calibration-target:before{filter:brightness(1.18);box-shadow:inset 0 8px 12px #01070b,0 0 0 5px #2b302c,0 0 0 8px #e4bc74,0 0 34px 12px rgba(230,183,100,.72)}
+.jz-content-view{animation:none}
+.jz-content-view.jz-view-fold{animation:jz-page-fold .26s ease-in both}
+.jz-section-bar.jz-bar-fold{animation:jz-bar-fold .24s ease-in both}
+@keyframes jz-chart-draw{to{stroke-dashoffset:0}}
+@keyframes jz-chart-star{from{opacity:0;transform:scale(.35)}to{opacity:1;transform:scale(1)}}
+@keyframes jz-page-fold{to{opacity:0;transform:translateY(8px) scale(.99);filter:blur(2px)}}
+@keyframes jz-bar-fold{to{opacity:0;transform:translateY(-7px)}}
+@media(prefers-reduced-motion:reduce){.jz-calibration-chart,.jz-calibration-chart *{animation:none!important;transition:none!important}.jz-content-view.jz-view-fold,.jz-section-bar.jz-bar-fold{animation:none!important}}
+</style>
+
+<style id="jz-character-wizard-styles">
+.jz-character-wizard{display:grid;gap:14px}
+.jz-character-progress{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 2px}
+.jz-character-step-tab{display:flex;align-items:center;gap:9px;min-width:0;min-height:52px;padding:7px 10px;border:1px solid #c8b58f;border-radius:9px;background:#fbf6e9;color:#786b55;text-align:left;font:inherit;cursor:pointer;transition:.18s}
+.jz-character-step-tab:hover{border-color:#318d83;color:#245d59}
+.jz-character-step-tab[aria-selected="true"]{border-color:#318d83;background:#e1eee5;color:#225851;box-shadow:inset 0 -3px #318d83}
+.jz-character-step-number{display:grid;place-items:center;flex:0 0 29px;width:29px;height:29px;border:1px solid #b7a67f;border-radius:50%;font-size:11px;color:#806b46}
+.jz-character-step-tab[aria-selected="true"] .jz-character-step-number{border-color:#318d83;background:#318d83;color:#fff}
+.jz-character-step-tab strong,.jz-character-step-tab small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.jz-character-step-tab strong{font-size:12px}
+.jz-character-step-tab small{margin-top:2px;font-size:10px;opacity:.78}
+.jz-character-step-panel[hidden]{display:none!important}
+.jz-character-step-panel{min-width:0;animation:jz-char-step-in .18s ease-out}
+@keyframes jz-char-step-in{from{opacity:.75;transform:translateY(3px)}to{opacity:1;transform:none}}
+.jz-character-step-actions{display:flex;align-items:center;gap:8px;margin-top:16px;padding-top:12px;border-top:1px dashed #c8b58f}
+.jz-character-step-spacer{flex:1}
+.jz-character-step-back,.jz-character-step-next{min-height:38px;padding:8px 14px;border:1px solid #9e804f;border-radius:6px;background:#ebe0c8;color:#27373c;font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.jz-character-step-next{border-color:#236d68;background:linear-gradient(135deg,#348f84,#246d68);color:#fff}
+.jz-character-step-back:hover,.jz-character-step-next:hover{filter:brightness(.96)}
+.jz-character-profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px;padding:4px 8px}
+.jz-character-profile-grid>.jz-character-profile-field{min-width:0;margin:0!important;padding:0 4px 3px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.jz-character-profile-grid>.jz-character-profile-wide{grid-column:span 2}
+.jz-character-profile-label{display:flex!important;align-items:center;gap:7px;margin:0 0 4px!important;color:#62605b!important;font-size:13px!important;font-weight:500!important}
+.jz-character-profile-label:before{content:"·";color:#a34436;font-weight:700}
+.jz-character-profile-badge{display:inline-flex;align-items:center;padding:2px 7px;border:1px solid #b7a67f;border-radius:99px;color:#806b46;font-size:10px;line-height:1.4}
+.jz-character-profile-badge.is-required{border-color:#a34436;background:#a34436;color:#fff}
+.jz-character-profile-grid .jz-character-profile-field input,.jz-character-profile-grid .jz-character-profile-field textarea,.jz-character-profile-grid .jz-character-profile-field select{display:block;box-sizing:border-box;width:100%;height:42px;min-height:42px;padding:7px 5px;border:0;border-bottom:1px solid #bdb8ac;border-radius:0;background:transparent;color:#1a1a2e;font:inherit;font-size:14px;line-height:1.5;outline:none}
+.jz-character-profile-grid .jz-character-profile-field textarea{resize:vertical}
+.jz-character-profile-grid .jz-character-profile-field input:focus,.jz-character-profile-grid .jz-character-profile-field textarea:focus,.jz-character-profile-grid .jz-character-profile-field select:focus{border-bottom-color:#318d83}
+.jz-opening-config-row{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr);align-items:stretch;gap:12px;margin-bottom:12px}
+.jz-opening-config-row>.opening-package-bar,.jz-opening-config-row>.opening-package-location{box-sizing:border-box;min-width:0;min-height:76px;margin:0!important}
+.jz-opening-config-row>.opening-package-location{display:flex;flex-direction:column;justify-content:center;padding:10px 13px;border:1px solid #c9b68d;border-radius:9px;background:#fffaf0b8}
+.jz-opening-config-row>.opening-package-location label{margin:0 0 5px;color:#344348;font-size:12px;font-weight:700}
+.jz-opening-config-row>.opening-package-location select{box-sizing:border-box;width:100%;height:38px;min-height:38px;padding:5px 3px;border:0;border-bottom:1px solid #bdb8ac;border-radius:0;background:transparent;color:#1a1a2e;font:inherit;font-size:13px}
+.jz-opening-config-row>.opening-package-location select:focus{border-bottom-color:#318d83;outline:none}
+.jz-character-step-panel[data-character-panel="1"] #combat-skill-form>div:nth-of-type(4){grid-column:2}
+.jz-character-step-panel[data-character-panel="1"] #combat-skill-form>.skill-effect-field{grid-column:1}
+.jz-page #jz-slot-character .jz-character-progress{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 18px;padding:0;list-style:none}
+.jz-page #jz-slot-character .jz-character-progress .jz-character-step-tab{width:100%;display:flex;align-items:center;gap:10px;min-height:52px;padding:8px 12px;border:1px solid #c8b58e;border-radius:9px;background:#fffaf0a6!important;color:#72664f!important;text-align:left;cursor:pointer;transition:.2s;box-shadow:none}
+.jz-page #jz-slot-character .jz-character-progress .jz-character-step-tab:hover{border-color:#318d83;background:#fffaf0a6!important;color:#245d59!important}
+.jz-page #jz-slot-character .jz-character-progress .jz-character-step-tab[aria-selected="true"]{border-color:#318d83;background:#e2efe5!important;box-shadow:inset 0 -3px #318d83;color:#1e5551!important}
+.jz-page #jz-slot-character .jz-character-step-number{display:grid;place-items:center;flex:0 0 29px;width:29px;height:29px;border:1px solid #b79a66;border-radius:50%;background:transparent;color:#826640;font-size:12px}
+.jz-page #jz-slot-character .jz-character-step-tab[aria-selected="true"] .jz-character-step-number{border-color:#318d83;background:#318d83;color:#fff}
+.jz-page #jz-slot-character .jz-character-step-tab strong{display:block;font-size:13px;font-weight:700}
+.jz-page #jz-slot-character .jz-character-step-tab small{display:block;margin-top:2px;color:#8b7d63;font-size:10px}
+.jz-page #jz-slot-character .jz-character-step-actions .jz-character-step-back,.jz-page #jz-slot-character .jz-character-step-actions .jz-character-step-next{min-height:38px;padding:8px 14px;border:1px solid #9e804f;border-radius:6px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.jz-page #jz-slot-character .jz-character-step-actions .jz-character-step-back{background:#ebe0c8!important;color:#27373c!important}
+.jz-page #jz-slot-character .jz-character-step-actions .jz-character-step-next{border-color:#236d68;background:linear-gradient(135deg,#348f84,#246d68)!important;color:#fff!important}
+.jz-page #jz-slot-character .form-section{grid-column:1/-1;display:block!important;width:100%;min-width:0}
+.jz-page #jz-slot-character .jz-character-profile-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:0 0 14px;padding:0 0 11px;border-bottom:1px solid #b7a67f}
+.jz-page #jz-slot-character .jz-character-profile-head h2{margin:0;color:#243c49;font:22px "Ma Shan Zheng",cursive;letter-spacing:.04em}
+.jz-page #jz-slot-character .jz-character-profile-head p{margin:4px 0 0;color:#786c56;font-size:12px}
+.jz-page #jz-slot-character .jz-character-profile-legend{display:flex;gap:7px}
+.jz-page #jz-slot-character .jz-character-profile-grid{display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px;width:100%;box-sizing:border-box;padding:4px 8px}
+.jz-page #jz-slot-character .jz-character-profile-grid>.jz-character-profile-field{min-width:0;margin:0!important;padding:0 0 5px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.jz-page #jz-slot-character .jz-character-profile-grid>.jz-character-profile-wide{grid-column:span 2}
+.jz-page #jz-slot-character .jz-character-profile-grid .jz-character-profile-label{display:flex!important;align-items:center;gap:7px;margin:0 0 6px!important;color:#62605b!important;font-size:13px!important;font-weight:500!important}
+.jz-page #jz-slot-character .jz-character-profile-label:before{content:"·";color:#a34436;font-weight:700}
+.jz-page #jz-slot-character .jz-character-profile-grid .jz-character-profile-field input,.jz-page #jz-slot-character .jz-character-profile-grid .jz-character-profile-field textarea,.jz-page #jz-slot-character .jz-character-profile-grid .jz-character-profile-field select{display:block;box-sizing:border-box;width:100%;height:42px!important;min-height:42px!important;padding:7px 5px!important;border:0!important;border-bottom:1px solid #bdb8ac!important;border-radius:0!important;background:transparent!important;color:var(--ink,#1a1a2e)!important;font-family:inherit;font-size:14px!important;line-height:1.5!important;box-shadow:none!important;outline:none}
+.jz-page #jz-slot-character .jz-character-profile-grid .jz-character-profile-field input:focus,.jz-page #jz-slot-character .jz-character-profile-grid .jz-character-profile-field textarea:focus,.jz-page #jz-slot-character .jz-character-profile-grid .jz-character-profile-field select:focus{border-bottom-color:#318d83!important}
+.jz-page #jz-slot-character .jz-character-profile-grid #char-name{resize:none}
+@media(max-width:700px){.jz-character-progress{grid-template-columns:repeat(4,minmax(112px,1fr));overflow-x:auto;padding-bottom:3px}.jz-character-step-tab{min-height:46px;padding:6px}.jz-character-profile-grid{grid-template-columns:1fr;gap:14px 18px;padding:4px}.jz-character-profile-grid>.jz-character-profile-wide{grid-column:auto}.jz-opening-config-row{grid-template-columns:1fr}.jz-opening-config-row>.opening-package-bar,.jz-opening-config-row>.opening-package-location{min-height:68px}}
+@media(max-width:700px){.jz-page #jz-slot-character .jz-character-progress{grid-template-columns:repeat(4,minmax(140px,1fr));overflow-x:auto;padding-bottom:3px}.jz-page #jz-slot-character .jz-character-profile-head{align-items:flex-start;flex-direction:column}.jz-page #jz-slot-character .jz-character-profile-grid{grid-template-columns:1fr;gap:14px 18px;padding:4px}.jz-page #jz-slot-character .jz-character-profile-grid>.jz-character-profile-wide{grid-column:auto}}
+.jz-character-pane-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:0 0 14px;padding:0 0 11px;border-bottom:1px solid #b7a67f}
+.jz-character-pane-head h2{margin:0;color:#243c49;font:22px "Ma Shan Zheng",cursive;letter-spacing:.04em}
+.jz-character-pane-head p{margin:4px 0 0;color:#786c56;font-size:12px}
+.jz-talents-layout{display:grid;gap:12px;min-width:0}
+.jz-page #jz-slot-character .talent-system{box-sizing:border-box;min-width:0;margin:0;padding:14px 15px;border:1px solid #d0b77f;border-radius:11px;background:rgba(255,250,239,.78)}
+.jz-page #jz-slot-character .talent-system>h3{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px;color:#315e5a;font-family:"Ma Shan Zheng",cursive;font-size:18px}
+.jz-page #jz-slot-character .talent-system>p{margin:0 0 10px;color:#8a7655;font-size:11px;text-align:right}
+.jz-page #jz-slot-character .talent-controls{justify-content:flex-start;gap:8px;margin-bottom:10px}
+.jz-page #jz-slot-character .talent-controls button{min-height:37px;padding:7px 12px;border:1px solid #a98750;border-radius:6px;background:#fffaf0;color:#3c514f;font:inherit;font-size:12px;cursor:pointer}
+.jz-page #jz-slot-character .talent-controls #roll-talents{border-color:#267b74;background:#2d8b80;color:#fff;font-weight:700}
+.jz-page #jz-slot-character .talent-roll-area{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 12px}
+.jz-page #jz-slot-character .talent-card{border-width:2px;background:#fffdf8;text-align:center}
+.jz-page #jz-slot-character .talent-system .talent-card.talent-quality-1{border-color:#a84808}
+.jz-page #jz-slot-character .talent-system .talent-card.talent-quality-2{border-color:#888}
+.jz-page #jz-slot-character .talent-system .talent-card.talent-quality-3{border-color:#1b9b2b}
+.jz-page #jz-slot-character .talent-system .talent-card.talent-quality-4{border-color:#9662fa}
+.jz-page #jz-slot-character .talent-system .talent-card.talent-quality-5{border-color:#d39300}
+.jz-page #jz-slot-character .talent-system .talent-card.selected{background:#e6f1e9}
+.jz-page #jz-slot-character .talent-tier-label{margin:0 0 4px;color:#a09277;font-size:10px;line-height:1.35}
+.jz-page #jz-slot-character .talent-name{margin-bottom:4px;color:#344348;font-weight:700}
+.jz-page #jz-slot-character .talent-desc{color:#8a806e}
+.jz-talent-empty{grid-column:1/-1;display:grid;place-items:center;min-height:43px;padding:8px;border:1px dashed #d5bb85;border-radius:7px;color:#9b8868;font-size:12px;text-align:center}
+.jz-page #jz-slot-character .selected-talents{margin:0 0 10px}
+.jz-page #jz-slot-character .selected-talents h4{margin:0 0 7px;color:#60796e;font-size:12px}
+.jz-page #jz-slot-character .selected-talent-list:empty{display:block;min-height:0}
+.jz-custom-talent-details{border:1px solid #d0b77f;border-radius:7px;background:#fffaf0a6}
+.jz-custom-talent-details>summary{padding:8px 10px;color:#60796e;font-size:12px;font-weight:700;cursor:pointer;list-style: disclosure-closed inside}
+.jz-custom-talent-details[open]>summary{border-bottom:1px solid #e1cfaa;list-style:disclosure-open inside}
+.jz-page #jz-slot-character .custom-talent-form{margin:0;padding:10px;border:0;border-radius:0;background:transparent}
+.jz-page #jz-slot-character .custom-skills{min-width:0;margin:0;padding:0;border:0;background:transparent}
+.jz-page #jz-slot-character .custom-skills>#custom-skills-title,.jz-page #jz-slot-character .custom-skills>p{display:none}
+.jz-page #jz-slot-character .custom-skill-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.jz-page #jz-slot-character .custom-skill-group{padding:12px;border-color:#d0b77f;border-radius:10px;background:rgba(255,250,239,.78)}
+.jz-page #jz-slot-character .custom-skill-group h4{margin:0 0 9px;color:#315e5a;font-family:"Ma Shan Zheng",cursive;font-size:17px}
+.jz-page #jz-slot-character .custom-skill-form .skill-preset-field{grid-column:1/-1}
+.jz-page #jz-slot-character .custom-skill-form .skill-effect-field{grid-column:1}
+.jz-page #jz-slot-character #combat-skill-form>div:nth-of-type(4){grid-column:2}
+.jz-page #jz-slot-character .custom-skill-form textarea{height:78px;min-height:78px}
+@media(min-width:701px){
+  .jz-page #jz-slot-character #cultivation-skill-form>.skill-preset-field,.jz-page #jz-slot-character #combat-skill-form>.skill-preset-field{grid-row:1;grid-column:1/-1}
+  .jz-page #jz-slot-character #cultivation-skill-form>div:nth-of-type(2),.jz-page #jz-slot-character #combat-skill-form>div:nth-of-type(2){grid-row:2;grid-column:1}
+  .jz-page #jz-slot-character #cultivation-skill-form>div:nth-of-type(3),.jz-page #jz-slot-character #combat-skill-form>div:nth-of-type(3){grid-row:2;grid-column:2}
+  .jz-page #jz-slot-character #cultivation-skill-form>.skill-effect-field,.jz-page #jz-slot-character #combat-skill-form>.skill-effect-field{grid-row:3;grid-column:1}
+  .jz-page #jz-slot-character #combat-skill-form>div:nth-of-type(4){grid-row:3;grid-column:2}
+  .jz-page #jz-slot-character #cultivation-skill-form>button,.jz-page #jz-slot-character #combat-skill-form>button{grid-row:4;grid-column:1/-1}
+}
+.jz-preset-details{margin:0 0 12px;border:1px solid #d0b77f;border-radius:9px;background:rgba(255,250,239,.76)}
+.jz-preset-details>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;color:#344d50;font-weight:700;cursor:pointer;list-style:disclosure-closed inside}
+.jz-preset-details[open]>summary{border-bottom:1px solid #dcc89e;list-style:disclosure-open inside}
+.jz-preset-details>summary small{color:#95815f;font-size:11px;font-weight:400}
+.jz-page #jz-slot-character .preset-opening{margin:0;padding:12px;border:0;border-radius:0;background:transparent;box-shadow:none}
+.jz-page #jz-slot-character .preset-opening>h3,.jz-page #jz-slot-character .preset-opening>.preset-opening-note{display:none}
+.jz-opening-config-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin:0 0 12px}
+.jz-opening-choice-field,.jz-opening-config-row>.opening-package-location{box-sizing:border-box;min-width:0;padding:12px;border:1px solid #d0b77f;border-radius:9px;background:rgba(255,250,239,.78)}
+.jz-opening-field-label{display:flex;align-items:center;gap:7px;margin:0 0 8px;color:#4c5d5b;font-size:13px;font-weight:700}
+.jz-page #jz-slot-character .jz-opening-choices{display:flex;flex-wrap:wrap;gap:6px;margin:0}
+.jz-page #jz-slot-character .jz-opening-choices .plot-option{flex:0 0 auto;min-width:0;padding:6px 10px;border:1px solid #c9aa72;border-radius:99px;background:#fffaf0;color:#4c514a;font-size:11px;line-height:1.35;cursor:pointer}
+.jz-page #jz-slot-character .jz-opening-choices .plot-option.active{border-color:#318d83;background:#e3f0e7;color:#245d59}
+.jz-page #jz-slot-character .jz-opening-choice-field .opening-package-bar{justify-content:space-between;gap:8px;margin:9px 0 0;padding:7px 8px;border:0;border-top:1px dashed #d5bb85;border-radius:0;background:transparent;box-shadow:none}
+.jz-page #jz-slot-character .opening-package-copy{min-width:0}
+.jz-page #jz-slot-character .opening-package-label{display:none}
+.jz-page #jz-slot-character .opening-package-summary{font-size:11px;line-height:1.4}
+.jz-page #jz-slot-character .opening-package-trigger{flex:none;min-height:32px;padding:6px 9px;font-size:11px}
+.jz-opening-config-row>.opening-package-location{display:flex;flex-direction:column;justify-content:flex-start;min-height:0!important;margin:0!important}
+.jz-opening-config-row>.opening-package-location label{margin:0 0 8px;color:#4c5d5b;font-size:13px;font-weight:700}
+.jz-opening-config-row>.opening-package-location select{height:38px;min-height:38px;padding:5px 8px;border:1px solid #c9aa72;border-radius:6px;background:#fffdf8;color:#333;font-size:13px}
+.jz-page #jz-slot-character .opening-package-display{margin:0 0 12px;padding:12px;border-color:#d0b77f;border-radius:9px;background:rgba(255,250,239,.78)}
+.jz-page #jz-slot-character .opening-package-display textarea{min-height:190px}
+@media(max-width:700px){.jz-page #jz-slot-character .talent-roll-area{grid-template-columns:repeat(2,minmax(0,1fr))}.jz-page #jz-slot-character .custom-skill-grid{grid-template-columns:1fr}.jz-opening-config-row{grid-template-columns:1fr}.jz-character-pane-head{align-items:flex-start;flex-direction:column}.jz-page #jz-slot-character .custom-skill-form .skill-effect-field{grid-column:1/-1}.jz-page #jz-slot-character #combat-skill-form>div:nth-of-type(4){grid-column:1/-1}}
+@media(max-width:700px){
+  .jz-page .jz-section-links,.jz-page #jz-slot-character .jz-character-progress,.jz-page .jz-opening-category{scrollbar-width:none!important;-ms-overflow-style:none!important;}
+  .jz-page .jz-section-links::-webkit-scrollbar,.jz-page #jz-slot-character .jz-character-progress::-webkit-scrollbar,.jz-page .jz-opening-category::-webkit-scrollbar{display:none!important;width:0!important;height:0!important;}
+}
+.jz-bond-progress{grid-template-columns:repeat(2,minmax(0,1fr))!important;margin:0 0 18px!important}
+.jz-bond-step-panel[hidden]{display:none!important}
+.jz-bond-step-panel{min-width:0;animation:jz-char-step-in .18s ease-out}
+.jz-page #bond-creator-step .jz-bond-fields{margin:0;padding:0;border:0;border-radius:0;background:transparent}
+.jz-bond-profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px;width:100%;box-sizing:border-box;padding:4px 8px}
+.jz-page #bond-creator-step .jz-bond-profile-field{min-width:0;margin:0!important;padding:0 0 5px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.jz-page #bond-creator-step .jz-bond-profile-wide{grid-column:span 2}
+.jz-page #bond-creator-step .jz-bond-profile-label{display:flex!important;align-items:center;gap:7px;margin:0 0 6px!important;color:#62605b!important;font-size:13px!important;font-weight:500!important}
+.jz-page #bond-creator-step .jz-bond-profile-label:before{content:"·";color:#a34436;font-weight:700}
+.jz-page #bond-creator-step .jz-bond-profile-field input,.jz-page #bond-creator-step .jz-bond-profile-field textarea,.jz-page #bond-creator-step .jz-bond-profile-field select{display:block;box-sizing:border-box;width:100%;height:42px!important;min-height:42px!important;padding:7px 5px!important;border:0!important;border-bottom:1px solid #bdb8ac!important;border-radius:0!important;background:transparent!important;color:var(--ink,#1a1a2e)!important;font-family:inherit;font-size:14px!important;line-height:1.5!important;box-shadow:none!important;outline:none}
+.jz-page #bond-creator-step .jz-bond-profile-field input:focus,.jz-page #bond-creator-step .jz-bond-profile-field textarea:focus,.jz-page #bond-creator-step .jz-bond-profile-field select:focus{border-bottom-color:#318d83!important}
+.jz-page #bond-creator-step .jz-bond-profile-field .bond-help{margin:3px 0 0;color:#8a806e;font-size:11px;line-height:1.5}
+.jz-page #bond-creator-step .jz-bond-fields>.bond-help{margin:8px 8px 0;color:#8a806e;font-size:11px;line-height:1.55}
+.jz-page #bond-creator-step #bond-progress,.jz-page #bond-creator-step #bond-affection{max-width:150px}
+.jz-page #bond-creator-step .jz-bond-custom-talent{box-sizing:border-box;margin:0 0 16px!important;padding:4px 8px 8px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.jz-page #bond-creator-step .jz-bond-custom-talent .jz-bond-profile-label{margin:0 0 6px!important}
+.jz-page #bond-creator-step .jz-bond-custom-talent #bond-talent-effect{display:block;width:100%;height:42px!important;min-height:42px!important;padding:7px 5px!important;border:0!important;border-bottom:1px solid #bdb8ac!important;border-radius:0!important;background:transparent!important;color:var(--ink,#1a1a2e)!important;font:inherit;font-size:14px;line-height:1.5;box-shadow:none!important}
+.jz-page #bond-creator-step .jz-bond-custom-talent #bond-talents[hidden]{display:none!important}
+.jz-bond-talent-fields{display:grid;grid-template-columns:minmax(125px,.7fr) minmax(150px,1fr) minmax(200px,1.5fr) auto;gap:10px 14px;align-items:end}
+.jz-bond-talent-fields>div{min-width:0}
+.jz-bond-talent-fields>div>label{display:block;margin:0 0 5px;color:#62605b;font-size:12px}
+.jz-bond-talent-fields>div>select,.jz-bond-talent-fields>div>input,.jz-bond-talent-fields>div>textarea{box-sizing:border-box;width:100%;height:42px;min-height:42px;padding:7px 5px;border:0;border-bottom:1px solid #bdb8ac;border-radius:0;background:transparent;color:#1a1a2e;font:inherit;font-size:14px;line-height:1.5}
+.jz-bond-talent-fields>.jz-bond-talent-effect{grid-column:auto}
+.jz-bond-talent-fields>button{grid-column:auto;justify-self:start;min-height:36px;padding:7px 12px;border:1px solid #267b74;border-radius:6px;background:#2d8b80;color:white;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.jz-bond-talent-list{display:grid;gap:7px;margin-top:10px}
+.jz-bond-talent-empty{padding:10px;border:1px dashed #d5bb85;border-radius:7px;color:#9b8868;font-size:12px;text-align:center}
+.jz-bond-talent-item{display:grid;grid-template-columns:auto 1fr auto;gap:4px 9px;align-items:center;padding:9px 10px;border:1px solid #c9aa72;border-radius:7px;background:#fffdf8}
+.jz-bond-talent-item>strong{color:#344348;font-size:13px}
+.jz-bond-talent-item>p{grid-column:2/3;margin:0;color:#8a806e;font-size:11px;line-height:1.5}
+.jz-bond-talent-quality{padding:2px 7px;border:1px solid #b7a67f;border-radius:99px;color:#806b46;font-size:10px;white-space:nowrap}
+.jz-bond-talent-remove{grid-column:3;grid-row:1/3;border:0;background:transparent;color:#9a4639;font:inherit;font-size:11px;cursor:pointer}
+.jz-page #bond-creator-step .jz-bond-skills{margin:0;padding:0;border:0;background:transparent}
+.jz-page #bond-creator-step .jz-bond-skills .bond-skills-editor{margin:0;padding:0;border:0;background:transparent}
+.jz-page #bond-creator-step .jz-bond-skills .bond-skills-editor>h3{margin:0 0 10px;color:#315e5a;font:18px "Ma Shan Zheng",cursive}
+.jz-page #bond-creator-step .jz-bond-skills .custom-skill-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.jz-page #bond-creator-step .jz-bond-skills .custom-skill-group{padding:12px;border-color:#d0b77f;border-radius:10px;background:rgba(255,250,239,.78)}
+.jz-page #bond-creator-step .jz-bond-skills .custom-skill-group h4{margin:0 0 9px;color:#315e5a;font:17px "Ma Shan Zheng",cursive}
+.jz-page #bond-creator-step .jz-bond-skills .custom-skill-form textarea{height:78px;min-height:78px}
+@media(min-width:701px){
+  .jz-page #bond-creator-step #bond-cultivation-skill-form>.skill-preset-field,.jz-page #bond-creator-step #bond-combat-skill-form>.skill-preset-field{grid-row:1;grid-column:1/-1}
+  .jz-page #bond-creator-step #bond-cultivation-skill-form>div:nth-of-type(2),.jz-page #bond-creator-step #bond-combat-skill-form>div:nth-of-type(2){grid-row:2;grid-column:1}
+  .jz-page #bond-creator-step #bond-cultivation-skill-form>div:nth-of-type(3),.jz-page #bond-creator-step #bond-combat-skill-form>div:nth-of-type(3){grid-row:2;grid-column:2}
+  .jz-page #bond-creator-step #bond-cultivation-skill-form>.skill-effect-field,.jz-page #bond-creator-step #bond-combat-skill-form>.skill-effect-field{grid-row:3;grid-column:1}
+  .jz-page #bond-creator-step #bond-combat-skill-form>div:nth-of-type(4){grid-row:3;grid-column:2}
+  .jz-page #bond-creator-step #bond-cultivation-skill-form>button,.jz-page #bond-creator-step #bond-combat-skill-form>button{grid-row:4;grid-column:1/-1}
+}
+@media(max-width:700px){
+  .jz-bond-profile-grid{grid-template-columns:1fr;gap:14px 18px;padding:4px}
+  .jz-page #bond-creator-step .jz-bond-profile-wide{grid-column:auto}
+  .jz-bond-talent-fields{grid-template-columns:1fr}
+  .jz-bond-talent-fields>.jz-bond-talent-effect,.jz-bond-talent-fields>button{grid-column:1}
+  .jz-page #bond-creator-step .jz-bond-skills .custom-skill-grid{grid-template-columns:1fr}
+  .jz-page #bond-creator-step #bond-combat-skill-form>div:nth-of-type(4){grid-column:1/-1}
+  .jz-page #bond-creator-step #bond-combat-skill-form>.skill-effect-field{grid-column:1/-1}
+}
+@media(prefers-reduced-motion:reduce){.jz-character-step-panel{animation:none}}
+</style>
+
 </head>
 <body>
 <section class="jz-entry-screen" id="jz-entry-screen" aria-label="九州大世界进入页面">
-    <div class="entry-content"><h1 class="entry-title"><small>九州卷 · 入江湖</small></h1><p class="entry-poem entry-poem-left">少年侠气，交结五都雄。肝胆洞，毛发耸。立谈中，死生同。一诺千金重。推翘勇，矜豪纵。轻盖拥，联飞鞚，斗城东。轰饮酒垆，春色浮寒瓮。吸海垂虹。闲呼鹰嗾犬，白羽摘雕弓。狡穴俄空。乐匆匆。</p><img class="entry-portrait" src="146562056_p0_master1200.jpg" alt="执伞行于九州的江湖人物"><p class="entry-poem entry-poem-right">似黄粱梦，辞丹凤；明月共，漾孤篷。官冗从，怀倥偬；落尘笼，簿书丛。鹖弁如云众，供粗用，忽奇功。笳鼓动，渔阳弄，思悲翁。不请长缨，系取天骄种。剑吼西风。恨登山临水，手寄七弦桐。目送归鸿。</p><div class="entry-action"><button class="entry-button" type="button" id="jz-enter-create">踏入江湖</button><p>卷轴展开，江湖在前。</p></div></div>
+  <div class="entry-content"><h1 class="entry-title"><small>九州卷 · 入江湖</small></h1><p class="entry-poem entry-poem-left">少年侠气，交结五都雄。肝胆洞，毛发耸。立谈中，死生同。一诺千金重。推翘勇，矜豪纵。轻盖拥，联飞鞚，斗城东。轰饮酒垆，春色浮寒瓮。吸海垂虹。闲呼鹰嗾犬，白羽摘雕弓。狡穴俄空。乐匆匆。</p><img class="entry-portrait" src="146562056_p0_master1200.jpg" alt="执伞行于九州的江湖人物"><p class="entry-poem entry-poem-right">似黄粱梦，辞丹凤；明月共，漾孤篷。官冗从，怀倥偬；落尘笼，簿书丛。鹖弁如云众，供粗用，忽奇功。笳鼓动，渔阳弄，思悲翁。不请长缨，系取天骄种。剑吼西风。恨登山临水，手寄七弦桐。目送归鸿。</p><div class="entry-action"><button class="entry-button" type="button" id="jz-enter-create">踏入江湖</button><p>卷轴展开，江湖在前。</p></div></div>
 </section>
 <div class="jz-page">
     <div class="container">
+
+<div class="jz-shell" id="jz-five-realm-shell">
+  <section class="jz-home jz-view" id="jz-view-home" aria-label="九州命盘首页">
+    <div class="jz-starfield" id="jz-starfield" aria-hidden="true"></div>
+    <div class="jz-home-mast">九州长歌 · 江湖命盘</div><div class="jz-home-meta">THE CELESTIAL ATLAS<b>五卷 · 一人 · 一江湖</b></div>
+    <div class="jz-orbit-stage"><div class="jz-wheel-wrap" id="jz-wheel-wrap"><div class="jz-compass" id="jz-compass"><div class="jz-compass-base" aria-hidden="true"></div><div class="jz-compass-ring" aria-hidden="true"></div><div class="jz-compass-axis" aria-hidden="true"></div><div class="jz-compass-runes" aria-hidden="true"><span>乾</span><span>兑</span><span>离</span><span>坎</span><span>坤</span></div><div id="jz-orbiting-buttons" class="jz-orbiting-buttons"><button type="button" class="jz-groove" data-view="map" style="--x:50%;--y:9%" aria-label="前往九州地图"><span class="jz-pearl" aria-hidden="true">✦</span><span class="jz-groove-label"><small>壹 · 观山河</small>九州地图</span></button>
+<button type="button" class="jz-groove" data-view="factions" style="--x:88%;--y:36%" aria-label="前往江湖势力"><span class="jz-pearl" aria-hidden="true">✦</span><span class="jz-groove-label"><small>贰 · 看风云</small>江湖势力</span></button>
+<button type="button" class="jz-groove" data-view="realm" style="--x:73%;--y:82%" aria-label="前往武学境界"><span class="jz-pearl" aria-hidden="true">✦</span><span class="jz-groove-label"><small>叁 · 识武道</small>武学境界</span></button>
+<button type="button" class="jz-groove" data-view="character" style="--x:27%;--y:82%" aria-label="前往人物创建"><span class="jz-pearl" aria-hidden="true">✦</span><span class="jz-groove-label"><small>肆 · 写命书</small>人物创建</span></button>
+<button type="button" class="jz-groove" data-view="bond" style="--x:12%;--y:36%" aria-label="前往羁绊人物创建"><span class="jz-pearl" aria-hidden="true">✦</span><span class="jz-groove-label"><small>伍 · 结同道</small>羁绊人物创建</span></button></div><div class="jz-wheel-core" aria-hidden="true"><b>九州</b><i></i><em>执星入江湖</em></div></div></div></div>
+    <div class="jz-home-caption"><strong>拨星珠 · 启五卷</strong>移动指针预览最近星珠，点击圆盘任意位置即可进入</div><div class="jz-page-nav"><span>✦ 随鼠标移动，命盘随心倾斜</span></div>
+  </section>
+  <div class="jz-section-bar" id="jz-section-bar" hidden><div class="jz-bar-left"><button class="jz-back" type="button" data-view="home">← 返回命盘</button><div><small>九州长歌 · 五卷命盘</small><strong id="jz-section-title">九州地图</strong></div></div><nav class="jz-section-links" aria-label="五卷导航"><button type="button" data-view="map">九州地图</button>
+<button type="button" data-view="factions">江湖势力</button>
+<button type="button" data-view="realm">武学境界</button>
+<button type="button" data-view="character">人物创建</button>
+<button type="button" data-view="bond">羁绊人物创建</button></nav></div>
+  <section class="jz-content-view jz-view" id="jz-view-map" data-section="map" hidden><div class="jz-content-wrap"><div class="jz-content-intro"><div class="jz-content-crest" aria-hidden="true"><span>图</span></div><div><small>卷 壹 · 九州长歌</small><h1>九州地图</h1><p>舆图开卷，九州与外域一览于前。</p></div></div><div class="jz-content-card" id="jz-slot-map"></div></div></section>
+<section class="jz-content-view jz-view" id="jz-view-factions" data-section="factions" hidden><div class="jz-content-wrap"><div class="jz-content-intro"><div class="jz-content-crest" aria-hidden="true"><span>势</span></div><div><small>卷 贰 · 九州长歌</small><h1>江湖势力</h1><p>从朝廷法度、名门传承到帮会商路，诸方势力各执一局。</p></div></div><div class="jz-content-card" id="jz-slot-factions"></div></div></section>
+<section class="jz-content-view jz-view" id="jz-view-realm" data-section="realm" hidden><div class="jz-content-wrap"><div class="jz-content-intro"><div class="jz-content-crest" aria-hidden="true"><span>武</span></div><div><small>卷 叁 · 九州长歌</small><h1>武学境界</h1><p>十五层武道境界，循阶而上。</p></div></div><div class="jz-content-card" id="jz-slot-realm"></div></div></section>
+<section class="jz-content-view jz-view" id="jz-view-character" data-section="character" hidden><div class="jz-content-wrap"><div class="jz-content-intro"><div class="jz-content-crest" aria-hidden="true"><span>命</span></div><div><small>卷 肆 · 九州长歌</small><h1>人物创建</h1><p>主角档案、天赋功法与开场剧情集中于此。</p></div></div><div class="jz-content-card" id="jz-slot-character"></div></div></section>
+<section class="jz-content-view jz-view" id="jz-view-bond" data-section="bond" hidden><div class="jz-content-wrap"><div class="jz-content-intro"><div class="jz-content-crest" aria-hidden="true"><span>缘</span></div><div><small>卷 伍 · 九州长歌</small><h1>羁绊人物创建</h1><p>为与你同行的人留下姓名与武学。</p></div></div><div class="jz-content-card" id="jz-slot-bond"></div></div></section>
+</div>
+
 <div class="accordion-container">
             <div class="wizard-nav">
                 <button type="button" class="wizard-btn" id="wizard-prev" disabled>← 返回</button>
@@ -503,7 +894,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                         <h2 id="first-page-title">九州疆域</h2>
                         <div id="step1-content">
 <div id="province-view">
-                            <p class="step-hint">点击任意州或外域地区查看详情；点击空白处或 × 关闭</p>
+                            <p class="step-hint">点击任意州或外域地区查看详情；再次点击当前地区可收起介绍</p>
                             <div class="map-container">
                                 <div class="map">
                                 <button type="button" class="province" id="yangzhou" data-name="扬州">
@@ -559,52 +950,18 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                             </div>
                             <section id="province-detail" class="province-detail" hidden aria-live="polite"></section>
                         </div>
-                        <div class="faction-sec">
-                            <h3>江湖势力 · 疆域分布</h3>
-                            <p class="step-hint">点击门派查看详情</p>
-                            <div class="faction-map" id="faction-map">
-                            <div class="fzone">
-                                <div class="fzone-name">幽州</div>
-                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="丐帮">丐帮·北分舵</button><button type="button" class="ftag" data-faction="神武卫">神武卫·北镇抚司</button></div>
-                            </div>
-                            <div class="fzone">
-                                <div class="fzone-name">凉州</div>
-                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="黑沙帮">黑沙帮</button><button type="button" class="ftag" data-faction="陇西马帮">陇西马帮</button></div>
-                            </div>
-                            <div class="fzone">
-                                <div class="fzone-name">青州</div>
-                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="听风楼">听风楼·沿海线</button><button type="button" class="ftag" data-faction="丐帮">丐帮·海港眼线</button></div>
-                            </div>
-                            <div class="fzone">
-                                <div class="fzone-name">中州</div>
-                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="神武卫">神武卫·总司</button><button type="button" class="ftag" data-faction="六扇门">六扇门·中州捕司</button><button type="button" class="ftag" data-faction="听风楼">听风楼·总楼</button><button type="button" class="ftag" data-faction="丐帮">丐帮·总舵</button><button type="button" class="ftag" data-faction="菩提禅院">菩提禅院</button><button type="button" class="ftag" data-faction="四大世家">四大世家·济阴</button><button type="button" class="ftag" data-faction="漕帮盐商">漕帮/盐商</button></div>
-                            </div>
-                            <div class="fzone">
-                                <div class="fzone-name">雍州</div>
-                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="天机剑宗">天机剑宗</button></div>
-                            </div>
-                            <div class="fzone">
-                                <div class="fzone-name">益州</div>
-                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="真武阁">真武阁</button><button type="button" class="ftag" data-faction="百草堂">百草堂</button><button type="button" class="ftag" data-faction="枯藤寺">枯藤寺(无主)</button></div>
-                            </div>
-                            <div class="fzone">
-                                <div class="fzone-name">扬州</div>
-                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="四大世家">四大世家</button><button type="button" class="ftag" data-faction="漕帮盐商">漕帮/盐商</button><button type="button" class="ftag" data-faction="听风楼">听风楼·秦淮</button></div>
-                            </div>
-                            <div class="fzone">
-                                <div class="fzone-name">荆州</div>
-                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="黑虎堂">黑虎堂</button><button type="button" class="ftag" data-faction="漕帮盐商">漕帮</button></div>
-                            </div>
-                            <div class="fzone">
-                                <div class="fzone-name">云州</div>
-                                <div class="fzone-tags"><button type="button" class="ftag" data-faction="七情谷">七情谷</button><button type="button" class="ftag" data-faction="幽冥教">幽冥教</button></div>
-                            </div>
-                            </div>
-                        </div>
+                        <section class="faction-sec" aria-labelledby="faction-directory-title">
+                            <header class="faction-directory-head">
+                                <div><span class="faction-kicker">卷贰 · 天下棋局</span><h2 id="faction-directory-title">江湖势力志</h2><p>朝廷、宗门、世家与行会各执一局；诸势交错，才是江湖。</p></div>
+                                <div class="faction-total"><strong id="faction-total-count">—</strong><span>方势力<br>列入此卷</span></div>
+                            </header>
+                            <nav class="faction-nav" id="faction-nav" aria-label="势力类别"></nav>
+                            <div class="faction-directory" id="faction-directory"></div>
+                        </section>
                         </div>
                         <section class="realm-below-first" aria-labelledby="realm-below-first-title">
-                            <h2 id="realm-below-first-title">武学境界</h2>
-                            <p class="step-hint">五大境界 · 每境三小境界 · 共十五层；每境第 2→3 小境界为质变节点</p>
+                            <h2 id="realm-below-first-title">五境登阶图谱</h2>
+                            <p class="step-hint">五大境界 · 十五小境界；每境第 2→3 阶为能力质变</p>
                             <div class="realm-list" id="realm-list">
                                 <div class="realm-col">
                                     <div class="realm-col-head"><span class="realm-no">第一境</span><span class="realm-sub">凡胎入武</span></div>
@@ -673,7 +1030,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                             <div class="left-column">
                             <div class="form-group">
                                 <label for="char-name">姓名：</label>
-                                <textarea id="char-name" placeholder="请输入角色姓名"></textarea>
+                                <input id="char-name" type="text" placeholder="请输入角色姓名">
                             </div>
                             <div class="form-group">
                                 <label for="char-age">年龄：</label>
@@ -761,7 +1118,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                         </div>
                         <div class="form-group" style="margin-top:14px;">
                             <label for="start-location">开局地点（九州州府区县，可选）：</label>
-                            <select id="start-location" style="width:100%;padding:10px;border:1px solid #1a1a2e;border-radius:6px;background:rgba(255,255,255,.85);font-family:inherit;font-size:1.05rem;color:#1a1a2e;">
+                            <select id="start-location">
                                 <option value="">未选择（按剧情推断）</option>
                                         <optgroup label="幽州">
                                             <option value="幽州·蓟城">幽州·蓟城（首府）</option>
@@ -847,7 +1204,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                                 <div>
                                     <label for="custom-talent-quality">天赋品阶</label>
                                     <select id="custom-talent-quality">
-                                        <option value="1">劣质</option><option value="2">普通</option><option value="3" selected>良品</option><option value="4">上乘</option><option value="5">传说</option>
+                                        <option value="1">劣质</option><option value="2">普通</option><option value="3" selected>优秀</option><option value="4">史诗</option><option value="5">传说</option>
                                     </select>
                                 </div>
                                 <div>
@@ -860,7 +1217,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                                 </div>
                                 <button type="button" id="add-custom-talent">加入自定义天赋</button>
                             </div>
-                            <div class="talent-roll-area" id="talent-display">
+                                <div class="talent-roll-area" id="talent-display">
                             </div>
                             <div class="selected-talents">
                                 <h4>已选择的天赋 (最多4个):</h4>
@@ -950,7 +1307,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                         <p class="bond-help">以下全部可选，每行填写一项，格式为「名称：描述」。不写名称也可以，页面会自动命名；无需 JSON。</p>
                         <div class="bond-grid">
                             <div class="form-group"><label for="bond-status">状态（可选）：</label><textarea id="bond-status" class="bond-json" placeholder="旧伤：左臂旧伤隐痛\n警觉：初到陌生地界，戒心未消"></textarea></div>
-                            <div class="form-group"><label for="bond-talents">天赋（可选）：</label><textarea id="bond-talents" class="bond-json" placeholder="听风辨位：能从风声分辨来者方位"></textarea></div>
+                            <div class="form-group jz-bond-talent-editor"><label>自定义天赋（可选）：</label><div class="jz-bond-talent-fields"><div><label for="bond-talent-quality">天赋品阶</label><select id="bond-talent-quality"><option>劣质</option><option selected>普通</option><option>优秀</option><option>史诗</option><option>传说</option></select></div><div><label for="bond-talent-name">天赋名称</label><input id="bond-talent-name" type="text" maxlength="40" placeholder="例如：听风辨位"></div><div class="jz-bond-talent-effect"><label for="bond-talent-effect">天赋效果</label><input id="bond-talent-effect" type="text" maxlength="500" placeholder="描述这项天赋的效果"></div><button type="button" id="bond-talent-add">添加自定义天赋</button></div><div class="jz-bond-talent-list" id="bond-talent-list" aria-live="polite"></div><textarea id="bond-talents" class="bond-json" hidden aria-hidden="true"></textarea></div>
                             <div class="form-group bond-wide"><label for="bond-equipment">装备（可选）：</label><textarea id="bond-equipment" class="bond-json" placeholder="佩剑：一柄旧青锋"></textarea></div>
                         </div>
                     </div>
@@ -2106,6 +2463,8 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
         let openingPackageDraftId = '';
         let customOpeningPackage = null;
         const openingPackageModal = document.getElementById('opening-package-modal');
+        const openingModalHost = document.querySelector('.jz-page');
+        if (openingPackageModal && openingModalHost) openingModalHost.appendChild(openingPackageModal);
         const openingPackageSummary = document.getElementById('opening-package-summary');
         const openingPackageDetail = document.getElementById('opening-package-detail');
         const openingPackageList = document.getElementById('opening-package-list');
@@ -2302,13 +2661,9 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
             });
         });
         rollButton.addEventListener('click', () => {
-            if (selectedTalents.length >= 4) {
-                alert('您已经选择了4个天赋，无法继续抽取。');
-                return;
-            }
             talentDisplay.innerHTML = '';
             const talentsToShow = [];
-            const qualityCounts = {1: 3, 2: 3, 3: 2, 4: 1, 5: 3}; // 每种品质的数量（传说 3 个）
+            const qualityCounts = {1: 3, 2: 3, 3: 3, 4: 3, 5: 3}; // 五档各抽取 3 个，共 15 个
             for (const quality in qualityCounts) {
                 const count = qualityCounts[quality];
                 const pool = [...talentData[quality]];
@@ -2324,6 +2679,7 @@ body.jz-bond-page #bond-creator-step .accordion-content-inner{padding-top:0;}
                 const talentCard = document.createElement('div');
                 talentCard.className = `talent-card talent-quality-${talent.quality}`;
                 talentCard.innerHTML = `
+                    <div class="talent-tier-label">${toTierName(talent.quality)}</div>
                     <div class="talent-name">${talent.name}</div>
                     <div class="talent-desc">${talent.desc}</div>
                 `;
@@ -2707,17 +3063,65 @@ ${martialArtsText}
             if (!raw) return {};
             const entries = {};
             raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean).forEach((line, index) => {
+                const talentMatch = id === 'bond-talents' ? line.match(/^【(劣质|普通|优秀|史诗|传说)】(.+?)[:：](.*)$/) : null;
                 const divider = line.search(/[：:]/);
-                const suppliedName = divider >= 0 ? line.slice(0, divider).trim() : '';
-                const description = (divider >= 0 ? line.slice(divider + 1) : line).trim();
+                const suppliedName = talentMatch ? talentMatch[2].trim() : (divider >= 0 ? line.slice(0, divider).trim() : '');
+                const description = (talentMatch ? talentMatch[3] : (divider >= 0 ? line.slice(divider + 1) : line)).trim();
                 const rootName = suppliedName || fallbackName;
                 let key = rootName;
                 let serial = 2;
                 while (Object.prototype.hasOwnProperty.call(entries, key)) key = rootName + '·' + serial++;
-                entries[key] = buildEntry(description || rootName, index);
+                entries[key] = buildEntry(description || rootName, index, talentMatch ? talentMatch[1] : '普通');
             });
             return entries;
         }
+        const BOND_TALENT_QUALITIES = ['劣质', '普通', '优秀', '史诗', '传说'];
+        function readBondTalentRecords() {
+            const raw = String(document.getElementById('bond-talents')?.value || '');
+            return raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean).map((line, index) => {
+                const match = line.match(/^【(劣质|普通|优秀|史诗|传说)】(.+?)[:：](.*)$/);
+                if (match) return { quality: match[1], name: match[2].trim(), effect: match[3].trim() };
+                const divider = line.search(/[：:]/);
+                const name = divider >= 0 ? line.slice(0, divider).trim() : '自定义天赋' + (index ? '·' + (index + 1) : '');
+                const effect = (divider >= 0 ? line.slice(divider + 1) : line).trim();
+                return { quality: '普通', name: name || '自定义天赋' + (index ? '·' + (index + 1) : ''), effect };
+            }).filter(item => item.name && item.effect);
+        }
+        function writeBondTalentRecords(records) {
+            const storage = document.getElementById('bond-talents');
+            if (storage) storage.value = records.map(item => '【' + (BOND_TALENT_QUALITIES.includes(item.quality) ? item.quality : '普通') + '】' + item.name.trim() + '：' + item.effect.trim()).join('\n');
+        }
+        function renderBondTalentList() {
+            const list = document.getElementById('bond-talent-list');
+            if (!list) return;
+            const records = readBondTalentRecords();
+            const qualitySelect = document.getElementById('bond-talent-quality');
+            if (qualitySelect && records.length && document.activeElement !== qualitySelect) qualitySelect.value = records[records.length - 1].quality;
+            list.replaceChildren();
+            if (!records.length) { const empty = document.createElement('div'); empty.className = 'jz-bond-talent-empty'; empty.textContent = '尚未添加自定义天赋'; list.appendChild(empty); return; }
+            records.forEach((item, index) => {
+                const card = document.createElement('div'); card.className = 'jz-bond-talent-item';
+                const quality = document.createElement('span'); quality.className = 'jz-bond-talent-quality'; quality.textContent = item.quality;
+                const name = document.createElement('strong'); name.textContent = item.name;
+                const effect = document.createElement('p'); effect.textContent = item.effect;
+                const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'jz-bond-talent-remove'; remove.textContent = '移除'; remove.setAttribute('aria-label', '移除天赋：' + item.name);
+                remove.addEventListener('click', () => { const next = readBondTalentRecords(); next.splice(index, 1); writeBondTalentRecords(next); renderBondTalentList(); updatePreview(); });
+                card.append(quality, name, effect, remove); list.appendChild(card);
+            });
+        }
+        const bondTalentAddButton = document.getElementById('bond-talent-add');
+        if (bondTalentAddButton) bondTalentAddButton.addEventListener('click', () => {
+            const quality = document.getElementById('bond-talent-quality')?.value || '普通';
+            const nameInput = document.getElementById('bond-talent-name');
+            const effectInput = document.getElementById('bond-talent-effect');
+            const name = String(nameInput?.value || '').trim(), effect = String(effectInput?.value || '').trim();
+            if (!name || !effect) { alert('请填写天赋名称和天赋效果。'); return; }
+            const records = readBondTalentRecords();
+            if (records.some(item => item.name === name)) { alert('已存在同名天赋，请换一个名称。'); return; }
+            records.push({ quality, name, effect }); writeBondTalentRecords(records); renderBondTalentList();
+            nameInput.value = ''; effectInput.value = ''; nameInput.focus(); updatePreview();
+        });
+        renderBondTalentList();
         function clampBondNumber(id) {
             const el = document.getElementById(id);
             const n = Number(el && el.value !== '' ? el.value : 0);
@@ -2754,7 +3158,7 @@ ${martialArtsText}
                 修为进度: clampBondNumber('bond-progress'),
                 境界: normalizeCultivation(text('bond-realm')),
                 状态: readBondLines('bond-status', '当前状态', description => ({ 描述: description, 剩余回合: 0 })),
-                天赋: readBondLines('bond-talents', '自定义天赋', description => ({ 品阶: '普通', 描述: description })),
+                天赋: readBondLines('bond-talents', '自定义天赋', (description, index, quality) => ({ 品阶: quality || '普通', 描述: description })),
                 所属势力: faction,
                 好感度: clampBondNumber('bond-affection')
             };
@@ -3052,6 +3456,8 @@ ${martialArtsText}
         document.querySelectorAll('textarea').forEach(textarea => {
             textarea.addEventListener('input', updatePreview);
         });
+        const characterNameInput = document.getElementById('char-name');
+        if (characterNameInput) characterNameInput.addEventListener('input', updatePreview);
         const characterCultivation = document.getElementById('char-cultivation');
         if (characterCultivation) characterCultivation.addEventListener('change', updatePreview);
         document.querySelectorAll('#bond-creator-step input, #bond-creator-step select').forEach(input => {
@@ -3167,6 +3573,7 @@ ${martialArtsText}
                 bondCombatSkills = [];
             }
             bondEditingSkillIndex.cultivation = bondEditingSkillIndex.combat = null;
+            renderBondTalentList();
             renderCustomSkills('bond');
             syncBondFactionCustom();
         }
@@ -3544,13 +3951,33 @@ ${martialArtsText}
             '黑水铁衣堂': { '定位': '黑水部盟的铁衣武门，兼具护矿武人和军械工匠传统', '在地': '北方诸部·黑水林海的矿山、渡口与冬季粮仓', '组织架构': '矿主家族、炉主和铁衣弟子共同议价；大宗军械交易须经部盟首领会议许可', '经营模式': '锻铁、马具、重斧、矿材和船钉；护矿与河运抽成并行，暗中也存在向多方出售配件的商路', '行政关系': '向北辰汗庭供给铁器，也向九州边军出售马具矿材；神武卫重点查缉其军械走私，黑水部盟则借其维持自治' }
         };
 
-        var REALMS = {
-            '第一境': { '别称': '凡胎入武', '小境界': [['淬皮', '皮膜坚韧，寻常拳脚难伤'], ['通脉', '气血贯通，内劲运转更顺，速度与恢复力提升'], ['凝元', '内力凝成稳定元力，连续攻防能力明显增强']], '质变': '通脉→凝元：内力凝成稳定元力', '地位': '外门弟子、普通帮众、镖师、武馆学徒' },
-            '第二境': { '别称': '真劲外放', '小境界': [['周天', '内力成周天循环，持久战力大增'], ['罡劲', '劲力覆盖身体或兵器，普通刀剑与弓弩难破防'], ['离体', '刀风掌劲可短距离离体攻击，但距离与消耗受限']], '质变': '罡劲→离体：劲力可脱离身体短距离攻击', '地位': '真传弟子、精英骨干、一方舵主、小门派掌门' },
-            '第三境': { '别称': '化劲成势', '小境界': [['明势', '能判断重心、发力方向与攻击意图，提前避开劲力路线'], ['透劲', '劲力可穿透护甲、震伤内腑，并能卸力借力'], ['破阵', '能控制一片战斗空间，正面击溃小型阵势']], '质变': '透劲→破阵：从针对单一目标变为控制战斗空间', '地位': '一方豪杰、武林名宿、大派长老' },
-            '第四境': { '别称': '宗师归真', '小境界': [['入微', '精确控制呼吸、筋骨、步法、兵器与内力'], ['归一', '身体、兵器、内力和意图形成完整攻防闭环'], ['无招', '不让对手看到完整招式，主动打断归一高手的节奏']], '质变': '归一→无招：主动打断归一体系的节奏闭环', '地位': '武林宗师、大派掌门、朝廷供奉' },
-            '第五境': { '别称': '镇国绝巅', '小境界': [['破军', '可击溃精锐小队、重甲军阵和普通城防据点'], ['裂城', '可持续破坏城门、城墙和大型建筑群，改变攻城战局'], ['绝巅', '长时间作战、蓄力或借地形可摧毁一座普通城池，但不可一击毁城']], '质变': '裂城→绝巅：破坏力与战场覆盖达到城池级，但受时间、体力和地形限制', '地位': '镇国级人物、战略威慑、传说中的绝顶武者' }
-        };
+        var REALMS = [
+            { name: '第一境', title: '筑基锻体 · 凡胎入武', arc: '从站稳承力，到让内劲贯通、元力稳定留存。', turning: '凝元：元力由短暂运行转为稳定储存，可反复调用，支撑连续攻防。', steps: [
+                ['淬皮', '皮膜、筋骨与重心初步强化；普通拳脚和轻微刀伤较难致命，仍以身体素质和基础武技作战。'],
+                ['通脉', '气血与内劲协同运行，速度、爆发、恢复力提升；力量可由躯干传至手足或兵器。'],
+                ['凝元', '元力稳定储存在体内，可持续强化攻防；通脉武者难以正面承受其持续运劲。']
+            ] },
+            { name: '第二境', title: '真劲外放 · 内力成势', arc: '从内力周天循环，到护体成罡，最终将内力送出体外短距攻敌。', turning: '离体：内力脱离身体保持短暂攻击作用，可绕开接触防御；距离有限、消耗较大。', steps: [
+                ['周天', '内力形成体内循环，长时间作战不易衰竭；移动与连续交手中仍能维持运转。'],
+                ['罡劲', '内力覆盖身体或兵器形成护体劲力；普通刀剑、弓弩难破防，防护可随攻防动作转移。'],
+                ['离体', '内力可化作刀风、掌劲或剑气短距攻击，绕开接触防御，但射程和持续性有限。']
+            ] },
+            { name: '第三境', title: '化劲成势 · 战场之势', arc: '由读懂真实攻势，到穿透受力，进而改变多人战局。', turning: '破阵：把识势与透劲作用于多人交战空间，打断协同、压制站位并改变局部战局。', steps: [
+                ['明势', '从重心、落脚、呼吸和兵器线路判断攻势节奏，提前避开劲力路线；依靠观察，不是读心或预知。'],
+                ['透劲', '内力穿透护甲、震伤内腑，也能卸力借力、削弱罡劲与外放攻击。'],
+                ['破阵', '以步法、招式、内力和站位同时压制多人协同，一人正面击溃小型阵势。']
+            ] },
+            { name: '第四境', title: '宗师归真 · 武学自成', arc: '内外劲流并行、贯通，最终让持续外放之力稳定成域。', turning: '无招：内外循环贯通，外放内力稳定成域；以领域本身完成攻防，不依赖固定招式。', steps: [
+                ['入微', '内力结构质变为内外双路并行：体内周天持续运转，同时外劲可护体、附兵或短距外放。'],
+                ['归一', '内循环与外循环瞬息转换，外放之劲绵绵接续；全力一掌可显化并摧毁坚固城墙。'],
+                ['无招', '周身形成小型领域，可引动领域内力攻击、阻截或压制对手，对无领域者形成结构性优势。']
+            ] },
+            { name: '第五境', title: '镇国绝巅 · 战略级武力', arc: '领域压制军阵，劲力显化攻城，最终以山河万象入武。', turning: '绝巅：周遭万物皆可纳入武道，威能不设城池级上限，也不预设固定规模。', steps: [
+                ['破军', '以强大内力与领域影响军阵整体，一人正面冲击并击溃小规模军队。'],
+                ['裂城', '内外劲力汇聚显化为远超人体的攻伐形体，一击足以摧毁一座城池。'],
+                ['绝巅', '以自身为枢纽，将山岳、江河、风云、金石与军阵纳入武道；战力规模不预先封顶。']
+            ] }
+        ];
 
         function mapLine(label, value) {
             return '<div class="detail-line"><span class="dl-lbl">' + label + '</span><span>' + esc(value) + '</span></div>';
@@ -3602,12 +4029,7 @@ ${martialArtsText}
             head.className = 'province-detail-head';
             var title = document.createElement('h3');
             title.textContent = name;
-            var close = document.createElement('button');
-            close.type = 'button';
-            close.className = 'province-detail-close';
-            close.setAttribute('aria-label', '关闭疆域介绍');
-            close.textContent = '×';
-            head.append(title, close);
+            head.append(title);
             panel.replaceChildren(head);
             fields.forEach(function (field) {
                 var row = document.createElement('div');
@@ -3636,10 +4058,6 @@ ${martialArtsText}
         }
 
         document.addEventListener('click', function (event) {
-            if (event.target.closest && event.target.closest('.province-detail-close')) {
-                var detail = document.getElementById('province-detail');
-                if (detail) { detail.hidden = true; detail.replaceChildren(); detail.removeAttribute('data-active-key'); }
-            }
             var popover = document.getElementById('map-popover');
             if (!popover || popover.style.display !== 'block') return;
             if (popover.contains(event.target) || event.target.closest('.province, .ftag')) return;
@@ -3649,106 +4067,104 @@ ${martialArtsText}
             if (event.key === 'Escape') closeMapPopover();
         });
 
-        buildFactionMap();
         renderRealmList();
 
     
         function renderRealmList() {
             var box = document.getElementById('realm-list');
             if (!box) return;
-            var html = '';
-            Object.keys(REALMS).forEach(function (name) {
-                var d = REALMS[name];
-                html += '<div class="realm-col">';
-                html += '<div class="realm-col-head"><span class="realm-no">' + name + '</span><span class="realm-sub">' + d['别称'] + '</span></div>';
-                html += '<ol class="sub-realm-list">';
-                d['小境界'].forEach(function (s) {
-                    html += '<li><b>' + s[0] + '</b>' + s[1] + '</li>';
-                });
-                html += '</ol>';
-                html += '</div>';
+            var numerals = ['壹', '贰', '叁', '肆', '伍'];
+            var html = '<div class="realm-overview" aria-label="五境进阶总览">';
+            REALMS.forEach(function (realm, index) {
+                html += '<div class="realm-overview-step"><span class="realm-overview-node">' + numerals[index] + '</span><span class="realm-overview-label"><b>' + esc(realm.name) + '</b><small>' + esc(realm.title.split('·')[0].trim()) + '</small></span></div>';
             });
+            html += '</div><div class="realm-bands">';
+            REALMS.forEach(function (realm, index) {
+                html += '<section class="realm-band" id="realm-stage-' + (index + 1) + '"><header class="realm-band-head"><span class="realm-band-index">' + numerals[index] + '<i>境</i></span><div><h3>' + esc(realm.name) + '</h3><p class="realm-band-title">' + esc(realm.title) + '</p><p class="realm-band-arc">' + esc(realm.arc) + '</p></div></header><div class="realm-path">';
+                realm.steps.forEach(function (step, stepIndex) {
+                    if (stepIndex === 2) html += '<div class="realm-breakthrough"><span>✦</span><b>质变</b><small>二阶 → 三阶</small></div>';
+                    html += '<article class="realm-step-card' + (stepIndex === 2 ? ' is-breakthrough' : '') + '"><div class="realm-step-top"><span>0' + (stepIndex + 1) + ' / 03</span>' + (stepIndex === 2 ? '<em>破境节点</em>' : '') + '</div><h4>' + esc(step[0]) + '</h4><p>' + esc(step[1]) + '</p></article>';
+                });
+                html += '<p class="realm-turning"><span>境界质变</span>' + esc(realm.turning) + '</p></div></section>';
+            });
+            html += '</div>';
             box.innerHTML = html;
         }
 
     
-        function buildFactionMap() {
-            var box = document.getElementById('faction-map');
-            if (!box) return;
-            var html = '';
-            Object.keys(FACTION_ZONES).forEach(function (z) {
-                var tags = FACTION_ZONES[z];
-                html += '<div class="fzone"><div class="fzone-name">' + z + '</div><div class="fzone-tags">';
-                tags.forEach(function (t) {
-                    html += '<button type="button" class="ftag" data-faction="' + t[1] + '">' + t[0] + '</button>';
-                });
-                html += '</div></div>';
+        var FACTION_GROUPS = [
+            { id: 'court', title: '朝廷法度', mark: '令', note: '律令、缉捕与隐务，是朝廷介入江湖的三只手。', names: ['神武卫', '六扇门', '影御众'] },
+            { id: 'orthodox', title: '名门宗派', mark: '宗', note: '以传承立身，以门规行走江湖；医道、剑道与禅武各成一脉。', names: ['真武阁', '菩提禅院', '天机剑宗', '百草堂', '广陵琴院', '昆仑雪宫', '月轮禅院', '神乐御剑院', '黑岳修验寺', '雪原长生坛'] },
+            { id: 'guilds', title: '帮会行会', mark: '会', note: '码头、商路、漕运、护镖与消息网络，让江湖在市井之间流动。', names: ['丐帮', '听风楼', '鹰扬镖局', '沧海盟', '洞庭龙君寨', '黑沙帮', '陇西马帮', '漕帮盐商', '黑虎堂', '潮灯舟会'] },
+            { id: 'houses', title: '世家门阀', mark: '门', note: '家学、血脉与多年经营，构成盘根错节的世家底蕴。', names: ['四大世家', '蜀中唐门'] },
+            { id: 'independent', title: '异门与独立势力', mark: '异', note: '奇门秘术、独立武门与无主旧址，各有不受编制的生存法则。', names: ['幽冥教', '七情谷', '落日刀门', '银月峒', '枯藤寺', '赤沙刀门', '天狼骑门', '黑水铁衣堂'] }
+        ];
+        renderFactionDirectory();
+
+        function renderFactionDirectory() {
+            var directory = document.getElementById('faction-directory');
+            var nav = document.getElementById('faction-nav');
+            if (!directory || !nav) return;
+            var factionNames = Object.keys(FACTION_DETAILS);
+            var groups = FACTION_GROUPS.map(function (group) {
+                return { id: group.id, title: group.title, mark: group.mark, note: group.note, names: group.names.filter(function (name) { return FACTION_DETAILS[name]; }) };
             });
-            box.innerHTML = html;
-            box.querySelectorAll('.ftag').forEach(function (btn) {
-                btn.addEventListener('click', function (event) { event.stopPropagation(); showFaction(this.getAttribute('data-faction'), event); });
+            var assigned = new Set(groups.reduce(function (all, group) { return all.concat(group.names); }, []));
+            var unfiled = factionNames.filter(function (name) { return !assigned.has(name); });
+            if (unfiled.length) groups.push({ id: 'unfiled', title: '新入江湖', mark: '新', note: '尚未归档的势力。', names: unfiled });
+
+            document.getElementById('faction-total-count').textContent = factionNames.length;
+            nav.innerHTML = groups.map(function (group, index) {
+                return '<button type="button" class="faction-nav-chip' + (index === 0 ? ' is-first' : '') + '" data-faction-target="faction-chapter-' + group.id + '"><span>' + group.mark + '</span>' + esc(group.title) + '<small>' + group.names.length + '</small></button>';
+            }).join('');
+            directory.innerHTML = groups.map(function (group, index) {
+                var cards = group.names.map(function (name, itemIndex) {
+                    var detail = FACTION_DETAILS[name];
+                    return '<article class="faction-card"><header class="faction-card-head"><span class="faction-card-seal">' + String(itemIndex + 1).padStart(2, '0') + '</span><div><span class="faction-type">' + esc(group.title) + '</span><h4>' + esc(name) + '</h4></div></header><p class="faction-position">' + esc(detail['定位']) + '</p><div class="faction-reach"><span>活动触角</span><p>' + esc(detail['在地']) + '</p></div><details class="faction-dossier"><summary>展开势力档案 <small>组织 · 营生 · 关系</small></summary><div class="faction-dossier-body">' + mapLine('组织架构', detail['组织架构']) + mapLine('经营模式', detail['经营模式']) + mapLine('关系脉络', detail['行政关系']) + '</div></details></article>';
+                }).join('');
+                return '<section class="faction-chapter" id="faction-chapter-' + group.id + '"><header class="faction-chapter-head"><span class="faction-chapter-mark">' + group.mark + '</span><div><span class="faction-chapter-no">势力篇 · ' + ['壹', '贰', '叁', '肆', '伍', '陆'][index] + '</span><h3>' + esc(group.title) + '</h3><p>' + esc(group.note) + '</p></div><span class="faction-chapter-count">' + group.names.length + '<small>方</small></span></header><div class="faction-card-grid">' + cards + '</div></section>';
+            }).join('');
+            nav.querySelectorAll('[data-faction-target]').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var target = document.getElementById(this.getAttribute('data-faction-target'));
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
             });
         }
 
     </script>
-<script>
-    // 酒馆助手把前端包在 iframe 里，iframe 高度由内容撑开；
-    // vh 在 iframe 内以 iframe 为基准，直接用 vh 会高度塌缩。
-    // 这里读取最外层浏览器视口高度，把页面定成像素高度，保持“固定高度 + 内部滚动”。
-    (function () {
-        function getViewportHeight() {
-            try { if (window.top && window.top !== window && window.top.innerHeight) return window.top.innerHeight; } catch (e) { /* 跨域时降级 */ }
-            try { if (window.parent && window.parent !== window && window.parent.innerHeight) return window.parent.innerHeight; } catch (e) { /* 降级到自身 */ }
-            return window.innerHeight || 900;
-        }
-        function sizeJzPage() {
-            var page = document.querySelector('.jz-page');
-            if (!page) return;
-            var vh = getViewportHeight();
-            var h = Math.round(vh);
-            page.style.height = h + 'px';
-            page.style.minHeight = h + 'px';
-        }
-        sizeJzPage();
-        window.addEventListener('resize', sizeJzPage);
-        try { if (window.top && window.top !== window) window.top.addEventListener('resize', sizeJzPage); } catch (e) { /* 忽略 */ }
-    })();
-</script>
 <p id="jz-completion-note" style="flex:0 0 auto;margin:12px auto 16px;padding:0 18px;text-align:center;color:#7a5a31;font-family:serif;">完成创建后，请把页面中的「角色摘要」复制并粘贴到对话中，我将为你开启江湖。</p>
 <script>
 (() => {
   let pending = false;
+  const root = document.documentElement;
+  const getHostViewportHeight = () => {
+    try { if (window.top && window.top.innerHeight) return window.top.innerHeight; } catch (_) {}
+    try { if (window.parent && window.parent.innerHeight) return window.parent.innerHeight; } catch (_) {}
+    return window.innerHeight || 700;
+  };
   const fitFrame = () => {
     pending = false;
-    let viewport = 700;
-    try { viewport = window.top && window.top.innerHeight ? window.top.innerHeight : viewport; } catch (_) {}
-    try { viewport = window.parent && window.parent.innerHeight ? window.parent.innerHeight : viewport; } catch (_) {}
+    const viewport = Math.max(1, Math.round(getHostViewportHeight()));
+    root.style.setProperty('--jz-host-vh', viewport + 'px');
     const page = document.querySelector('.jz-page');
     const entry = document.getElementById('jz-entry-screen');
     if (!page) return;
     const isOpening = entry && !entry.classList.contains('is-hidden') && !document.body.classList.contains('jz-entered');
     let height;
     if (isOpening) {
-      height = Math.ceil(Math.max(entry.offsetHeight, entry.scrollHeight, 1));
+      height = Math.ceil(Math.max(viewport, entry.offsetHeight, entry.scrollHeight, 1));
     } else {
-      const compact = window.matchMedia && window.matchMedia('(max-width: 700px)').matches;
-      const content = page.querySelector('.container') || page;
-      page.style.height = 'auto';
-      if (compact) {
-        page.style.setProperty('--jz-min-height', '0px');
-        height = Math.ceil(Math.max(1, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight));
-      } else {
-        page.style.setProperty('--jz-min-height', viewport + 'px');
-        height = Math.max(viewport, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight);
-      }
+      height = Math.ceil(Math.max(viewport, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight));
     }
     try {
       if (window.frameElement) {
         window.frameElement.setAttribute('scrolling', 'no');
-        window.frameElement.style.height = height + 'px';
-        window.frameElement.style.minHeight = height + 'px';
-        window.frameElement.style.maxHeight = height + 'px';
-        window.frameElement.style.overflow = 'hidden';
+        const nextHeight = Math.ceil(height) + 'px';
+        if (window.frameElement.style.height !== nextHeight) window.frameElement.style.height = nextHeight;
+        if (window.frameElement.style.minHeight !== nextHeight) window.frameElement.style.minHeight = nextHeight;
+        if (window.frameElement.style.maxHeight !== nextHeight) window.frameElement.style.maxHeight = nextHeight;
+        if (window.frameElement.style.overflow !== 'hidden') window.frameElement.style.overflow = 'hidden';
       }
     } catch (_) {}
   };
@@ -3758,6 +4174,8 @@ ${martialArtsText}
   requestFit();
   setTimeout(requestFit, 80);
   window.addEventListener('resize', requestFit);
+  try { if (window.top && window.top !== window) window.top.addEventListener('resize', requestFit); } catch (_) {}
+  try { if (document.fonts && document.fonts.ready) document.fonts.ready.then(requestFit); } catch (_) {}
   if (window.ResizeObserver) new ResizeObserver(requestFit).observe(document.body);
 })();
 </script>
@@ -3843,5 +4261,418 @@ ${martialArtsText}
     }, 150);
   }());
 </script>
+
+<script id="jz-five-realm-controller">
+(function(){
+  const shell=document.getElementById('jz-five-realm-shell');
+  if(!shell)return;
+  document.querySelector('.jz-page')?.removeAttribute('aria-hidden');
+  const routes={
+    map:['#province-view'],
+    factions:['.faction-sec'],
+    realm:['.realm-below-first'],
+    character:['.preset-opening','.form-section','.opening-package-bar','.opening-package-display','.opening-package-location','.talent-system','.custom-skills:not(.bond-skills-editor)','.summary-section'],
+    bond:['#bond-creator-step']
+  };
+  for(const [key,selectors] of Object.entries(routes)){
+    const slot=document.getElementById('jz-slot-'+key);
+    for(const selector of selectors){
+      const node=document.querySelector(selector);
+      if(!node)continue;
+      if(node.id==='bond-creator-step'){node.classList.remove('hidden');node.removeAttribute('aria-hidden');}
+      slot.appendChild(node);
+    }
+  }
+  function buildCharacterWizard(){
+    const slot=document.getElementById('jz-slot-character');
+    if(!slot)return;
+    const profile=slot.querySelector('.form-section');
+    if(profile){
+      const grid=document.createElement('div');
+      grid.className='jz-character-profile-grid';
+      const fields=[
+        ['char-name',false],['char-gender',false],['char-age',false],['char-cultivation',false],
+        ['char-identity',false],['char-figure',false],['char-personality',true],['char-appearance',true],['char-other',true]
+      ];
+      for(const [id,wide] of fields){
+        const control=profile.querySelector('#'+id);
+        const group=control?.closest('.form-group');
+        if(!group)continue;
+        group.classList.add('jz-character-profile-field');
+        if(wide)group.classList.add('jz-character-profile-wide');
+        const label=group.querySelector('label');
+        if(label){
+          label.classList.add('jz-character-profile-label');
+          if(label.firstChild?.nodeType===Node.TEXT_NODE)label.firstChild.nodeValue=label.firstChild.nodeValue.replace(/[：:]\s*$/,'');
+          const badge=document.createElement('span');
+          badge.className='jz-character-profile-badge'+(id==='char-name'||id==='char-age'?' is-required':'');
+          badge.textContent=id==='char-name'||id==='char-age'?'必填':'选填';
+          label.appendChild(badge);
+        }
+        grid.appendChild(group);
+      }
+      const head=document.createElement('div');
+      head.className='jz-character-profile-head';
+      head.innerHTML='<div><h2>人物档案</h2><p>核心资料集中展示；补充描述保留在同一分区。</p></div><div class="jz-character-profile-legend"><span class="jz-character-profile-badge is-required">必填</span><span class="jz-character-profile-badge">选填</span></div>';
+      profile.replaceChildren(head,grid);
+    }
+    const stages=[
+      {id:'profile',title:'人物档案',hint:'基础资料与预设',nodes:[slot.querySelector('.form-section')]},
+      {id:'talents',title:'天赋武学',hint:'天赋与多项功法',nodes:[slot.querySelector('.talent-system'),slot.querySelector('.custom-skills:not(.bond-skills-editor)')]},
+      {id:'opening',title:'开局卷轴',hint:'剧情与所在地点',nodes:[slot.querySelector('.preset-opening'),slot.querySelector('.opening-package-bar'),slot.querySelector('.opening-package-display'),slot.querySelector('.opening-package-location')]},
+      {id:'review',title:'总览确认',hint:'检查资料并开局',nodes:[slot.querySelector('.summary-section')]}
+    ].map(stage=>({...stage,nodes:stage.nodes.filter(Boolean)}));
+    if(stages.some(stage=>!stage.nodes.length))return;
+    const wizard=document.createElement('div');
+    wizard.className='jz-character-wizard';
+    const nav=document.createElement('nav');
+    nav.className='jz-character-progress';
+    nav.setAttribute('aria-label','人物创建步骤');
+    nav.setAttribute('role','tablist');
+    const panels=[];
+    stages.forEach((stage,index)=>{
+      const tab=document.createElement('button');
+      tab.type='button';
+      tab.className='jz-character-step-tab';
+      tab.dataset.characterStep=String(index);
+      tab.setAttribute('role','tab');
+      tab.setAttribute('aria-controls','jz-character-panel-'+stage.id);
+      tab.innerHTML='<span class="jz-character-step-number">'+['壹','贰','叁','肆'][index]+'</span><span><strong>'+stage.title+'</strong><small>'+stage.hint+'</small></span>';
+      nav.appendChild(tab);
+      const panel=document.createElement('section');
+      panel.className='jz-character-step-panel';
+      panel.id='jz-character-panel-'+stage.id;
+      panel.dataset.characterPanel=String(index);
+      panel.setAttribute('role','tabpanel');
+      panel.setAttribute('aria-label',stage.title);
+      if(index)panel.hidden=true;
+      if(stage.id==='talents'){
+        const head=document.createElement('div');
+        head.className='jz-character-pane-head';
+        head.innerHTML='<div><h2>天赋与武学</h2><p>可添加多项记录；选择器、手动填写与说明字段全部保留。</p></div><span class="jz-character-profile-badge">本区选填</span>';
+        panel.appendChild(head);
+        const layout=document.createElement('div');
+        layout.className='jz-talents-layout';
+        const talentSystem=stage.nodes.find(node=>node.matches('.talent-system'));
+        const skills=stage.nodes.find(node=>node.matches('.custom-skills:not(.bond-skills-editor)'));
+        if(talentSystem){
+          const customForm=talentSystem.querySelector('.custom-talent-form');
+          if(customForm&&!customForm.closest('.jz-custom-talent-details')){
+            const details=document.createElement('details');details.className='jz-custom-talent-details';
+            const summary=document.createElement('summary');summary.textContent='手动添加自定义天赋';
+            customForm.before(details);details.append(summary,customForm);
+          }
+          const title=talentSystem.querySelector('h3');if(title)title.textContent='天赋抽取';
+          const note=talentSystem.querySelector(':scope > p');if(note)note.textContent='五档品阶 · 每档 3 项 · 最多选择 4 项';
+          const roll=talentSystem.querySelector('#roll-talents');if(roll)roll.innerHTML='✦ 抽取 15 项天赋 <span id="roll-count" hidden>无限</span>';
+          const display=talentSystem.querySelector('#talent-display');if(display&&!display.children.length)display.innerHTML='<div class="jz-talent-empty">点击「抽取 15 项天赋」，查看五档品阶各 3 项。</div>';
+          const selected=talentSystem.querySelector('.selected-talents h4');if(selected)selected.textContent='已选择的天赋（最多 4 项）';
+          const selectedList=talentSystem.querySelector('#selected-talents');if(selectedList&&!selectedList.children.length)selectedList.innerHTML='<div class="jz-talent-empty">尚未选择天赋</div>';
+          layout.appendChild(talentSystem);
+        }
+        if(skills)layout.appendChild(skills);
+        panel.appendChild(layout);
+      }else if(stage.id==='opening'){
+        const head=document.createElement('div');
+        head.className='jz-character-pane-head';
+        head.innerHTML='<div><h2>开局卷轴</h2><p>预设剧情、手写剧情与九州地点都能在此选择或编辑。</p></div><span class="jz-character-profile-badge">均为选填</span>';
+        panel.appendChild(head);
+        const row=document.createElement('div');
+        row.className='jz-opening-config-row';
+        const preset=stage.nodes.find(node=>node.matches('.preset-opening'));
+        const bar=stage.nodes.find(node=>node.matches('.opening-package-bar'));
+        const location=stage.nodes.find(node=>node.matches('.opening-package-location'));
+        const story=stage.nodes.find(node=>node.matches('.opening-package-display'));
+        const legacyChoices=document.querySelector('.plot-block .plot-options');
+        const choiceField=document.createElement('section');
+        choiceField.className='jz-opening-choice-field';
+        choiceField.innerHTML='<div class="jz-opening-field-label">选择开场剧情 <span class="jz-character-profile-badge">选填</span></div>';
+        if(legacyChoices){
+          legacyChoices.classList.add('jz-opening-choices');
+          choiceField.appendChild(legacyChoices);
+          legacyChoices.addEventListener('click',()=>{
+            requestAnimationFrame(()=>{
+              const active=document.querySelector('.plot-scene.active');
+              const custom=document.getElementById('custom-plot');
+              const text=active===custom?custom.value:(active?.textContent||'');
+              if(text.trim()){setOpeningPackageDisplay(text);syncDirectCustomOpening();}
+            });
+          });
+        }
+        if(bar){
+          const label=bar.querySelector('.opening-package-label');if(label)label.textContent='更多开局卷轴';
+          const trigger=bar.querySelector('.opening-package-trigger');if(trigger)trigger.textContent='浏览剧情卷轴 ›';
+          choiceField.appendChild(bar);
+        }
+        row.append(choiceField);
+        if(location)row.appendChild(location);
+        if(preset){
+          const details=document.createElement('details');details.className='jz-preset-details';
+          const summary=document.createElement('summary');summary.innerHTML='<span>一键预制开局</span><small>6 个预设 · 可填入后继续编辑</small>';
+          preset.before(details);details.append(summary,preset);panel.appendChild(details);
+        }
+        if(bar||location)panel.appendChild(row);
+        if(story)panel.appendChild(story);
+      }else stage.nodes.forEach(node=>panel.appendChild(node));
+      const pager=document.createElement('div');
+      pager.className='jz-character-step-actions';
+      if(index){const back=document.createElement('button');back.type='button';back.className='jz-character-step-back';back.dataset.characterPrev=String(index-1);back.textContent='← '+stages[index-1].title;pager.appendChild(back);}
+      const spacer=document.createElement('span');spacer.className='jz-character-step-spacer';pager.appendChild(spacer);
+      if(index<stages.length-1){const next=document.createElement('button');next.type='button';next.className='jz-character-step-next';next.dataset.characterNext=String(index+1);next.textContent='继续：'+stages[index+1].title+' →';pager.appendChild(next);}
+      panel.appendChild(pager);
+      panels.push(panel);
+      wizard.appendChild(panel);
+    });
+    wizard.prepend(nav);
+    slot.replaceChildren(wizard);
+    const activate=index=>{
+      const next=Math.max(0,Math.min(stages.length-1,index));
+      nav.querySelectorAll('[data-character-step]').forEach((tab,i)=>{
+        tab.setAttribute('aria-selected',String(i===next));
+        tab.tabIndex=i===next?0:-1;
+      });
+      panels.forEach((panel,i)=>{panel.hidden=i!==next;});
+      wizard.dataset.activeStep=String(next);
+    };
+    nav.addEventListener('click',event=>{
+      const tab=event.target.closest('[data-character-step]');
+      if(tab)activate(Number(tab.dataset.characterStep));
+    });
+    wizard.addEventListener('click',event=>{
+      const next=event.target.closest('[data-character-next]');
+      const prev=event.target.closest('[data-character-prev]');
+      if(next)activate(Number(next.dataset.characterNext));
+      else if(prev)activate(Number(prev.dataset.characterPrev));
+    });
+    activate(0);
+  }
+  function buildBondWizard(){
+    const root=document.querySelector('#bond-creator-step>.accordion-content-inner');
+    if(!root)return;
+    const title=root.querySelector(':scope > h2');
+    const intro=root.querySelector(':scope > .bond-intro');
+    const sections=[...root.querySelectorAll(':scope > .bond-section')];
+    const profileSection=sections[0],stateSection=sections[1],skillsSection=sections[2];
+    const profileGrid=document.createElement('div');profileGrid.className='jz-bond-profile-grid';
+    const baseFields=[...(profileSection?.querySelectorAll(':scope > .bond-grid > .form-group')||[])];
+    const stateFields=[...(stateSection?.querySelectorAll(':scope > .bond-grid > .form-group')||[])];
+    const talentField=stateFields.find(field=>field.querySelector('#bond-talents'));
+    const profileFields=[...baseFields,...stateFields.filter(field=>field!==talentField)];
+    const wideIds=new Set(['bond-appearance','bond-figure','bond-clothes','bond-status','bond-equipment']);
+    const requiredIds=new Set(['bond-name','bond-gender','bond-age','bond-realm','bond-faction','bond-faction-custom','bond-appearance','bond-figure']);
+    for(const field of profileFields){
+      const control=field.querySelector('input,textarea,select');
+      const id=control?.id||'';
+      field.classList.add('jz-bond-profile-field');
+      field.classList.remove('bond-wide');
+      if(wideIds.has(id)||id==='bond-faction-custom')field.classList.add('jz-bond-profile-wide');
+      const label=field.querySelector('label');
+      if(label){
+        label.classList.add('jz-bond-profile-label');
+        if(label.firstChild?.nodeType===Node.TEXT_NODE)label.firstChild.nodeValue=label.firstChild.nodeValue.replace(/\s*[（(](必填|可选|可空)[）)]\s*[：:]?\s*$/,'').replace(/[：:]\s*$/,'');
+        const badge=document.createElement('span');badge.className='jz-character-profile-badge'+(requiredIds.has(id)?' is-required':'');badge.textContent=requiredIds.has(id)?'必填':'选填';label.appendChild(badge);
+      }
+      profileGrid.appendChild(field);
+    }
+    const stateNote=stateSection?.querySelector(':scope > .bond-help');
+    const customTalentLabel=talentField?.querySelector('label');
+    if(customTalentLabel){
+      customTalentLabel.classList.add('jz-bond-profile-label');
+      if(customTalentLabel.firstChild?.nodeType===Node.TEXT_NODE)customTalentLabel.firstChild.nodeValue='自定义天赋';
+      const badge=document.createElement('span');badge.className='jz-character-profile-badge';badge.textContent='选填';customTalentLabel.appendChild(badge);
+    }
+    const nav=document.createElement('nav');nav.className='jz-character-progress jz-bond-progress';nav.setAttribute('role','tablist');nav.setAttribute('aria-label','羁绊人物创建步骤');
+    const panels=[];
+    const makeTab=(index,label,hint)=>{const button=document.createElement('button');button.type='button';button.className='jz-character-step-tab';button.dataset.bondStep=String(index);button.setAttribute('role','tab');button.innerHTML='<span class="jz-character-step-number">'+(index?'贰':'壹')+'</span><span><strong>'+label+'</strong><small>'+hint+'</small></span>';nav.appendChild(button);};
+    makeTab(0,'人物档案','基础信息、状态与装备');makeTab(1,'天赋武学','自定义天赋与多项功法');
+    const profilePanel=document.createElement('section');profilePanel.className='jz-bond-step-panel';profilePanel.dataset.bondPanel='0';profilePanel.setAttribute('role','tabpanel');profilePanel.setAttribute('aria-label','人物档案');
+    profilePanel.innerHTML='<div class="jz-character-pane-head"><div><h2>人物档案</h2><p>基础资料与状态、装备集中填写。</p></div><div class="jz-character-profile-legend"><span class="jz-character-profile-badge is-required">必填</span><span class="jz-character-profile-badge">选填</span></div></div>';
+    if(profileSection){profileSection.className='bond-section jz-bond-fields';profileSection.replaceChildren(profileGrid);profilePanel.appendChild(profileSection);}
+    if(stateNote){stateNote.textContent='状态与装备均为选填；每行填写一项，格式为「名称：描述」。不写名称也可以，页面会自动命名；无需 JSON。';profilePanel.appendChild(stateNote);}
+    const profileActions=document.createElement('div');profileActions.className='jz-character-step-actions';profileActions.innerHTML='<span class="jz-character-step-spacer"></span><button type="button" class="jz-character-step-next" data-bond-next>继续：天赋武学 →</button>';profilePanel.appendChild(profileActions);
+    const talentPanel=document.createElement('section');talentPanel.className='jz-bond-step-panel';talentPanel.dataset.bondPanel='1';talentPanel.setAttribute('role','tabpanel');talentPanel.setAttribute('aria-label','天赋武学');talentPanel.hidden=true;
+    talentPanel.innerHTML='<div class="jz-character-pane-head"><div><h2>天赋武学</h2><p>填写自定义天赋，并添加修炼功法与战斗功法。</p></div><span class="jz-character-profile-badge">本区选填</span></div>';
+    if(talentField){talentField.classList.add('jz-bond-custom-talent');talentField.classList.remove('bond-wide');talentPanel.appendChild(talentField);}
+    if(skillsSection){
+      const skills=skillsSection.querySelector('.bond-skills-editor');
+      if(skills){skillsSection.className='bond-section jz-bond-skills';const heading=skillsSection.querySelector(':scope > h3');if(heading)heading.remove();const explainer=skills.querySelector(':scope > p');if(explainer)explainer.remove();talentPanel.appendChild(skills);}
+    }
+    const talentActions=document.createElement('div');talentActions.className='jz-character-step-actions';talentActions.innerHTML='<button type="button" class="jz-character-step-back" data-bond-prev>← 返回：人物档案</button><span class="jz-character-step-spacer"></span>';talentPanel.appendChild(talentActions);
+    const actions=root.querySelector(':scope > .bond-actions');const status=root.querySelector(':scope > #bond-game-status');
+    if(actions)talentPanel.appendChild(actions);
+    if(status)talentPanel.appendChild(status);
+    root.replaceChildren(...[title,intro,nav,profilePanel,talentPanel].filter(Boolean));
+    let active=0;
+    const activate=index=>{active=Math.max(0,Math.min(1,index));panels.length=0;panels.push(profilePanel,talentPanel);nav.querySelectorAll('[data-bond-step]').forEach((tab,i)=>{tab.setAttribute('aria-selected',String(i===active));tab.tabIndex=i===active?0:-1;});panels.forEach((panel,i)=>panel.hidden=i!==active);};
+    nav.addEventListener('click',event=>{const tab=event.target.closest('[data-bond-step]');if(tab)activate(Number(tab.dataset.bondStep));});
+    root.addEventListener('click',event=>{if(event.target.closest('[data-bond-next]'))activate(1);else if(event.target.closest('[data-bond-prev]'))activate(0);});
+    activate(0);
+  }
+  buildCharacterWizard();
+  buildBondWizard();
+  const views=[...shell.querySelectorAll('.jz-view')],bar=document.getElementById('jz-section-bar');
+  const titles={map:'九州地图',factions:'江湖势力',realm:'武学境界',character:'人物创建',bond:'羁绊人物创建'};
+  function currentRoute(){const name=decodeURIComponent(location.hash.replace(/^#/,''));return Object.hasOwn(titles,name)?name:'home';}
+  function renderRoute(){
+    const route=currentRoute();
+    for(const view of views)view.hidden=view.id!=='jz-view-'+route;
+    bar.hidden=route==='home';
+    if(route!=='home')document.getElementById('jz-section-title').textContent=titles[route];
+    shell.querySelectorAll('.jz-section-links [data-view]').forEach(button=>{if(button.dataset.view===route)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
+    document.body.classList.remove('jz-bond-page');
+    window.scrollTo({top:0,behavior:'auto'});
+  }
+  let isTransitioning=false,ignoreHash='';
+  function commitRoute(route){
+    const nextHash='#'+route;
+    if(location.hash!==nextHash){ignoreHash=nextHash;location.hash=route;}
+    renderRoute();
+  }
+  function clearOrbitLabelOffsets(){
+    for(const groove of grooves){
+      const label=groove.querySelector('.jz-groove-label');
+      label?.style.removeProperty('--jz-label-dx');label?.style.removeProperty('--jz-label-dy');
+    }
+  }
+  function navigate(route){
+    if(!(route==='home'||Object.hasOwn(titles,route))||isTransitioning)return;
+    const from=currentRoute();
+    if(route===from)return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){commitRoute(route);return;}
+    if(from==='home'&&route!=='home'){
+      const home=document.getElementById('jz-view-home');
+      const target=grooves.find(button=>button.dataset.view===route);
+      const pearl=target?.querySelector('.jz-pearl');
+      if(!target||!pearl){commitRoute(route);return;}
+      isTransitioning=true;
+      disc.style.transition='none';
+      disc.style.transform='rotateX(0deg) rotateY(0deg)';
+      orbit.style.transition='none';
+      orbit.style.transform='rotateZ(0deg)';
+      void disc.offsetWidth;
+      const wheelRect=disc.getBoundingClientRect(),pearlRect=pearl.getBoundingClientRect();
+      const dx=pearlRect.left+pearlRect.width/2-(wheelRect.left+wheelRect.width/2);
+      const dy=pearlRect.top+pearlRect.height/2-(wheelRect.top+wheelRect.height/2);
+      const bearing=Math.atan2(dy,dx)*180/Math.PI;
+      let turn=-90-bearing;turn=((turn+180)%360+360)%360-180;
+      const radians=turn*Math.PI/180;
+      for(const groove of grooves){
+        const label=groove.querySelector('.jz-groove-label'),bead=groove.querySelector('.jz-pearl');
+        if(!label||!bead)continue;
+        const labelRect=label.getBoundingClientRect(),beadRect=bead.getBoundingClientRect();
+        const scale=groove.getBoundingClientRect().height/groove.offsetHeight;
+        const offset=(labelRect.top-(beadRect.top+beadRect.height/2))/scale;
+        label.style.setProperty('--jz-label-dx',(Math.sin(radians)*offset)+'px');
+        label.style.setProperty('--jz-label-dy',((Math.cos(radians)-1)*offset)+'px');
+      }
+      orbit.style.setProperty('--jz-orbit-turn',turn+'deg');
+      orbit.style.setProperty('--jz-orbit-counter',(-turn)+'deg');
+      home.classList.add('jz-is-calibrating');target.classList.add('is-calibration-target');chart.classList.add('is-drawing');
+      disc.style.removeProperty('transition');
+      orbit.style.removeProperty('transition');
+      requestAnimationFrame(()=>{orbit.style.transform='rotateZ('+turn+'deg)';});
+      window.setTimeout(()=>{
+        home.classList.remove('jz-is-calibrating');target.classList.remove('is-calibration-target');chart.classList.remove('is-drawing');
+        commitRoute(route);
+        clearOrbitLabelOffsets();
+        orbit.style.transition='none';orbit.style.transform='rotateZ(0deg)';
+        orbit.style.removeProperty('--jz-orbit-turn');orbit.style.removeProperty('--jz-orbit-counter');
+        void orbit.offsetWidth;
+        orbit.style.removeProperty('transition');orbit.style.removeProperty('transform');
+        isTransitioning=false;
+      },920);
+      return;
+    }
+    if(route==='home'&&from!=='home'){
+      isTransitioning=true;
+      const activeView=views.find(view=>!view.hidden);
+      activeView?.classList.add('jz-view-fold');bar.classList.add('jz-bar-fold');
+      window.setTimeout(()=>{
+        activeView?.classList.remove('jz-view-fold');bar.classList.remove('jz-bar-fold');
+        disc.style.transition='none';disc.style.transform='rotateX(0deg) rotateY(0deg)';
+        orbit.style.transition='none';orbit.style.transform='rotateZ(0deg)';
+        orbit.style.removeProperty('--jz-orbit-turn');orbit.style.removeProperty('--jz-orbit-counter');
+        clearOrbitLabelOffsets();
+        void disc.offsetWidth;
+        commitRoute('home');
+        disc.style.removeProperty('transition');disc.style.removeProperty('transform');
+        orbit.style.removeProperty('transition');orbit.style.removeProperty('transform');
+        isTransitioning=false;
+      },260);
+      return;
+    }
+    commitRoute(route);
+  }
+  shell.addEventListener('click',event=>{const button=event.target.closest('[data-view]');if(button)navigate(button.dataset.view);});
+  window.addEventListener('hashchange',()=>{if(ignoreHash===location.hash){ignoreHash='';return;}if(!isTransitioning)renderRoute();});
+  document.getElementById('jz-enter-create')?.addEventListener('click',()=>{
+    history.replaceState(null,'','#home');
+    renderRoute();
+    document.getElementById('jz-entry-screen')?.classList.add('is-hidden');
+    document.body.classList.add('jz-entered');
+  });
+  for(const [id,route] of [['create-bond-button','bond'],['bond-back-button','character']]){
+    const button=document.getElementById(id);
+    button?.addEventListener('click',event=>{event.preventDefault();event.stopImmediatePropagation();navigate(route);},true);
+  }
+  renderRoute();
+  const starfield=document.getElementById('jz-starfield');
+  for(let i=0;i<64;i++){
+    const star=document.createElement('span');
+    const n=(i*73+19)%101,m=(i*47+11)%97;
+    star.style.cssText=`--x:${n}%;--y:${m}%;--s:${i%9===0?3:1.5}px;--a:${.24+(i%6)*.11};--d:${2+(i%5)}s;animation-delay:-${i%7}s`;
+    starfield.appendChild(star);
+  }
+  const wrap=document.getElementById('jz-wheel-wrap'),disc=document.getElementById('jz-compass'),orbit=document.getElementById('jz-orbiting-buttons');
+  const grooves=[...orbit.querySelectorAll('.jz-groove')];
+  const starOrbitTrack=document.createElement('div');starOrbitTrack.className='jz-star-orbit-track';
+  grooves.forEach(groove=>starOrbitTrack.appendChild(groove));
+  orbit.appendChild(starOrbitTrack);
+  const chart=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  chart.setAttribute('class','jz-calibration-chart');chart.setAttribute('viewBox','0 0 1000 1000');chart.setAttribute('aria-hidden','true');
+  chart.innerHTML='<path class="chart-lines" d="M500 90L880 360L730 820L270 820L120 360Z M500 500L500 90 M500 500L880 360 M500 500L730 820 M500 500L270 820 M500 500L120 360"></path><circle class="chart-star" cx="500" cy="90" r="8"></circle><circle class="chart-star" cx="880" cy="360" r="8"></circle><circle class="chart-star" cx="730" cy="820" r="8"></circle><circle class="chart-star" cx="270" cy="820" r="8"></circle><circle class="chart-star" cx="120" cy="360" r="8"></circle><circle class="chart-star" cx="500" cy="500" r="6"></circle>';
+  orbit.prepend(chart);
+  function insideWheel(x,y){
+    const rect=wrap.getBoundingClientRect(),radius=Math.min(rect.width,rect.height)/2;
+    const dx=x-(rect.left+rect.width/2),dy=y-(rect.top+rect.height/2);
+    return dx*dx+dy*dy<=radius*radius;
+  }
+  function nearestGroove(x,y){
+    return grooves.reduce((nearest,button)=>{
+      const pearl=button.querySelector('.jz-pearl').getBoundingClientRect();
+      const dx=x-(pearl.left+pearl.width/2),dy=y-(pearl.top+pearl.height/2),distance=dx*dx+dy*dy;
+      return !nearest||distance<nearest.distance?{button,distance}:nearest;
+    },null)?.button;
+  }
+  function markNearest(button){grooves.forEach(groove=>groove.classList.toggle('is-nearest',groove===button));}
+  wrap.addEventListener('pointermove',event=>{
+    if(isTransitioning)return;
+    const inside=insideWheel(event.clientX,event.clientY);
+    wrap.style.cursor=inside?'pointer':'';
+    markNearest(inside?nearestGroove(event.clientX,event.clientY):null);
+  });
+  wrap.addEventListener('pointerleave',()=>{wrap.style.cursor='';markNearest(null);if(isTransitioning)return;});
+  wrap.addEventListener('click',event=>{
+    if(event.target.closest('.jz-groove')||!insideWheel(event.clientX,event.clientY))return;
+    const button=nearestGroove(event.clientX,event.clientY);
+    if(button){markNearest(button);navigate(button.dataset.view);}
+  });
+  const canTilt=window.matchMedia('(pointer:fine) and (prefers-reduced-motion:no-preference)').matches;
+  if(canTilt){
+    let frame=0,rx=0,ry=0;
+    wrap.addEventListener('pointermove',event=>{
+      if(isTransitioning)return;
+      const rect=wrap.getBoundingClientRect();
+      const x=(event.clientX-rect.left-rect.width/2)/rect.width;
+      const y=(event.clientY-rect.top-rect.height/2)/rect.height;
+      rx=Math.max(-22,Math.min(22,-y*40));ry=Math.max(-22,Math.min(22,x*40));
+      if(frame)return;
+      frame=requestAnimationFrame(()=>{disc.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;frame=0;});
+    });
+    wrap.addEventListener('pointerleave',()=>{if(isTransitioning)return;disc.style.transform='rotateX(0deg) rotateY(0deg)';});
+  }
+}());
+</script>
+
 </body>
 </html>
