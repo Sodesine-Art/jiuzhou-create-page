@@ -4143,8 +4143,21 @@ ${martialArtsText}
       height = homeHeight;
     } else {
       root.style.setProperty('--jz-home-height', viewport + 'px');
-      const contentHeight = Math.max(1, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight);
-      height = Math.ceil(document.body.classList.contains('jz-compact-content-route') ? contentHeight : Math.max(viewport, contentHeight));
+      if (document.body.classList.contains('jz-compact-content-route')) {
+        const pageRect = page.getBoundingClientRect();
+        const note = document.getElementById('jz-completion-note');
+        const noteRect = note?.getBoundingClientRect();
+        const noteMargin = note ? (parseFloat(getComputedStyle(note).marginBottom) || 0) : 0;
+        const contentBottom = Math.max(
+          page.scrollHeight,
+          pageRect.bottom + window.scrollY,
+          noteRect ? noteRect.bottom + window.scrollY + noteMargin : 0
+        );
+        height = Math.ceil(Math.max(1, contentBottom));
+      } else {
+        const contentHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight);
+        height = Math.ceil(Math.max(viewport, contentHeight));
+      }
     }
     try {
       if (window.frameElement) {
