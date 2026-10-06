@@ -4143,7 +4143,8 @@ ${martialArtsText}
       height = homeHeight;
     } else {
       root.style.setProperty('--jz-home-height', viewport + 'px');
-      height = Math.ceil(Math.max(viewport, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight));
+      const contentHeight = Math.max(1, document.documentElement.scrollHeight, document.body.scrollHeight, page.scrollHeight);
+      height = Math.ceil(document.body.classList.contains('jz-compact-content-route') ? contentHeight : Math.max(viewport, contentHeight));
     }
     try {
       if (window.frameElement) {
@@ -4504,6 +4505,7 @@ ${martialArtsText}
   function renderRoute(){
     const route=currentRoute();
     document.body.classList.toggle('jz-home-route',route==='home');
+    document.body.classList.toggle('jz-compact-content-route',['map','realm','character','bond'].includes(route));
     for(const view of views)view.hidden=view.id!=='jz-view-'+route;
     bar.hidden=route==='home';
     if(route!=='home')document.getElementById('jz-section-title').textContent=titles[route];
@@ -4677,6 +4679,18 @@ ${martialArtsText}
   wrap.addEventListener('pointerleave',resetTilt);
 }());
 </script>
+
+<style id="jz-compact-content-pages">
+/* These content views and their frame follow their content instead of filling an empty viewport. */
+body.jz-compact-content-route .jz-page,
+body.jz-compact-content-route .jz-page .container,
+body.jz-compact-content-route .jz-content-view,
+body.jz-compact-content-route .jz-content-card {
+  min-height: 0 !important;
+  height: auto !important;
+}
+body.jz-compact-content-route .jz-page .container { flex: 0 0 auto !important; }
+</style>
 
 </body>
 </html>
