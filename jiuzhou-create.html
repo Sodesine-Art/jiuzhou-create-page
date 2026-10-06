@@ -4144,13 +4144,16 @@ ${martialArtsText}
     } else {
       root.style.setProperty('--jz-home-height', viewport + 'px');
       if (document.body.classList.contains('jz-compact-content-route')) {
-        const pageRect = page.getBoundingClientRect();
+        const activeView = document.querySelector('.jz-content-view:not([hidden])');
+        const sectionBar = document.getElementById('jz-section-bar');
+        const viewRect = activeView?.getBoundingClientRect();
+        const barRect = sectionBar?.getBoundingClientRect();
         const note = document.getElementById('jz-completion-note');
         const noteRect = note?.getBoundingClientRect();
         const noteMargin = note ? (parseFloat(getComputedStyle(note).marginBottom) || 0) : 0;
         const contentBottom = Math.max(
-          page.scrollHeight,
-          pageRect.bottom + window.scrollY,
+          barRect && activeView ? barRect.bottom + window.scrollY + activeView.scrollHeight : 0,
+          viewRect ? viewRect.bottom + window.scrollY : 0,
           noteRect ? noteRect.bottom + window.scrollY + noteMargin : 0
         );
         height = Math.ceil(Math.max(1, contentBottom));
